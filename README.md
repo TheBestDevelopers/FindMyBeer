@@ -1,3 +1,3 @@
 # FindMyBeer
 Find My Beer
-FindMyBeer to aplikacja pomagająca znaleźć wolny stolik w pubie.
+FindMyBeer helps find a free table in pub
