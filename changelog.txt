@@ -2,3 +2,5 @@
 Rozpoczêcie prac nad projektem.
 10.03.2018
 Zaktualizowanie pliku README.md.
+11.03.2018
+Dodanie diagramu przypadków u¿ycia  schematu bazy danych.
