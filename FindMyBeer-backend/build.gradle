@@ -1,0 +1,36 @@
+group 'FindMyBeer-backend'
+version '1.0-SNAPSHOT'
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.0.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+bootJar {
+    baseName = 'gs-rest-service'
+    version =  '0.1.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile 'org.postgresql:postgresql:42.2.2'
+    compile 'org.hibernate:hibernate-core:5.2.15.Final'
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}
