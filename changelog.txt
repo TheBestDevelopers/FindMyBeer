@@ -6,3 +6,5 @@ Zaktualizowanie pliku README.md.
 Dodanie diagramu przypadków u¿ycia  schematu bazy danych.
 13.03.2018 
 Przeniesienie rezerwacji do dodatkowych funkcjonalnoœci.
+2.04.2018
+Poprawiono schemat bazy danych - dodano pole pub_name.
