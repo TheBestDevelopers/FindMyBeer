@@ -8,5 +8,5 @@ Kamil Ismail,
 Monika Kokot,
 Jakub Pisula
 
-Grupa: GKIO1
-Sekcja: 5
+Group: GKIO1
+Section: 5
