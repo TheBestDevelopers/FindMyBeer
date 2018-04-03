@@ -8,3 +8,5 @@ Dodanie diagramu przypadków u¿ycia  schematu bazy danych.
 Przeniesienie rezerwacji do dodatkowych funkcjonalnoœci.
 2.04.2018
 Poprawiono schemat bazy danych - dodano pole pub_name.
+3.04.2018
+Dodano menu, za pomoca ktorego mozna sie przelaczac miedzy ekranami.

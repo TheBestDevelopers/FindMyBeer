@@ -5,12 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
@@ -53,7 +50,7 @@ public class Login extends AppCompatActivity {
     }
 
     public void mButtonLogInOnClick(View v){
-        Intent myIntent = new Intent(getBaseContext(), MainView.class);
+        Intent myIntent = new Intent(getBaseContext(), HomeTab.class);
         startActivity(myIntent);
     }
 
