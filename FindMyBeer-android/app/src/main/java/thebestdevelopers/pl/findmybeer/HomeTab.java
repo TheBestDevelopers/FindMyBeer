@@ -5,10 +5,9 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
+
+import thebestdevelopers.pl.findmybeer.mapsController.MapTab;
 
 public class HomeTab extends AppCompatActivity {
 
@@ -16,9 +15,10 @@ public class HomeTab extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hometab);
-
+        overridePendingTransition(0, 0);
         BottomNavigationView tabs = (BottomNavigationView) findViewById(R.id.navigationtabs1);
         BottomNavigationViewHelper.disableShiftMode(tabs);
+        tabs.getMenu().findItem(R.id.action_home).setChecked(true);
 
         Intent i;
         tabs.setOnNavigationItemSelectedListener
@@ -27,24 +27,24 @@ public class HomeTab extends AppCompatActivity {
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         Intent i;
                         switch (item.getItemId()) {
-                            case R.id.action_home:
-                                i = new Intent(getApplicationContext(), HomeTab.class);
-                                startActivity(i);
-                                break;
                             case R.id.action_fav:
                                 i = new Intent(getApplicationContext(), FavTab.class);
+                                i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                 startActivity(i);
                                 break;
                             case R.id.action_search:
                                 i = new Intent(getApplicationContext(), SearchTab.class);
+                                i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                 startActivity(i);
                                 break;
                             case R.id.action_map:
                                 i = new Intent(getApplicationContext(), MapTab.class);
+                                i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                 startActivity(i);
                                 break;
                             case R.id.action_user:
                                 i = new Intent(getApplicationContext(), ProfileTab.class);
+                                i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                 startActivity(i);
                                 break;
                         }

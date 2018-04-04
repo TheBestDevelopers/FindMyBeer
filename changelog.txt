@@ -10,3 +10,5 @@ Przeniesienie rezerwacji do dodatkowych funkcjonalnoœci.
 Poprawiono schemat bazy danych - dodano pole pub_name.
 3.04.2018
 Dodano menu, za pomoca ktorego mozna sie przelaczac miedzy ekranami.
+4.04.2018
+Dodano implementacje google maps do zakladki mapy.

@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/navigationtabs1"
         android:layout_gravity="bottom"
+        android:background="@android:color/background_light"
         app:menu="@menu/tabs_navigation"
         />
 

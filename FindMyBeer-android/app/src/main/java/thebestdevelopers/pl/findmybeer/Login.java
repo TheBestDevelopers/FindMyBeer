@@ -1,15 +1,20 @@
 package thebestdevelopers.pl.findmybeer;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 
 import java.util.Arrays;
 
@@ -23,30 +28,29 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        facebookLoginButton = (LoginButton)findViewById(R.id.mButtonLogInFacebook);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+            setContentView(R.layout.activity_login);
+            facebookLoginButton = (LoginButton) findViewById(R.id.mButtonLogInFacebook);
+            facebookLoginButton.setReadPermissions(Arrays.asList("public_profile", EMAIL));
+            // If you are using in a fragment, call loginButton.setFragment(this);
+            callbackManager = CallbackManager.Factory.create();
+            // Callback registration
+            facebookLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+                @Override
+                public void onSuccess(LoginResult loginResult) {
+                }
 
-        facebookLoginButton.setReadPermissions(Arrays.asList("public_profile",EMAIL));
-        // If you are using in a fragment, call loginButton.setFragment(this);
-        callbackManager = CallbackManager.Factory.create();
-        // Callback registration
-        facebookLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-            }
+                @Override
+                public void onCancel() {
+                    // App code
+                }
 
-            @Override
-            public void onCancel() {
-                // App code
-            }
-
-            @Override
-            public void onError(FacebookException exception) {
-                // App code
-            }
-        });
-
-
+                @Override
+                public void onError(FacebookException exception) {
+                    // App code
+                }
+            });
     }
 
     public void mButtonLogInOnClick(View v){

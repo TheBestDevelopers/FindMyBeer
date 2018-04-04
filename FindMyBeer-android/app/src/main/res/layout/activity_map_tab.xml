@@ -4,20 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MapTab">
+    tools:context=".mapsController.MapTab">
 
     <android.support.design.widget.BottomNavigationView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/navigationtabs4"
-        android:layout_gravity="bottom"
-        app:menu="@menu/tabs_navigation"
-        />
-
-    <TextView
-        android:id="@+id/textView4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Map" />
+        android:layout_gravity="bottom"
+        android:background="@android:color/background_light"
+        app:menu="@menu/tabs_navigation" />
+
+    <fragment
+        android:id="@+id/mapfragment"
+        android:name="com.google.android.gms.maps.MapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="fill" />
+
+    <Button
+        android:id="@+id/bSearch"
+        android:layout_width="78dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/roundedbutton"
+        android:onClick="onClick"
+        android:text="Search"
+        app:layout_anchor="@+id/mapfragment"
+        app:layout_anchorGravity="left|top" />
 
 </android.support.design.widget.CoordinatorLayout>
