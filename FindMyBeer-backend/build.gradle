@@ -1,46 +1,38 @@
-group 'FindMyBeer-backend'
-version '1.0-SNAPSHOT'
 buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.0.RELEASE")
-    }
+	ext {
+		springBootVersion = '2.0.0.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
 }
 
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath "org.liquibase:liquibase-gradle-plugin:1.2.4"
-    }
-}
-
-apply plugin: 'org.liquibase.gradle'
 apply plugin: 'java'
 apply plugin: 'eclipse'
-apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
-bootJar {
-    baseName = 'gs-rest-service'
-    version =  '0.1.0'
-}
+group = 'com.TheBestDevelopers'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
 
 repositories {
-    mavenCentral()
+	mavenCentral()
 }
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
 
 dependencies {
-    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
-    compile("org.springframework.boot:spring-boot-starter-web")
-    compile 'org.postgresql:postgresql:42.2.2'
-    compile 'org.hibernate:hibernate-core:5.2.15.Final'
-    testCompile('org.springframework.boot:spring-boot-starter-test')
+	compile('org.hibernate:hibernate-core:5.2.16.Final')
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile('org.springframework.boot:spring-boot-starter-data-rest')
+	//compile('org.springframework.boot:spring-boot-starter-security')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	//compile('org.liquibase:liquibase-core')
+	runtime('org.springframework.boot:spring-boot-devtools')
+	runtime('org.postgresql:postgresql')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	testCompile('org.springframework.security:spring-security-test')
 }
