@@ -12,3 +12,5 @@ Poprawiono schemat bazy danych - dodano pole pub_name.
 Dodano menu, za pomoca ktorego mozna sie przelaczac miedzy ekranami.
 4.04.2018
 Dodano implementacje google maps do zakladki mapy.
+5.04.2018
+Zakonczono prace nad implementacja Google Maps. Dodano mozliwosc wyswietlania informacji o wybranym pubie.

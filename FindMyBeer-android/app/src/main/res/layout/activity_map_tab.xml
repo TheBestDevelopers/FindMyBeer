@@ -25,10 +25,12 @@
         android:id="@+id/bSearch"
         android:layout_width="78dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="left|top"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/roundedbutton"
+        android:backgroundTint="#B3FFFFFF"
         android:onClick="onClick"
-        android:text="Search"
-        app:layout_anchor="@+id/mapfragment"
-        app:layout_anchorGravity="left|top" />
+        android:text="Search" />
 
 </android.support.design.widget.CoordinatorLayout>
