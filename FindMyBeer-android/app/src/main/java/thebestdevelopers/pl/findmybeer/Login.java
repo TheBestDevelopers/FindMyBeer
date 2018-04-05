@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -39,16 +40,21 @@ public class Login extends AppCompatActivity {
             facebookLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
                 @Override
                 public void onSuccess(LoginResult loginResult) {
+                    Log.d("LOGIN_SUCCESS", "Success");
+                    facebookLoginButton.setVisibility(View.INVISIBLE); //<- IMPORTANT
+                    Intent intent = new Intent(getBaseContext(), HomeTab.class);
+                    startActivity(intent);
+                    finish();//<- IMPORTANT
                 }
 
                 @Override
                 public void onCancel() {
-                    // App code
+                    Log.d("LOGIN_CANCEL", "Cancelled");
                 }
 
                 @Override
                 public void onError(FacebookException exception) {
-                    // App code
+                    Log.d("LOGIN_ERROR", "Error");
                 }
             });
     }
@@ -66,6 +72,7 @@ public class Login extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode,resultCode, data);
     }
 
 }
