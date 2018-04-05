@@ -5,16 +5,44 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+
+import com.facebook.FacebookSdk;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import thebestdevelopers.pl.findmybeer.mapsController.MapTab;
 
 public class HomeTab extends AppCompatActivity {
 
+    private RecyclerView recyclerView;
+    private MyRecyclerViewerAdapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
+    ArrayList<Pub> pubs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hometab);
+
+        recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        recyclerView.setHasFixedSize(true);
+
+        layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+        //recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+       // recyclerView.setHasFixedSize(true);
+
+        initializePubs();
+        mAdapter = new MyRecyclerViewerAdapter(pubs);
+        recyclerView.setAdapter(mAdapter);
+       //
+
         overridePendingTransition(0, 0);
         BottomNavigationView tabs = (BottomNavigationView) findViewById(R.id.navigationtabs1);
         BottomNavigationViewHelper.disableShiftMode(tabs);
@@ -51,5 +79,22 @@ public class HomeTab extends AppCompatActivity {
                         return true;
                     }
                 });
+    }
+
+    private void initializePubs() {
+        pubs = new ArrayList<>();
+        pubs.add(new Pub("Klubowa", 200.0, 4, 4.5));
+        pubs.add(new Pub("Ministerstwo", 100.0, 2, 4.0));
+        pubs.add(new Pub("Ministerstwo", 100.0, 2, 4.0));
+        pubs.add(new Pub("Ministerstwo", 100.0, 2, 4.0));
+        pubs.add(new Pub("Ministerstwo", 100.0, 2, 4.0));
+        pubs.add(new Pub("Ministerstwo", 100.0, 2, 4.0));
+        pubs.add(new Pub("Ministerstwo", 100.0, 2, 4.0));
+        pubs.add(new Pub("Ministerstwo", 100.0, 2, 4.0));
+        pubs.add(new Pub("Ministerstwo", 100.0, 2, 4.0));
+        pubs.add(new Pub("Ministerstwo", 100.0, 2, 4.0));
+        pubs.add(new Pub("Ministerstwo", 100.0, 2, 4.0));
+
+        //mAdapter.notifyDataSetChanged();
     }
 }
