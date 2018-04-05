@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationProvider;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
@@ -13,11 +12,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -26,23 +22,26 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 
 import thebestdevelopers.pl.findmybeer.BottomNavigationViewHelper;
 import thebestdevelopers.pl.findmybeer.FavTab;
 import thebestdevelopers.pl.findmybeer.HomeTab;
 import thebestdevelopers.pl.findmybeer.ProfileTab;
+import thebestdevelopers.pl.findmybeer.pubInfo.PubInfo;
 import thebestdevelopers.pl.findmybeer.R;
 import thebestdevelopers.pl.findmybeer.SearchTab;
 
-public class MapTab extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
+public class MapTab extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener, LocationListener,
+        GoogleMap.OnInfoWindowClickListener{
 
     GoogleMap mGoogleMap;
     GoogleApiClient mGoogleApiClient;
@@ -135,9 +134,12 @@ public class MapTab extends AppCompatActivity implements OnMapReadyCallback, Goo
             return;
         }
         mGoogleMap.setMyLocationEnabled(true);
+        mGoogleMap.setOnInfoWindowClickListener(this);
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(LocationServices.API)
+                .addApi(Places.GEO_DATA_API)
+                .addApi(Places.PLACE_DETECTION_API)
                 .addConnectionCallbacks(this).addOnConnectionFailedListener(this)
                 .build();
         mGoogleApiClient.connect();
@@ -147,7 +149,7 @@ public class MapTab extends AppCompatActivity implements OnMapReadyCallback, Goo
     public void onConnected(@Nullable Bundle bundle) {
         mLocationRequest = LocationRequest.create();
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        mLocationRequest.setInterval(120000); //after 2 minutes move camera to the user location on map
+        //mLocationRequest.setInterval(120000); //after 2 minutes move camera to the user location on map
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -179,7 +181,7 @@ public class MapTab extends AppCompatActivity implements OnMapReadyCallback, Goo
         } else {
             latitude = location.getLatitude();
             longitude = location.getLongitude();
-            LatLng ll = new LatLng(location.getLatitude(), location.getLongitude());
+            LatLng ll = new LatLng(latitude, longitude);
             CameraUpdate update = CameraUpdateFactory.newLatLngZoom(ll, 15);
             mGoogleMap.animateCamera(update);
         }
@@ -198,9 +200,19 @@ public class MapTab extends AppCompatActivity implements OnMapReadyCallback, Goo
     private String getUrl(double lat, double lng, String nearby) {
         StringBuilder googlePlaceUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
         googlePlaceUrl.append("location="+lat+","+lng);
-        googlePlaceUrl.append("&radius="+"10000");
-        googlePlaceUrl.append("&types="+nearby);
-        googlePlaceUrl.append("&key="+"AIzaSyBTpl3BfLrQnN1URP53_1Zv3miIT8MiqI8");
+        googlePlaceUrl.append("&radius="+"5000");
+        googlePlaceUrl.append("&type="+nearby);
+        googlePlaceUrl.append("&name="+nearby);
+        googlePlaceUrl.append("&key="+"AIzaSyB3iQRgruru1jotumbRTuzOYiWSePz41ZQ");
+        Log.d("created url", googlePlaceUrl.toString());
         return googlePlaceUrl.toString();
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        Intent myIntent = new Intent(getApplicationContext(), PubInfo.class);
+        String id = marker.getSnippet();
+        myIntent.putExtra("placeID", id);
+        startActivity(myIntent);
     }
 }

@@ -1,4 +1,4 @@
-package thebestdevelopers.pl.findmybeer.mapsController;
+package thebestdevelopers.pl.findmybeer.pubInfo;
 
 import android.util.Log;
 
@@ -10,7 +10,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class DownloadUrl {
+public class DownloadPubUrl {
 
     public String readUrl(String myUrl) throws IOException
     {
