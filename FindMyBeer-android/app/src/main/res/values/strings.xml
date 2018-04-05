@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">FindMyBeer</string>
+    <string name="facebook_app_id">2121156901452166</string>
+    <string name="fb_login_protocol_scheme">fb2121156901452166</string>
 </resources>
