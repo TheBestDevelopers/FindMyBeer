@@ -33,6 +33,7 @@ public class Login extends AppCompatActivity {
         actionBar.hide();
             setContentView(R.layout.activity_login);
             facebookLoginButton = (LoginButton) findViewById(R.id.mButtonLogInFacebook);
+            facebookLoginButton.setBackgroundResource(R.drawable.roundedfacebookbutton);
             facebookLoginButton.setReadPermissions(Arrays.asList("public_profile", EMAIL));
             // If you are using in a fragment, call loginButton.setFragment(this);
             callbackManager = CallbackManager.Factory.create();
