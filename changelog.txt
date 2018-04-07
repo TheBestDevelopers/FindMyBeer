@@ -14,3 +14,5 @@ Dodano menu, za pomoca ktorego mozna sie przelaczac miedzy ekranami.
 Dodano implementacje google maps do zakladki mapy.
 5.04.2018
 Zakonczono prace nad implementacja Google Maps. Dodano mozliwosc wyswietlania informacji o wybranym pubie.
+7.04.2018
+Dodano sekcje ulubionych, menu oraz dodano mozliwosc przekierowania uzytkownika do google maps gdzie wlaczona zostanie nawigacja do wybranego wczesniej, w aplikacji FindMyBeer, miejsca.

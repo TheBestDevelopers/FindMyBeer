@@ -54,7 +54,7 @@ class GetJsonResult extends AsyncTask<Object, String, String> {
             mAddress.setText(vicinity);
 
             mRating = activity.findViewById(R.id.tRating);
-            mRating.setText("Rating: "+rating+"/5");
+            mRating.setText(rating+"/5");
 
             mWebsite = activity.findViewById(R.id.tWebsite);
             mWebsite.setText(website);
@@ -72,6 +72,8 @@ class GetJsonResult extends AsyncTask<Object, String, String> {
             website = googlePlace.get("web");
             phone = googlePlace.get("phone");
             if (website.equals(""))
-                website = "There's no website :(";
+                website = "There's no website";
+            if (phone.equals(""))
+                phone = "There's no phone";
     }
 }

@@ -7,7 +7,6 @@
     tools:context=".pubInfo.PubInfo"
     android:orientation="vertical">
 
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -25,7 +24,6 @@
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-
                 android:text="Pub:" />
 
             <TextView
@@ -35,7 +33,6 @@
                 android:layout_marginBottom="5dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginTop="10dp"
                 android:textColor="@color/black"
                 android:textSize="36sp"
                 android:textStyle="bold" />
@@ -48,6 +45,8 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="10dp"
+                android:drawableLeft="@drawable/ic_fav"
+                android:drawablePadding="5dp"
                 android:textColor="@color/black"
                 android:textSize="24sp" />
 
@@ -55,12 +54,13 @@
                 android:id="@+id/bAddFav"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
                 android:background="@drawable/roundedbutton"
                 android:backgroundTint="#B3FFFFFF"
+                android:onClick="mButtonAddFavClick"
                 android:text="Add to favourites"
                 android:textSize="14sp" />
 
@@ -81,7 +81,6 @@
                 android:layout_marginBottom="5dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginTop="5dp"
                 android:textColor="@color/black"
                 android:textSize="24sp" />
 
@@ -102,7 +101,6 @@
                 android:layout_marginBottom="5dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginTop="5dp"
                 android:textColor="@color/black"
                 android:textSize="24sp" />
 
@@ -123,7 +121,6 @@
                 android:layout_marginBottom="5dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginTop="5dp"
                 android:textColor="@color/black"
                 android:textSize="24sp" />
 
@@ -131,24 +128,26 @@
                 android:id="@+id/bDirections"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
                 android:background="@drawable/roundedbutton"
                 android:backgroundTint="#B3FFFFFF"
-                android:text="Get directions" />
+                android:onClick="mButtonGetDirectionsClick"
+                android:text="Get directions by Google Maps" />
 
             <Button
                 android:id="@+id/bMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
                 android:background="@drawable/roundedbutton"
                 android:backgroundTint="#B3FFFFFF"
+                android:onClick="mButtonMenuClick"
                 android:text="Menu" />
         </LinearLayout>
     </ScrollView>
