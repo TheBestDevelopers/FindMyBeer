@@ -1,15 +1,19 @@
 package com.thebestdevelopers.find_my_beer.controller;
 
-import com.thebestdevelopers.find_my_beer.model.User;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.sun.corba.se.spi.ior.ObjectKey;
+import com.thebestdevelopers.find_my_beer.DTO.UserDTO;
+import com.thebestdevelopers.find_my_beer.model.UserEntity;
 import com.thebestdevelopers.find_my_beer.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.Serializable;
 import java.util.List;
 
 /**
- * @author Wiktor Florencki
+ * @author Dominik Florencki
  */
 @RestController
 @RequestMapping("api/users/")
@@ -18,8 +22,11 @@ public class UserController {
     UserService userService;
 
     @GetMapping("")
-    public List<User> getAllUser(){ return userService.getAllUser();}
+    public List<UserDTO> getAllUser(){ return userService.getAllUser();}
 
-    @PostMapping("")
-    public User createUser(@Valid @RequestBody User user) {return userService.createUser(user);}
+    @PostMapping("{role}")
+    public UserDTO createUser(@Valid @RequestBody UserEntity user, @PathVariable(value = "role") String role) {
+        return userService.createUser(user, role);
+    }
+
 }

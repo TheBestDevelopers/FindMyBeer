@@ -1,6 +1,7 @@
 package com.thebestdevelopers.find_my_beer.service;
 
-import com.thebestdevelopers.find_my_beer.model.User;
+import com.thebestdevelopers.find_my_beer.DTO.UserDTO;
+import com.thebestdevelopers.find_my_beer.model.UserEntity;
 
 import java.util.List;
 
@@ -8,6 +9,6 @@ import java.util.List;
  * @author Wiktor Florencki
  */
 public interface UserService {
-    List<User> getAllUser();
-    User createUser(User user);
+    List<UserDTO> getAllUser();
+    UserDTO createUser(UserEntity user, String role);
 }

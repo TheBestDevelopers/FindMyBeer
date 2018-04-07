@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/FindMyBeer.iml" filepath="$PROJECT_DIR$/FindMyBeer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/database.iml" filepath="$PROJECT_DIR$/database.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/find_my_beer.iml" filepath="$PROJECT_DIR$/.idea/modules/find_my_beer.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/find_my_beer_main.iml" filepath="$PROJECT_DIR$/.idea/modules/find_my_beer_main.iml" group="find_my_beer" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/find_my_beer_test.iml" filepath="$PROJECT_DIR$/.idea/modules/find_my_beer_test.iml" group="find_my_beer" />
