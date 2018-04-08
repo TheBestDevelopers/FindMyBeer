@@ -13,11 +13,12 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-class GetNearbyPlacesData extends AsyncTask<Object, String, String> {
+public class GetNearbyPlacesData extends AsyncTask<Object, String, String> {
 
     private String googlePlacesData;
     private GoogleMap mMap;
     String url;
+    List<HashMap<String, String>> nearbyPlaceList;
 
     @Override
     protected String doInBackground(Object... objects){
@@ -37,14 +38,13 @@ class GetNearbyPlacesData extends AsyncTask<Object, String, String> {
     @Override
     protected void onPostExecute(String s){
 
-        List<HashMap<String, String>> nearbyPlaceList;
         DataParser parser = new DataParser();
         nearbyPlaceList = parser.parse(s);
         Log.d("placedata","called parse method");
-        showNearbyPlaces(nearbyPlaceList);
+        showNearbyPlaces();
     }
 
-    private void showNearbyPlaces(List<HashMap<String, String>> nearbyPlaceList)
+    private void showNearbyPlaces()
     {
         for(int i = 0; i < nearbyPlaceList.size(); i++)
         {
@@ -66,4 +66,5 @@ class GetNearbyPlacesData extends AsyncTask<Object, String, String> {
             mMap.animateCamera(CameraUpdateFactory.zoomTo(12));
         }
     }
+
 }

@@ -63,7 +63,7 @@ public class Login extends AppCompatActivity {
     }
 
     public void mButtonLogInOnClick(View v){
-        Intent myIntent = new Intent(getBaseContext(), MapTab.class);
+        Intent myIntent = new Intent(getBaseContext(), HomeTab.class);
         startActivity(myIntent);
     }
 

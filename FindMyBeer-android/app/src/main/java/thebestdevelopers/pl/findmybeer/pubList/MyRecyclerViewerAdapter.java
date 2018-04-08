@@ -25,6 +25,7 @@ public class MyRecyclerViewerAdapter extends RecyclerView.Adapter<MyRecyclerView
         public TextView textViewDistance;
         public TextView textViewFreeTables;
 
+
         public ViewHolder(View v) {
             super(v);
             layout = v;

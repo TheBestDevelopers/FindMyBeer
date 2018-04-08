@@ -8,6 +8,16 @@
     android:layout_height="match_parent"
     tools:context="thebestdevelopers.pl.findmybeer.HomeTab">
 
+    <Button
+        android:id="@+id/btnLoad"
+        android:layout_width="69dp"
+        android:layout_height="wrap_content"
+        android:onClick="onClick"
+        android:text="Load"
+        app:layout_anchor="@+id/relativeLayout"
+        app:layout_anchorGravity="top|center"
+        tools:layout_editor_absoluteX="172dp" />
+
     <android.support.design.widget.BottomNavigationView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,8 +28,9 @@
         />
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
         <!-- A RecyclerView with some commonly used attributes -->
         <android.support.v7.widget.RecyclerView
             android:id="@+id/my_recycler_view"

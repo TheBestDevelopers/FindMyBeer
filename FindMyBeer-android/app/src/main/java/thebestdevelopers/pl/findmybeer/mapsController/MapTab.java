@@ -46,7 +46,7 @@ public class MapTab extends AppCompatActivity implements OnMapReadyCallback, Goo
     GoogleMap mGoogleMap;
     GoogleApiClient mGoogleApiClient;
     LocationRequest mLocationRequest;
-    public static double latitude, longitude;
+    public double latitude, longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
