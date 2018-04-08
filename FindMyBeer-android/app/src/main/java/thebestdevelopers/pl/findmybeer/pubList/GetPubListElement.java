@@ -1,4 +1,5 @@
-package thebestdevelopers.pl.findmybeer.pubInfo;
+package thebestdevelopers.pl.findmybeer.pubList;
+
 
 import android.app.Activity;
 import android.os.AsyncTask;
@@ -7,20 +8,24 @@ import android.widget.TextView;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.HashMap;
 
-import thebestdevelopers.pl.findmybeer.R;
+import thebestdevelopers.pl.findmybeer.pubInfo.DataPubParser;
+import thebestdevelopers.pl.findmybeer.pubInfo.DownloadPubUrl;
+import thebestdevelopers.pl.findmybeer.pubList.Pub;
 
-public class GetJsonResult extends AsyncTask<Object, String, String> {
+public class GetPubListElement extends AsyncTask<Object, String, String> {
 
     private String googlePlacesData;
-    public String placeName, vicinity, phone, rating, website;
+    public String placeName, vicinity, phone, rating, website, id;
     String url;
     public TextView mName, mRating, mAddress, mPhone, mWebsite;
+    private ArrayList<Pub> pubs;
 
     WeakReference<Activity> mWeakActivity;
 
-    public GetJsonResult(Activity activity) {
+    public GetPubListElement(Activity activity) {
         mWeakActivity = new WeakReference<Activity>(activity);
     }
 
@@ -46,32 +51,24 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
         showNearbyPlaces(nearbyPlaceList);
         Activity activity = mWeakActivity.get();
         if (activity != null) {
+            pubs.add(new Pub(placeName,200.0, 3, Double.parseDouble((rating))));
 
-            mName = activity.findViewById(R.id.tName);
-            mName.setText(placeName);
-
-            mAddress = activity.findViewById(R.id.tAddress);
-            mAddress.setText(vicinity);
-
-            mRating = activity.findViewById(R.id.tRating);
-            mRating.setText("Rating: "+rating+"/5");
-
-            mWebsite = activity.findViewById(R.id.tWebsite);
-            mWebsite.setText(website);
-
-            mPhone = activity.findViewById(R.id.tPhone);
-            mPhone.setText(phone);
         }
+    }
+
+    public void setPubSArray(ArrayList<Pub> _pubs) {
+        pubs = _pubs;
     }
 
     private void showNearbyPlaces(HashMap<String, String> googlePlace)
     {
-            placeName = googlePlace.get("place_name");
-            vicinity = googlePlace.get("vicinity");
-            rating = googlePlace.get("rating");
-            website = googlePlace.get("web");
-            phone = googlePlace.get("phone");
-            if (website.equals(""))
-                website = "There's no website :(";
+        placeName = googlePlace.get("place_name");
+        vicinity = googlePlace.get("vicinity");
+        rating = googlePlace.get("rating");
+        website = googlePlace.get("web");
+        phone = googlePlace.get("phone");
+        id = googlePlace.get("place_id");
+        if (website.equals(""))
+            website = "There's no website :(";
     }
 }

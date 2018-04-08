@@ -1,4 +1,4 @@
-package thebestdevelopers.pl.findmybeer;
+package thebestdevelopers.pl.findmybeer.pubList;
 
 public class Pub {
     String pubName;

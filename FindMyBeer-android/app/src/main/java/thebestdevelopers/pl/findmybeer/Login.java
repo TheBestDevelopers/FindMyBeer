@@ -19,6 +19,8 @@ import com.google.android.gms.common.GoogleApiAvailability;
 
 import java.util.Arrays;
 
+import thebestdevelopers.pl.findmybeer.mapsController.MapTab;
+
 public class Login extends AppCompatActivity {
 
     private static final String EMAIL = "email";
@@ -61,7 +63,7 @@ public class Login extends AppCompatActivity {
     }
 
     public void mButtonLogInOnClick(View v){
-        Intent myIntent = new Intent(getBaseContext(), HomeTab.class);
+        Intent myIntent = new Intent(getBaseContext(), MapTab.class);
         startActivity(myIntent);
     }
 

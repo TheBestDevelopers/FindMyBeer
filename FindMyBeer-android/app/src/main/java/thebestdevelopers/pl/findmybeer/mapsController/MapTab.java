@@ -46,7 +46,7 @@ public class MapTab extends AppCompatActivity implements OnMapReadyCallback, Goo
     GoogleMap mGoogleMap;
     GoogleApiClient mGoogleApiClient;
     LocationRequest mLocationRequest;
-    double latitude, longitude;
+    public static double latitude, longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,8 +98,8 @@ public class MapTab extends AppCompatActivity implements OnMapReadyCallback, Goo
                         return true;
                     }
                 });
-    }
 
+    }
     private void initMap() {
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.mapfragment);
         mapFragment.getMapAsync(this);

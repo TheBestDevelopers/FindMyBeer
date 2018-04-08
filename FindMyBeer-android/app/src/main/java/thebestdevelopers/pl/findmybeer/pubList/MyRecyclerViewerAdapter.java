@@ -1,4 +1,4 @@
-package thebestdevelopers.pl.findmybeer;
+package thebestdevelopers.pl.findmybeer.pubList;
 
     import java.util.List;
 
@@ -8,6 +8,8 @@ package thebestdevelopers.pl.findmybeer;
     import android.view.View.OnClickListener;
     import android.view.ViewGroup;
     import android.widget.TextView;
+
+    import thebestdevelopers.pl.findmybeer.R;
 
 public class MyRecyclerViewerAdapter extends RecyclerView.Adapter<MyRecyclerViewerAdapter.ViewHolder> {
     private List<Pub> pubs;
