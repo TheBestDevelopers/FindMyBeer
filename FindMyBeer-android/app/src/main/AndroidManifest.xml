@@ -63,7 +63,7 @@
             android:name=".HomeTab"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".FavTab"
+            android:name=".favController.FavTab"
             android:screenOrientation="portrait" />
         <activity
             android:name=".SearchTab"
@@ -86,7 +86,8 @@
             android:value="@string/google_places_key" />
 
         <activity android:name=".pubInfoController.PubInfo" />
-        <activity android:name=".pubInfo.PubInfo"></activity>
+        <activity android:name=".pubInfo.PubInfo" />
+        <activity android:name=".menuController.Menu"></activity>
     </application>
 
 </manifest>

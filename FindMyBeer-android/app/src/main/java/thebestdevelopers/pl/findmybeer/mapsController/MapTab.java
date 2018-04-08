@@ -32,7 +32,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 
 import thebestdevelopers.pl.findmybeer.BottomNavigationViewHelper;
-import thebestdevelopers.pl.findmybeer.FavTab;
+import thebestdevelopers.pl.findmybeer.favController.FavTab;
 import thebestdevelopers.pl.findmybeer.HomeTab;
 import thebestdevelopers.pl.findmybeer.ProfileTab;
 import thebestdevelopers.pl.findmybeer.pubInfo.PubInfo;

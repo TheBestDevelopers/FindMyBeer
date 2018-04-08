@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import thebestdevelopers.pl.findmybeer.favController.FavTab;
 import thebestdevelopers.pl.findmybeer.mapsController.MapTab;
 import thebestdevelopers.pl.findmybeer.pubList.GetPubListElement;
 import thebestdevelopers.pl.findmybeer.pubList.MyRecyclerViewerAdapter;
