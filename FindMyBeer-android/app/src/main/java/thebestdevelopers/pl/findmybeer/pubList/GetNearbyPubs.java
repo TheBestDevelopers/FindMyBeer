@@ -56,7 +56,7 @@ public class GetNearbyPubs extends AsyncTask<Object, String, String> {
                 Log.d("placedata", "PARSE METHOD IN PUB LIST");
                 for (HashMap<String, String> place : nearbyPlaceList ) {
                         showNearbyPlaces(place);
-                        pubs.add(new Pub(placeName, vicinity, randGen.nextInt()*10, Double.parseDouble(rating)));
+                      //  pubs.add(new Pub(placeName, vicinity, randGen.nextInt()*10, Double.parseDouble(rating)));
                 }
 
         }
