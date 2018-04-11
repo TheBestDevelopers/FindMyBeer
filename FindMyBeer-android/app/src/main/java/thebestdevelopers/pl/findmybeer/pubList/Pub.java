@@ -8,20 +8,23 @@ public class Pub implements Comparable<Pub>{
     Double longitude, latitude;
     Integer freeTablesCount;
     Double stars;
+    String placeID;
 
-    public Pub(String _pubName, Integer _distance, Integer _freeTableCount, Double _stars) {
+    public Pub(String _pubName, Integer _distance, Integer _freeTableCount, Double _stars, String _placeID) {
         this.pubName = _pubName;
         this.distance = _distance;
         this.freeTablesCount = _freeTableCount;
         this.stars = _stars;
+        this.placeID = _placeID;
     }
 
-    public Pub(String _pubName, Double _latitude, Double _longitude, Integer _freeTableCount, Double _stars) {
+    public Pub(String _pubName, Double _latitude, Double _longitude, Integer _freeTableCount, Double _stars, String _placeID) {
         this.pubName = _pubName;
         this.freeTablesCount = _freeTableCount;
         this.stars = _stars;
         this.longitude = _longitude;
         this.latitude = _latitude;
+        this.placeID = _placeID;
     }
 
     public void setDistance(int _distance) {
@@ -48,6 +51,7 @@ public class Pub implements Comparable<Pub>{
 
     public Double getLatitude() { return latitude; }
 
+    public String getPlaceID() { return placeID; }
 
     @Override
     public int compareTo(@NonNull Pub other) {

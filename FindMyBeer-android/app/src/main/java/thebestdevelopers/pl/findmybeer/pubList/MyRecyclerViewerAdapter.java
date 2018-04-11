@@ -6,6 +6,8 @@ package thebestdevelopers.pl.findmybeer.pubList;
     import java.util.List;
 
     import android.app.Dialog;
+    import android.content.Context;
+    import android.content.Intent;
     import android.location.Location;
     import android.support.v7.widget.RecyclerView;
     import android.view.LayoutInflater;
@@ -19,16 +21,19 @@ package thebestdevelopers.pl.findmybeer.pubList;
     import com.google.android.gms.common.GoogleApiAvailability;
 
     import thebestdevelopers.pl.findmybeer.R;
+    import thebestdevelopers.pl.findmybeer.pubInfo.PubInfo;
 
-public class MyRecyclerViewerAdapter extends RecyclerView.Adapter<MyRecyclerViewerAdapter.ViewHolder> {
+public class MyRecyclerViewerAdapter extends RecyclerView.Adapter<MyRecyclerViewerAdapter.ViewHolder>{
     private List<Pub> pubs;
     Double latitude, longitude;
     Location userLocation;
+    private ItemClickListener clickListener;
+
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         // each data item is just a string in this case
         public View layout;
         public TextView textViewStars;
@@ -44,7 +49,14 @@ public class MyRecyclerViewerAdapter extends RecyclerView.Adapter<MyRecyclerView
             textViewPubName = (TextView) v.findViewById(R.id.mTextViewPubName);
             textViewFreeTables = (TextView) v.findViewById(R.id.mTextViewFreeTables);
             textViewDistance = (TextView) v.findViewById(R.id.mTextViewDistance);
+            itemView.setOnClickListener(this);
 
+        }
+        @Override
+        public void onClick(View view) {
+            if (clickListener != null) {
+                clickListener.onClick(view, getAdapterPosition());
+            }
         }
     }
 
@@ -83,7 +95,7 @@ public class MyRecyclerViewerAdapter extends RecyclerView.Adapter<MyRecyclerView
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 
-        Pub currentPub = pubs.get(position);
+        final Pub currentPub = pubs.get(position);
         Location pubLocation = new Location("pub");
         pubLocation.setLatitude(currentPub.getLatitude());
         pubLocation.setLongitude(currentPub.getLongitude());
@@ -93,12 +105,6 @@ public class MyRecyclerViewerAdapter extends RecyclerView.Adapter<MyRecyclerView
         holder.textViewDistance.setText(distance + "m");
         holder.textViewStars.setText(currentPub.getStars().toString());
         holder.textViewFreeTables.setText(currentPub.getFreeTablesCount().toString());
-        holder.textViewPubName.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                remove(position);
-           }
-        });
 
     }
     // Return the size of your dataset (invoked by the layout manager)
@@ -107,6 +113,9 @@ public class MyRecyclerViewerAdapter extends RecyclerView.Adapter<MyRecyclerView
         return pubs.size();
     }
 
+    public void setClickListener(ItemClickListener itemClickListener) {
+        this.clickListener = itemClickListener;
+    }
     public void updateLocation(Location _location) {
         this.userLocation = _location;
         Collections.sort(pubs);

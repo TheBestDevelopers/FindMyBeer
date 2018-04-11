@@ -26,16 +26,19 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.GoogleMap;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
 import thebestdevelopers.pl.findmybeer.favController.FavTab;
 import thebestdevelopers.pl.findmybeer.mapsController.MapTab;
+import thebestdevelopers.pl.findmybeer.pubInfo.PubInfo;
+import thebestdevelopers.pl.findmybeer.pubList.ItemClickListener;
 import thebestdevelopers.pl.findmybeer.pubList.MyRecyclerViewerAdapter;
 import thebestdevelopers.pl.findmybeer.pubList.Pub;
 
 
-public class HomeTab extends AppCompatActivity  {
+public class HomeTab extends AppCompatActivity implements ItemClickListener {
 
     private RecyclerView recyclerView;
     private MyRecyclerViewerAdapter mAdapter;
@@ -72,12 +75,14 @@ public class HomeTab extends AppCompatActivity  {
         initializePubs();
         mAdapter = new MyRecyclerViewerAdapter(pubs);
         recyclerView.setAdapter(mAdapter);
+        mAdapter.setClickListener(this);
         if (googleServicesAvailable()) {
             manageLocation();
 
         } else {
             Toast.makeText(this, "There's no Google Services installed", Toast.LENGTH_LONG).show();
         }
+
         Intent i;
         tabs.setOnNavigationItemSelectedListener
                 (new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -126,6 +131,14 @@ public class HomeTab extends AppCompatActivity  {
         return false;
     }
 
+    @Override
+    public void onClick(View view, int position) {
+        final Pub currentPub = pubs.get(position);
+        Intent i = new Intent(this, PubInfo.class);
+        i.putExtra("placeID", currentPub.getPlaceID());
+        startActivity(i);
+    }
+
     private void manageLocation() {
         Toast.makeText(this, "google services working", Toast.LENGTH_LONG).show();
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -172,10 +185,9 @@ public class HomeTab extends AppCompatActivity  {
 
     private void initializePubs() {
         pubs = new ArrayList<>();
-        pubs.add(new Pub("trzy siostry", 50.2591173, 19.0266095, 4, 4.5));
-        pubs.add(new Pub("dubai food", 50.2698693,19.0261198, 4, 4.5));
+        pubs.add(new Pub("trzy siostry", 50.2591173, 19.0266095, 5, 5.0, "ChIJc-kYGzbOFkcRC563sBLpD6w"));
+        pubs.add(new Pub("dubai food", 50.2698693,19.0261198, 4, 4.5, "ChIJJ3UMCiXOFkcRzO760q6SSo0"));
 
-        //Collections.sort(pubs);
 
     }
 
