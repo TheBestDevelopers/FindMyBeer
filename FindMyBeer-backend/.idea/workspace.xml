@@ -1,18 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dec3e95c-4b3d-474a-ac2a-4d1ed7263fb2" name="Default" comment="add delete user controller&#10;add get user controller">
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/thebestdevelopers/find_my_beer/controller/userControllerParam/CreateUserParam.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/thebestdevelopers/find_my_beer/controller/userControllerParam/GetUserParam.java" />
+    <list default="true" id="dec3e95c-4b3d-474a-ac2a-4d1ed7263fb2" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" afterPath="$PROJECT_DIR$/build.gradle" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/thebestdevelopers/find_my_beer/DAO/UserDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/thebestdevelopers/find_my_beer/DAO/UserDao.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/thebestdevelopers/find_my_beer/DAO/UserDaoImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/thebestdevelopers/find_my_beer/DAO/UserDaoImpl.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/thebestdevelopers/find_my_beer/DTO/UserDTO.java" afterPath="$PROJECT_DIR$/src/main/java/com/thebestdevelopers/find_my_beer/DTO/UserDTO.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/thebestdevelopers/find_my_beer/controller/UserController.java" afterPath="$PROJECT_DIR$/src/main/java/com/thebestdevelopers/find_my_beer/controller/UserController.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/thebestdevelopers/find_my_beer/repository/UserRepository.java" afterPath="$PROJECT_DIR$/src/main/java/com/thebestdevelopers/find_my_beer/repository/UserRepository.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/thebestdevelopers/find_my_beer/service/UserService.java" afterPath="$PROJECT_DIR$/src/main/java/com/thebestdevelopers/find_my_beer/service/UserService.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/thebestdevelopers/find_my_beer/service/UserServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/thebestdevelopers/find_my_beer/service/UserServiceImpl.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -953,12 +943,20 @@
       <workItem from="1522956771464" duration="4721000" />
       <workItem from="1523106151829" duration="907000" />
       <workItem from="1523107079734" duration="15029000" />
-      <workItem from="1523808339062" duration="7380000" />
+      <workItem from="1523808339062" duration="7392000" />
     </task>
+    <task id="LOCAL-00001" summary="add delete user controller&#10;add get user controller">
+      <created>1523816928187</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1523816928187</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="33678000" />
+    <option name="totallyTimeSpent" value="33690000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1912" y="-8" width="1936" height="1056" extended-state="6" />
