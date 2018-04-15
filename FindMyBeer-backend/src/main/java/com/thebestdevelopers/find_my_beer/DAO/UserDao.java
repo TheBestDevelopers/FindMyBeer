@@ -10,5 +10,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface UserDao{
-    UserEntity createUser(UserEntity user, String role);
+    UserEntity createUser(String username, String password, String role);
+    Boolean deleteUser(String username, String password);
 }

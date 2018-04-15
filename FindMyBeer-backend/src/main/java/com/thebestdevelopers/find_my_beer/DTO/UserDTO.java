@@ -4,7 +4,7 @@ package com.thebestdevelopers.find_my_beer.DTO;
  * @author Dominik Florencki
  */
 public class UserDTO {
-    private long user_id;
+    private long id;
     private String username;
     private String role;
 
@@ -12,17 +12,17 @@ public class UserDTO {
     }
 
     public UserDTO(long user_id, String username, String role) {
-        this.user_id = user_id;
+        this.id = user_id;
         this.username = username;
         this.role = role;
     }
 
-    public long getUser_id() {
-        return user_id;
+    public long getId() {
+        return id;
     }
 
-    public void setUser_id(long user_id) {
-        this.user_id = user_id;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getUsername() {
