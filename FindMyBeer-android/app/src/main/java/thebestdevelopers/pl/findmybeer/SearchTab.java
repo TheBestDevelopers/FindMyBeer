@@ -18,10 +18,12 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.support.v7.widget.SearchView;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -38,6 +40,7 @@ import thebestdevelopers.pl.findmybeer.pubList.Pub;
 
 public class SearchTab extends AppCompatActivity implements ItemClickListener {
 
+    private final int REQUEST_CODE = 0;
     private RecyclerView recyclerView;
     private MyRecyclerViewerAdapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -109,7 +112,17 @@ public class SearchTab extends AppCompatActivity implements ItemClickListener {
                 });
     }
 
+    public void mButtonFiltersOnClick(View v) {
+        Intent myIntent = new Intent(getBaseContext(), Filters.class);
+        startActivityForResult(myIntent, REQUEST_CODE);
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK && data != null) {
+            String test = (data.getStringExtra("test"));
+        }
+    }
     public boolean googleServicesAvailable() {
         GoogleApiAvailability api = GoogleApiAvailability.getInstance();
         int isAvailable = api.isGooglePlayServicesAvailable(this);

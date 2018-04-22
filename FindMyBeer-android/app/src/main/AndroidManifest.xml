@@ -68,7 +68,7 @@
         <activity
             android:name=".SearchTab"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".mapsController.MapTab"
             android:screenOrientation="portrait" />
@@ -88,7 +88,8 @@
 
         <activity android:name=".pubInfoController.PubInfo" />
         <activity android:name=".pubInfo.PubInfo" />
-        <activity android:name=".menuController.Menu"></activity>
+        <activity android:name=".menuController.Menu" />
+        <activity android:name=".Filters"></activity>
     </application>
 
 </manifest>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="thebestdevelopers.pl.findmybeer.Filters">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:fillViewport="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/mButtonSave"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/roundedbutton"
+                    android:backgroundTint="#B3FFFFFF"
+                    android:onClick="mButtonSaveOnClick"
+                    android:text="Save" />
+
+                <Button
+                    android:id="@+id/mButtonCancel"
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/roundedbutton"
+                    android:backgroundTint="#B3FFFFFF"
+                    android:onClick="mButtonCancelOnClick"
+                    android:text="Cancel" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/mTextViewSort"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="Sort by..."
+                    android:textAlignment="textStart"
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp" />
+
+                <ListView
+                    android:id="@+id/mListViewSorting"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:headerDividersEnabled="true"
+                    android:scrollbars="vertical" />
+
+
+                <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="horizontal">-->
+                <!--<ListView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:id="@android:id/list"-->
+                <!--android:choiceMode="singleChoice"-->
+                <!--android:descendantFocusability="beforeDescendants"-->
+                <!--android:layout_height="wrap_content">-->
+                <!--</ListView>-->
+
+                <!--<RadioButton-->
+                <!--android:id="@+id/radio1"-->
+                <!--android:checked="false"-->
+                <!--android:focusable="false"-->
+                <!--android:clickable="false"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_width="wrap_content" />-->
+
+                <!--</LinearLayout>-->
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</android.support.constraint.ConstraintLayout>
