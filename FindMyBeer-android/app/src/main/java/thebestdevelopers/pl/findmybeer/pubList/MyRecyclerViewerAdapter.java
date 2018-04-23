@@ -2,6 +2,7 @@ package thebestdevelopers.pl.findmybeer.pubList;
 
     import java.util.ArrayList;
     import java.util.Collections;
+    import java.util.Comparator;
     import java.util.List;
 
     import android.location.Location;
@@ -111,7 +112,6 @@ public class MyRecyclerViewerAdapter extends RecyclerView.Adapter<MyRecyclerView
     }
     public void updateLocation(Location _location) {
         this.userLocation = _location;
-        Collections.sort(filteredPubs);
     }
 
         @Override

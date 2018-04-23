@@ -2,21 +2,14 @@ package thebestdevelopers.pl.findmybeer.pubList;
 
 import android.support.annotation.NonNull;
 
-public class Pub implements Comparable<Pub>{
+public class Pub {
     String pubName;
-    Integer distance=0;
+    Integer distance = 0;
     Double longitude, latitude;
     Integer freeTablesCount;
     Double stars;
     String placeID;
 
-    public Pub(String _pubName, Integer _distance, Integer _freeTableCount, Double _stars, String _placeID) {
-        this.pubName = _pubName;
-        this.distance = _distance;
-        this.freeTablesCount = _freeTableCount;
-        this.stars = _stars;
-        this.placeID = _placeID;
-    }
 
     public Pub(String _pubName, Double _latitude, Double _longitude, Integer _freeTableCount, Double _stars, String _placeID) {
         this.pubName = _pubName;
@@ -53,8 +46,8 @@ public class Pub implements Comparable<Pub>{
 
     public String getPlaceID() { return placeID; }
 
-    @Override
-    public int compareTo(@NonNull Pub other) {
-        return distance.compareTo(other.distance);
-    }
+//    @Override
+//    public int compareTo(@NonNull Pub other) {
+//        return distance.compareTo(other.distance);
+//    }
 }

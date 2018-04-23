@@ -50,14 +50,13 @@ public class SearchTab extends AppCompatActivity implements ItemClickListener {
     Double longitude;
     Double latitude;
     private android.location.LocationListener mLocationListener;
+    private String sortingType;
+    SortingTypeChooser sortingTypeChooser;
+    ArrayList<String> conveniences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        ActionBar actionBar = getSupportActionBar();
-//        actionBar.hide();
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
 
         setContentView(R.layout.activity_search_tab);
         overridePendingTransition(0, 0);
@@ -67,15 +66,13 @@ public class SearchTab extends AppCompatActivity implements ItemClickListener {
         initializeRecyclerView();
         // recyclerView.setHasFixedSize(true);
         initializePubs();
-
+        sortingTypeChooser = new SortingTypeChooser(pubs);
         if (googleServicesAvailable()) {
             manageLocation();
 
         } else {
             Toast.makeText(this, "There's no Google Services installed", Toast.LENGTH_LONG).show();
         }
-
-
 
 
         Intent i;
@@ -120,7 +117,10 @@ public class SearchTab extends AppCompatActivity implements ItemClickListener {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK && data != null) {
-            String test = (data.getStringExtra("test"));
+            sortingType = data.getStringExtra("sorting type");
+            conveniences = data.getStringArrayListExtra("conveniences");
+            pubs = sortingTypeChooser.getSortedList(sortingType);
+            mAdapter.notifyDataSetChanged();
         }
     }
     public boolean googleServicesAvailable() {
@@ -153,6 +153,7 @@ public class SearchTab extends AppCompatActivity implements ItemClickListener {
                 longitude = location.getLongitude();
                 latitude = location.getLatitude();
                 mAdapter.updateLocation(location);
+                pubs = sortingTypeChooser.getSortedList("distance ascending");
                 mAdapter.notifyDataSetChanged();
             }
 
@@ -199,18 +200,13 @@ public class SearchTab extends AppCompatActivity implements ItemClickListener {
         pubs = new ArrayList<>();
         pubs.add(new Pub("trzy siostry", 50.2591173, 19.0266095, 5, 5.0, "ChIJc-kYGzbOFkcRC563sBLpD6w"));
         pubs.add(new Pub("dubai food", 50.2698693,19.0261198, 4, 4.5, "ChIJJ3UMCiXOFkcRzO760q6SSo0"));
-
+        pubs.add(new Pub("Klubowa", 50.2573933, 19.0229366, 3, 5.0, "ChIJge1n50nOFkcR0N6ku8YtrOQ"));
         mAdapter = new MyRecyclerViewerAdapter(pubs);
         recyclerView.setAdapter(mAdapter);
         mAdapter.setClickListener(this);
 
     }
 
-//        @Override
-//    public boolean onSearchRequested() {
-//        //pauseSomeStuff();
-//        return super.onSearchRequested();
-//    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
