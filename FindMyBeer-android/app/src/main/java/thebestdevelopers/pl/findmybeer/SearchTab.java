@@ -10,20 +10,16 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.support.v7.widget.SearchView;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -41,41 +37,85 @@ import thebestdevelopers.pl.findmybeer.pubList.Pub;
 public class SearchTab extends AppCompatActivity implements ItemClickListener {
 
     private final int REQUEST_CODE = 0;
-    private RecyclerView recyclerView;
     private MyRecyclerViewerAdapter mAdapter;
-    private RecyclerView.LayoutManager layoutManager;
     public ArrayList<Pub> pubs;
-    LocationManager lm;
-    Location location;
-    Double longitude;
-    Double latitude;
-    private android.location.LocationListener mLocationListener;
-    private String sortingType;
+    private String sortingType = "distance ascending";
     SortingTypeChooser sortingTypeChooser;
     ArrayList<String> conveniences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_search_tab);
         overridePendingTransition(0, 0);
-        BottomNavigationView tabs = (BottomNavigationView) findViewById(R.id.navigationtabs3);
-        BottomNavigationViewHelper.disableShiftMode(tabs);
-        tabs.getMenu().findItem(R.id.action_search).setChecked(true);
-        initializeRecyclerView();
-        // recyclerView.setHasFixedSize(true);
-        initializePubs();
+        setBottomNavigationView();
+        MockPubsData mockPubsData = new MockPubsData();
+        pubs = mockPubsData.initializePubs();
+        setRecyclerView();
         sortingTypeChooser = new SortingTypeChooser(pubs);
         if (googleServicesAvailable()) {
             manageLocation();
-
         } else {
             Toast.makeText(this, "There's no Google Services installed", Toast.LENGTH_LONG).show();
         }
+    }
 
+    @Override
+    public void onClick(View view, int position) {
+        final Pub currentPub = pubs.get(position);
+        Intent i = new Intent(this, PubInfo.class);
+        i.putExtra("placeID", currentPub.getPlaceID());
+        startActivity(i);
+    }
 
-        Intent i;
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK && data != null) {
+            sortingType = data.getStringExtra("sorting type");
+            conveniences = data.getStringArrayListExtra("conveniences");
+            pubs = sortingTypeChooser.getSortedList(sortingType);
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_search, menu);
+        MenuItem search = menu.findItem(R.id.search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(search);
+        search(searchView);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void search(SearchView searchView) {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                mAdapter.getFilter().filter(newText);
+                return true;
+            }
+        });
+    }
+
+    public void mButtonFiltersOnClick(View v) {
+        Intent myIntent = new Intent(getBaseContext(), Filters.class);
+        startActivityForResult(myIntent, REQUEST_CODE);
+    }
+
+    private void setBottomNavigationView() {
+        BottomNavigationView tabs =  findViewById(R.id.navigationtabs3);
+        BottomNavigationViewHelper.disableShiftMode(tabs);
+        tabs.getMenu().findItem(R.id.action_search).setChecked(true);
         tabs.setOnNavigationItemSelectedListener
                 (new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -103,26 +143,26 @@ public class SearchTab extends AppCompatActivity implements ItemClickListener {
                                 startActivity(i);
                                 break;
                         }
-
                         return true;
                     }
                 });
     }
 
-    public void mButtonFiltersOnClick(View v) {
-        Intent myIntent = new Intent(getBaseContext(), Filters.class);
-        startActivityForResult(myIntent, REQUEST_CODE);
+    private void setRecyclerView() {
+        RecyclerView recyclerView = findViewById(R.id.my_recycler_view);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
+                recyclerView.getContext(), DividerItemDecoration.VERTICAL);
+        recyclerView.addItemDecoration(dividerItemDecoration);
+        recyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setHasFixedSize(true);
+        mAdapter = new MyRecyclerViewerAdapter(pubs);
+        recyclerView.setAdapter(mAdapter);
+        mAdapter.setClickListener(this);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK && data != null) {
-            sortingType = data.getStringExtra("sorting type");
-            conveniences = data.getStringArrayListExtra("conveniences");
-            pubs = sortingTypeChooser.getSortedList(sortingType);
-            mAdapter.notifyDataSetChanged();
-        }
-    }
     public boolean googleServicesAvailable() {
         GoogleApiAvailability api = GoogleApiAvailability.getInstance();
         int isAvailable = api.isGooglePlayServicesAvailable(this);
@@ -136,24 +176,15 @@ public class SearchTab extends AppCompatActivity implements ItemClickListener {
         }
         return false;
     }
-    @Override
-    public void onClick(View view, int position) {
-        final Pub currentPub = pubs.get(position);
-        Intent i = new Intent(this, PubInfo.class);
-        i.putExtra("placeID", currentPub.getPlaceID());
-        startActivity(i);
-    }
 
     private void manageLocation() {
         Toast.makeText(this, "google services working", Toast.LENGTH_LONG).show();
-        lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        mLocationListener = new android.location.LocationListener() {
+        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        android.location.LocationListener mLocationListener = new android.location.LocationListener() {
             @Override
             public void onLocationChanged(final Location location) {
-                longitude = location.getLongitude();
-                latitude = location.getLatitude();
                 mAdapter.updateLocation(location);
-                pubs = sortingTypeChooser.getSortedList("distance ascending");
+                pubs = sortingTypeChooser.getSortedList(sortingType);
                 mAdapter.notifyDataSetChanged();
             }
 
@@ -184,62 +215,4 @@ public class SearchTab extends AppCompatActivity implements ItemClickListener {
         }
         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1, 10.0f, mLocationListener);
     }
-
-    private void initializeRecyclerView() {
-        recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
-                recyclerView.getContext(), DividerItemDecoration.VERTICAL);
-        recyclerView.addItemDecoration(dividerItemDecoration);
-        recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-    }
-    private void initializePubs() {
-        pubs = new ArrayList<>();
-        pubs.add(new Pub("trzy siostry", 50.2591173, 19.0266095, 5, 5.0, "ChIJc-kYGzbOFkcRC563sBLpD6w"));
-        pubs.add(new Pub("dubai food", 50.2698693,19.0261198, 4, 4.5, "ChIJJ3UMCiXOFkcRzO760q6SSo0"));
-        pubs.add(new Pub("Klubowa", 50.2573933, 19.0229366, 3, 5.0, "ChIJge1n50nOFkcR0N6ku8YtrOQ"));
-        mAdapter = new MyRecyclerViewerAdapter(pubs);
-        recyclerView.setAdapter(mAdapter);
-        mAdapter.setClickListener(this);
-
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        getMenuInflater().inflate(R.menu.menu_search, menu);
-
-        MenuItem search = menu.findItem(R.id.search);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(search);
-        search(searchView);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void search(SearchView searchView) {
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-
-                mAdapter.getFilter().filter(newText);
-                return true;
-            }
-        });
-    }
-
 }
