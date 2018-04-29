@@ -1,4 +1,4 @@
-package thebestdevelopers.pl.findmybeer;
+package thebestdevelopers.pl.findmybeer.searchController;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -27,17 +27,22 @@ import com.google.android.gms.common.GoogleApiAvailability;
 
 import java.util.ArrayList;
 
+import thebestdevelopers.pl.findmybeer.BottomNavigationViewHelper;
+import thebestdevelopers.pl.findmybeer.HomeTab;
+import thebestdevelopers.pl.findmybeer.MockPubsData;
+import thebestdevelopers.pl.findmybeer.ProfileTab;
+import thebestdevelopers.pl.findmybeer.R;
 import thebestdevelopers.pl.findmybeer.favController.FavTab;
 import thebestdevelopers.pl.findmybeer.mapsController.MapTab;
 import thebestdevelopers.pl.findmybeer.pubInfo.PubInfo;
 import thebestdevelopers.pl.findmybeer.pubList.ItemClickListener;
-import thebestdevelopers.pl.findmybeer.pubList.MyRecyclerViewerAdapter;
+import thebestdevelopers.pl.findmybeer.pubList.MainMenuRecyclerViewerAdapter;
 import thebestdevelopers.pl.findmybeer.pubList.Pub;
 
 public class SearchTab extends AppCompatActivity implements ItemClickListener {
 
     private final int REQUEST_CODE = 0;
-    private MyRecyclerViewerAdapter mAdapter;
+    private MainMenuRecyclerViewerAdapter mAdapter;
     public ArrayList<Pub> pubs;
     private String sortingType = "distance ascending";
     SortingTypeChooser sortingTypeChooser;
@@ -158,7 +163,7 @@ public class SearchTab extends AppCompatActivity implements ItemClickListener {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
-        mAdapter = new MyRecyclerViewerAdapter(pubs);
+        mAdapter = new MainMenuRecyclerViewerAdapter(pubs);
         recyclerView.setAdapter(mAdapter);
         mAdapter.setClickListener(this);
     }
@@ -204,13 +209,6 @@ public class SearchTab extends AppCompatActivity implements ItemClickListener {
             }
         };
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
         }
         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1, 10.0f, mLocationListener);

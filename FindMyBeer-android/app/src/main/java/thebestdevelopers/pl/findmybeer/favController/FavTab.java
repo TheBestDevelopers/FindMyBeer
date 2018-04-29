@@ -17,7 +17,7 @@ import thebestdevelopers.pl.findmybeer.BottomNavigationViewHelper;
 import thebestdevelopers.pl.findmybeer.HomeTab;
 import thebestdevelopers.pl.findmybeer.ProfileTab;
 import thebestdevelopers.pl.findmybeer.R;
-import thebestdevelopers.pl.findmybeer.SearchTab;
+import thebestdevelopers.pl.findmybeer.searchController.SearchTab;
 import thebestdevelopers.pl.findmybeer.mapsController.MapTab;
 
 public class FavTab extends AppCompatActivity {

@@ -15,32 +15,38 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.PlaceBufferResponse;
+import com.google.android.gms.location.places.Places;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 
 import thebestdevelopers.pl.findmybeer.favController.FavTab;
 import thebestdevelopers.pl.findmybeer.mapsController.MapTab;
+import thebestdevelopers.pl.findmybeer.pubInfo.GetJsonResult;
 import thebestdevelopers.pl.findmybeer.pubInfo.PubInfo;
 import thebestdevelopers.pl.findmybeer.pubList.ItemClickListener;
-import thebestdevelopers.pl.findmybeer.pubList.MyRecyclerViewerAdapter;
+import thebestdevelopers.pl.findmybeer.pubList.MainMenuRecyclerViewerAdapter;
 import thebestdevelopers.pl.findmybeer.pubList.Pub;
+import thebestdevelopers.pl.findmybeer.searchController.GetPubsInfo;
+import thebestdevelopers.pl.findmybeer.searchController.SearchTab;
+import thebestdevelopers.pl.findmybeer.searchController.SortingTypeChooser;
 
 
 public class HomeTab extends AppCompatActivity implements ItemClickListener {
 
-    private MyRecyclerViewerAdapter mAdapter;
+    private MainMenuRecyclerViewerAdapter mAdapter;
     private ArrayList<Pub> pubs;
     SortingTypeChooser sortingTypeChooser;
 
@@ -116,7 +122,7 @@ public class HomeTab extends AppCompatActivity implements ItemClickListener {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
-        mAdapter = new MyRecyclerViewerAdapter(pubs);
+        mAdapter = new MainMenuRecyclerViewerAdapter(pubs);
         recyclerView.setAdapter(mAdapter);
         mAdapter.setClickListener(this);
     }

@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import thebestdevelopers.pl.findmybeer.favController.FavTab;
 import thebestdevelopers.pl.findmybeer.mapsController.MapTab;
+import thebestdevelopers.pl.findmybeer.searchController.SearchTab;
 
 public class ProfileTab extends AppCompatActivity {
 

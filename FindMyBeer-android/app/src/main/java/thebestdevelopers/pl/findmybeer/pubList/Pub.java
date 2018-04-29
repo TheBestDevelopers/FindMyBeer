@@ -1,6 +1,8 @@
 package thebestdevelopers.pl.findmybeer.pubList;
 
-import android.support.annotation.NonNull;
+import android.util.Log;
+
+import thebestdevelopers.pl.findmybeer.pubInfo.GetJsonResult;
 
 public class Pub {
     String pubName;
@@ -46,8 +48,4 @@ public class Pub {
 
     public String getPlaceID() { return placeID; }
 
-//    @Override
-//    public int compareTo(@NonNull Pub other) {
-//        return distance.compareTo(other.distance);
-//    }
 }

@@ -37,7 +37,7 @@ import thebestdevelopers.pl.findmybeer.HomeTab;
 import thebestdevelopers.pl.findmybeer.ProfileTab;
 import thebestdevelopers.pl.findmybeer.pubInfo.PubInfo;
 import thebestdevelopers.pl.findmybeer.R;
-import thebestdevelopers.pl.findmybeer.SearchTab;
+import thebestdevelopers.pl.findmybeer.searchController.SearchTab;
 
 public class MapTab extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener,
