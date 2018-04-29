@@ -1,9 +1,12 @@
 package com.thebestdevelopers.find_my_beer.model;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
+@GenericGenerator(name = "seq8", strategy = "sequence-identity", parameters = @org.hibernate.annotations.Parameter(name = "user_id_sequence", value = "user_id_sequence"))
 @Table(name = "user", schema = "public", catalog = "d86n3p8h6i057d")
 public class UserEntity {
     private int userId;
@@ -12,6 +15,7 @@ public class UserEntity {
     private RoleEntity roleByUserId;
 
     @Id
+    @GeneratedValue(generator = "seq8")
     @Column(name = "user_id", nullable = false)
     public int getUserId() {
         return userId;

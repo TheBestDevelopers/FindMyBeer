@@ -1,10 +1,13 @@
 package com.thebestdevelopers.find_my_beer.model;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
 
 @Entity
+@GenericGenerator(name = "seq6", strategy = "sequence-identity", parameters = @org.hibernate.annotations.Parameter(name = "prod_id_sequence", value = "prod_id_sequence"))
 @Table(name = "products", schema = "public", catalog = "d86n3p8h6i057d")
 public class ProductsEntity {
     private int prodId;
@@ -12,6 +15,7 @@ public class ProductsEntity {
     private Collection<MenuEntity> menusByProdId;
 
     @Id
+    @GeneratedValue(generator = "seq6")
     @Column(name = "prod_id", nullable = false)
     public int getProdId() {
         return prodId;

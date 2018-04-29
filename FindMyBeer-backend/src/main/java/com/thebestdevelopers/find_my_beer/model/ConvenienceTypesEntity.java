@@ -1,10 +1,13 @@
 package com.thebestdevelopers.find_my_beer.model;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
 
 @Entity
+@GenericGenerator(name = "seq2", strategy = "sequence-identity", parameters = @org.hibernate.annotations.Parameter(name = "convenience_types_id_sequence", value = "convenience_types_id_sequence"))
 @Table(name = "convenience_types", schema = "public", catalog = "d86n3p8h6i057d")
 public class ConvenienceTypesEntity {
     private int convenienceTypesId;
@@ -12,6 +15,7 @@ public class ConvenienceTypesEntity {
     private Collection<ConveniencesEntity> conveniencesByConvenienceTypesId;
 
     @Id
+    @GeneratedValue(generator = "seq2")
     @Column(name = "convenience_types_id", nullable = false)
     public int getConvenienceTypesId() {
         return convenienceTypesId;
