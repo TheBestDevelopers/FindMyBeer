@@ -1,7 +1,7 @@
 package com.thebestdevelopers.find_my_beer.DAO;
 
-import com.thebestdevelopers.find_my_beer.model.RoleEntity;
-import com.thebestdevelopers.find_my_beer.model.UserEntity;
+import com.thebestdevelopers.find_my_beer.model.RoleEntityF;
+import com.thebestdevelopers.find_my_beer.model.UserEntityF;
 import com.thebestdevelopers.find_my_beer.repository.RoleRepository;
 import com.thebestdevelopers.find_my_beer.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,27 +19,27 @@ public class UserDaoImpl implements UserDao{
     RoleRepository roleRepository;
 
     @Override
-    public UserEntity createUser(String username, String password, String role) {
-        UserEntity userEntity = new UserEntity();
-        userEntity.setUsername(username);
-        userEntity.setPassword(password);
+    public UserEntityF createUser(String username, String password, String role) {
+        UserEntityF userEntityF = new UserEntityF();
+        userEntityF.setUsername(username);
+        userEntityF.setPassword(password);
 
-        userEntity = userRepository.save(userEntity);
+        userEntityF = userRepository.save(userEntityF);
 
-        RoleEntity roleEntity = new RoleEntity();
-        roleEntity.setRole(role);
-        roleEntity.setUserId(userEntity.getUserId());
-        roleEntity = roleRepository.save(roleEntity);
-        roleEntity.setUserByUserId(userEntity);
-        userEntity.setRoleByUserId(roleEntity);
-        return userEntity;
+        RoleEntityF roleEntityF = new RoleEntityF();
+        roleEntityF.setRole(role);
+        roleEntityF.setUserId(userEntityF.getUserId());
+        roleEntityF = roleRepository.save(roleEntityF);
+        roleEntityF.setUserByUserId(userEntityF);
+        userEntityF.setRoleByUserId(roleEntityF);
+        return userEntityF;
     }
 
     @Override
     public Boolean deleteUser(String username, String password) {
-        UserEntity userEntity = userRepository.findByUsernameAndPassword(username,password).get(0);
-        roleRepository.deleteById(userEntity.getUserId());
-        userRepository.deleteById(userEntity.getUserId());
+        UserEntityF userEntityF = userRepository.findByUsernameAndPassword(username,password).get(0);
+        roleRepository.deleteById(userEntityF.getUserId());
+        userRepository.deleteById(userEntityF.getUserId());
         return true;
     }
 }

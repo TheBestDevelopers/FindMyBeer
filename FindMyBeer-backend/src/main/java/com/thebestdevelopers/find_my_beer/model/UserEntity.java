@@ -1,35 +1,38 @@
 package com.thebestdevelopers.find_my_beer.model;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import java.util.Objects;
 
-/**
- * @author Dominik Florencki
- */
 @Entity
-@Table(name = "user", schema = "main", catalog = "d86n3p8h6i057d")
-@GenericGenerator(name = "seq", strategy = "sequence-identity", parameters = @org.hibernate.annotations.Parameter(name = "user_id_seq", value = "user_id_seq"))
+@Table(name = "user", schema = "public", catalog = "d86n3p8h6i057d")
 public class UserEntity {
-    private long userId;
+    private int userId;
+    private String login;
     private String password;
-    private String username;
     private RoleEntity roleByUserId;
 
     @Id
-    @Column(name = "user_id")
-    @GeneratedValue(generator = "seq")
-    public long getUserId() {
+    @Column(name = "user_id", nullable = false)
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
     @Basic
-    @Column(name = "password")
+    @Column(name = "login", nullable = false, length = 100)
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    @Basic
+    @Column(name = "password", nullable = false, length = 100)
     public String getPassword() {
         return password;
     }
@@ -38,30 +41,20 @@ public class UserEntity {
         this.password = password;
     }
 
-    @Basic
-    @Column(name = "username")
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserEntity that = (UserEntity) o;
         return userId == that.userId &&
-                Objects.equals(password, that.password) &&
-                Objects.equals(username, that.username);
+                Objects.equals(login, that.login) &&
+                Objects.equals(password, that.password);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(userId, password, username);
+        return Objects.hash(userId, login, password);
     }
 
     @OneToOne(mappedBy = "userByUserId")

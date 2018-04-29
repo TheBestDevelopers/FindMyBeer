@@ -1,7 +1,6 @@
 package com.thebestdevelopers.find_my_beer.DAO;
 
-import com.thebestdevelopers.find_my_beer.model.UserEntity;
-import org.springframework.context.annotation.Bean;
+import com.thebestdevelopers.find_my_beer.model.UserEntityF;
 import org.springframework.stereotype.Repository;
 
 
@@ -10,6 +9,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface UserDao{
-    UserEntity createUser(String username, String password, String role);
+    UserEntityF createUser(String username, String password, String role);
     Boolean deleteUser(String username, String password);
 }

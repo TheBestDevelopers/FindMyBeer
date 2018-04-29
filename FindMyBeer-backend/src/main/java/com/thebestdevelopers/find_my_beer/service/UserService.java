@@ -1,8 +1,6 @@
 package com.thebestdevelopers.find_my_beer.service;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.thebestdevelopers.find_my_beer.DTO.UserDTO;
-import com.thebestdevelopers.find_my_beer.model.UserEntity;
 
 import java.util.List;
 

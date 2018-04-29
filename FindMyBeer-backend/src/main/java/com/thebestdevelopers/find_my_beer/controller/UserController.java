@@ -3,7 +3,6 @@ package com.thebestdevelopers.find_my_beer.controller;
 import com.thebestdevelopers.find_my_beer.DTO.UserDTO;
 import com.thebestdevelopers.find_my_beer.controller.userControllerParam.CreateUserParam;
 import com.thebestdevelopers.find_my_beer.controller.userControllerParam.GetUserParam;
-import com.thebestdevelopers.find_my_beer.model.UserEntity;
 import com.thebestdevelopers.find_my_beer.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -2,17 +2,14 @@ package com.thebestdevelopers.find_my_beer.service;
 
 import com.thebestdevelopers.find_my_beer.DAO.UserDao;
 import com.thebestdevelopers.find_my_beer.DTO.UserDTO;
-import com.thebestdevelopers.find_my_beer.model.UserEntity;
+import com.thebestdevelopers.find_my_beer.model.UserEntityF;
 import com.thebestdevelopers.find_my_beer.repository.UserRepository;
-import org.hibernate.Criteria;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,17 +28,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO getUser(String username, String password) {
-        UserEntity userEntity = userRepository.findByUsernameAndPassword(username,password).get(0);
+        UserEntityF userEntityF = userRepository.findByUsernameAndPassword(username,password).get(0);
         ModelMapper mapper = new ModelMapper();
-        return mapper.map(userEntity,UserDTO.class);
+        return mapper.map(userEntityF,UserDTO.class);
     }
 
     @Override
     public List<UserDTO> getAllUser() {
-         List<UserEntity> userEntityList = userRepository.findAll();
+         List<UserEntityF> userEntityFList = userRepository.findAll();
          List<UserDTO> userList = new ArrayList<>();
-         for(UserEntity userEntity : userEntityList) {
-             userList.add(new UserDTO(userEntity.getUserId(), userEntity.getUsername(), userEntity.getRoleByUserId().getRole()));
+         for(UserEntityF userEntityF : userEntityFList) {
+             userList.add(new UserDTO(userEntityF.getUserId(), userEntityF.getUsername(), userEntityF.getRoleByUserId().getRole()));
          }
          return userList;
     }
