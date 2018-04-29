@@ -47,6 +47,7 @@ public class SearchTab extends AppCompatActivity implements ItemClickListener {
     private String sortingType = "distance ascending";
     SortingTypeChooser sortingTypeChooser;
     ArrayList<String> conveniences;
+    private double longitude, latitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,7 @@ public class SearchTab extends AppCompatActivity implements ItemClickListener {
         setRecyclerView();
         sortingTypeChooser = new SortingTypeChooser(pubs);
         if (googleServicesAvailable()) {
-            manageLocation();
+            manageLocation(null);
         } else {
             Toast.makeText(this, "There's no Google Services installed", Toast.LENGTH_LONG).show();
         }
@@ -78,6 +79,15 @@ public class SearchTab extends AppCompatActivity implements ItemClickListener {
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK && data != null) {
             sortingType = data.getStringExtra("sorting type");
             conveniences = data.getStringArrayListExtra("conveniences");
+            longitude = data.getDoubleExtra("longitude", 0);
+            latitude = data.getDoubleExtra("latitude", 0);
+            if (latitude != 0 && longitude != 0 ) {
+                Location location = new Location("");
+                location.setLatitude(latitude);
+                location.setLongitude(longitude);
+                manageLocation(location);
+
+            }
             pubs = sortingTypeChooser.getSortedList(sortingType);
             mAdapter.notifyDataSetChanged();
         }
@@ -182,13 +192,18 @@ public class SearchTab extends AppCompatActivity implements ItemClickListener {
         return false;
     }
 
-    private void manageLocation() {
+    private void manageLocation(final Location chosenLocation) {
         Toast.makeText(this, "google services working", Toast.LENGTH_LONG).show();
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         android.location.LocationListener mLocationListener = new android.location.LocationListener() {
             @Override
             public void onLocationChanged(final Location location) {
-                mAdapter.updateLocation(location);
+                if (chosenLocation != null) {
+                    mAdapter.updateLocation(chosenLocation);
+                }
+                else {
+                    mAdapter.updateLocation(location);
+                }
                 pubs = sortingTypeChooser.getSortedList(sortingType);
                 mAdapter.notifyDataSetChanged();
             }
