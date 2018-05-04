@@ -61,7 +61,6 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
     private static final LatLngBounds BOUNDS_MOUNTAIN_VIEW = new LatLngBounds(
             new LatLng(37.398160, -122.180831), new LatLng(37.430610, -121.972090));
     String placeId = "";
-    Location placeLocation;
     double latitude, longitude;
 
     @Override
@@ -91,8 +90,6 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
                 BOUNDS_MOUNTAIN_VIEW, null);
         mAutocompleteTextView.setAdapter(mPlaceArrayAdapter);
 
-
-
         SortingTypesStore sortingTypesStore = new SortingTypesStore();
         sortingTypes = sortingTypesStore.getSortingTypes();
         arrayAdapterSortingTypes = new ArrayAdapter<>(this,android.R.layout.simple_list_item_single_choice, sortingTypes);
@@ -115,11 +112,9 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             final PlaceArrayAdapter.PlaceAutocomplete item = mPlaceArrayAdapter.getItem(position);
             placeId = String.valueOf(item.placeId);
-            Log.i(LOG_TAG, "Selected: " + item.description);
             PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi
                     .getPlaceById(mGoogleApiClient, placeId);
             placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
-            Log.i(LOG_TAG, "Fetching details for ID: " + item.placeId);
         }
     };
 
@@ -136,11 +131,8 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
             final Place place = places.get(0);
             CharSequence attributions = places.getAttributions();
             LatLng placeLatLong = place.getLatLng();
-            placeLocation = new Location("");
             latitude = placeLatLong.latitude;
             longitude = placeLatLong.longitude;;
-            placeLocation.setLongitude(placeLatLong.longitude);
-            placeLocation.setLatitude(placeLatLong.latitude);
             mNameTextView.setText(Html.fromHtml(place.getName() + ""));
             mAddressTextView.setText(Html.fromHtml(place.getAddress() + ""));
             mIdTextView.setText(Html.fromHtml(place.getId() + ""));
@@ -155,8 +147,6 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
     @Override
     public void onConnected(Bundle bundle) {
         mPlaceArrayAdapter.setGoogleApiClient(mGoogleApiClient);
-        Log.i(LOG_TAG, "Google Places API connected.");
-
     }
 
     @Override
@@ -173,7 +163,6 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
     @Override
     public void onConnectionSuspended(int i) {
         mPlaceArrayAdapter.setGoogleApiClient(null);
-        Log.e(LOG_TAG, "Google Places API connection suspended.");
     }
 
 

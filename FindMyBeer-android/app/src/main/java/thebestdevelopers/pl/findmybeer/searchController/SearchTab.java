@@ -16,14 +16,27 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.support.v7.widget.SearchView;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.PlaceBuffer;
+import com.google.android.gms.location.places.Places;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 
@@ -39,15 +52,21 @@ import thebestdevelopers.pl.findmybeer.pubList.ItemClickListener;
 import thebestdevelopers.pl.findmybeer.pubList.MainMenuRecyclerViewerAdapter;
 import thebestdevelopers.pl.findmybeer.pubList.Pub;
 
-public class SearchTab extends AppCompatActivity implements ItemClickListener {
+public class SearchTab extends AppCompatActivity implements ItemClickListener, GoogleApiClient.OnConnectionFailedListener,
+        GoogleApiClient.ConnectionCallbacks  {
 
     private final int REQUEST_CODE = 0;
     private MainMenuRecyclerViewerAdapter mAdapter;
-    public ArrayList<Pub> pubs;
+    public ArrayList<Pub> pubs = new ArrayList<>();
+    MockPubsData mockPubsData;
     private String sortingType = "distance ascending";
     SortingTypeChooser sortingTypeChooser;
     ArrayList<String> conveniences;
     private double longitude, latitude;
+    private static final int GOOGLE_API_CLIENT_ID = 0;
+    private GoogleApiClient mGoogleApiClient;
+    private ProgressBar spinner;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,22 +74,81 @@ public class SearchTab extends AppCompatActivity implements ItemClickListener {
         setContentView(R.layout.activity_search_tab);
         overridePendingTransition(0, 0);
         setBottomNavigationView();
-        MockPubsData mockPubsData = new MockPubsData();
-        pubs = mockPubsData.initializePubs();
+        spinner = (ProgressBar)findViewById(R.id.mProgressBarSearch);
+        spinner.setVisibility(View.VISIBLE);
+        mockPubsData = new MockPubsData();
+        mGoogleApiClient = new GoogleApiClient.Builder(SearchTab.this)
+                .addApi(Places.GEO_DATA_API)
+                .enableAutoManage(this, GOOGLE_API_CLIENT_ID, this)
+                .addConnectionCallbacks(this)
+                .build();
+        for (int i = 0 ; i< mockPubsData.getPubs().size(); ++i) {
+            PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi
+                    .getPlaceById(mGoogleApiClient, mockPubsData.getPubs().get(i).getPlaceID());
+            placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
+        }
         setRecyclerView();
         sortingTypeChooser = new SortingTypeChooser(pubs);
+      //  pubs = sortingTypeChooser.getSortedList(sortingType);
+
+    //   mAdapter.notifyDataSetChanged();
         if (googleServicesAvailable()) {
             manageLocation(null);
+            sortingTypeChooser = new SortingTypeChooser(pubs);
+            pubs = sortingTypeChooser.getSortedList(sortingType);
+
+            mAdapter.notifyDataSetChanged();
         } else {
             Toast.makeText(this, "There's no Google Services installed", Toast.LENGTH_LONG).show();
         }
     }
 
+    private ResultCallback<PlaceBuffer> mUpdatePlaceDetailsCallback
+            = new ResultCallback<PlaceBuffer>() {
+        @Override
+        public void onResult(PlaceBuffer places) {
+            if (!places.getStatus().isSuccess()) {
+                return;
+            }
+            final Place place = places.get(0);
+            LatLng placeLatLong = place.getLatLng();
+            latitude = placeLatLong.latitude;
+            longitude = placeLatLong.longitude;
+            String pubName = place.getName().toString();
+            Float rating = place.getRating();
+            String id = place.getId();
+            Integer freeTablesCount = mockPubsData.getFreeTablesCount(id);
+            Pub pub = new Pub(pubName, latitude, longitude, freeTablesCount, rating, id);
+            pubs.add(pub);
+            spinner.setVisibility(View.GONE);
+            setRecyclerView();
+            sortingTypeChooser = new SortingTypeChooser(pubs);
+            pubs = sortingTypeChooser.getSortedList(sortingType);
+            mAdapter.notifyDataSetChanged();
+        }
+    };
+
+    @Override
+    public void onConnected(Bundle bundle) {
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Toast.makeText(this,
+                "Google Places API connection failed with error code:" +
+                        connectionResult.getErrorCode(),
+                Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+    }
+
     @Override
     public void onClick(View view, int position) {
-        final Pub currentPub = pubs.get(position);
+        final Pub selectedPub = pubs.get(position);
         Intent i = new Intent(this, PubInfo.class);
-        i.putExtra("placeID", currentPub.getPlaceID());
+        i.putExtra("placeID", selectedPub.getPlaceID());
         startActivity(i);
     }
 

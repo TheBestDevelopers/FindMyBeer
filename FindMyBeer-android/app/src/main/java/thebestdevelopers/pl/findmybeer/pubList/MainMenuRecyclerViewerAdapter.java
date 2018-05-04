@@ -87,7 +87,7 @@ public class MainMenuRecyclerViewerAdapter extends RecyclerView.Adapter<MainMenu
             setDistanceKilometers(distance, holder);
         else
             holder.textViewDistance.setText(distance + "m");
-        holder.textViewStars.setText(currentPub.getStars().toString());
+        holder.textViewStars.setText(currentPub.getRating().toString());
         holder.textViewFreeTables.setText(currentPub.getFreeTablesCount().toString());
     }
 

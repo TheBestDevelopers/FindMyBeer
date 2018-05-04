@@ -1,4 +1,4 @@
-package thebestdevelopers.pl.findmybeer.searchController;
+package thebestdevelopers.pl.findmybeer.pubList;
 
 import android.app.Activity;
 import android.os.AsyncTask;
@@ -15,8 +15,7 @@ import thebestdevelopers.pl.findmybeer.pubInfo.DownloadPubUrl;
 
 
 public class GetPubsInfo extends AsyncTask<Object, String, String>{
-
-
+    
     private String googlePlacesData;
     public String placeName, vicinity, rating;
     String url;
@@ -51,13 +50,13 @@ public class GetPubsInfo extends AsyncTask<Object, String, String>{
         Activity activity = mWeakActivity.get();
         if (activity != null) {
 
-            mName = activity.findViewById(R.id.tName);
+            mName = activity.findViewById(R.id.mTextViewPubName);
             mName.setText(placeName);
 
-            mAddress = activity.findViewById(R.id.tAddress);
-            mAddress.setText(vicinity);
+//            mAddress = activity.findViewById(R.id.tAddress);
+//            mAddress.setText(vicinity);
 
-            mRating = activity.findViewById(R.id.tRating);
+            mRating = activity.findViewById(R.id.mTextViewStars);
             mRating.setText(rating);
 
         }

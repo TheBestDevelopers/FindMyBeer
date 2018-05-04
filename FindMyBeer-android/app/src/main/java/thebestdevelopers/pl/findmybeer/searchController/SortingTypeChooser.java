@@ -54,7 +54,7 @@ public class SortingTypeChooser {
                 Collections.sort(pubListToSort, new Comparator<Pub>() {
                     @Override
                     public int compare(Pub p1, Pub p2) {
-                        return p1.getStars().compareTo(p2.getStars());
+                        return p1.getRating().compareTo(p2.getRating());
                     }
                 });
                 break;
@@ -62,7 +62,7 @@ public class SortingTypeChooser {
                 Collections.sort(pubListToSort, new Comparator<Pub>() {
                     @Override
                     public int compare(Pub p1, Pub p2) {
-                        return  p2.getStars().compareTo(p1.getStars());
+                        return  p2.getRating().compareTo(p1.getRating());
                     }
                 });
                 break;

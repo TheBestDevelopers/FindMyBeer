@@ -1,29 +1,34 @@
 package thebestdevelopers.pl.findmybeer.pubList;
 
-import android.util.Log;
-
-import thebestdevelopers.pl.findmybeer.pubInfo.GetJsonResult;
-
 public class Pub {
     String pubName;
     Integer distance = 0;
     Double longitude, latitude;
     Integer freeTablesCount;
-    Double stars;
+    Float rating;
     String placeID;
 
 
-    public Pub(String _pubName, Double _latitude, Double _longitude, Integer _freeTableCount, Double _stars, String _placeID) {
+    public Pub(String _pubName, Double _latitude, Double _longitude, Integer _freeTableCount, Float _stars, String _placeID) {
         this.pubName = _pubName;
         this.freeTablesCount = _freeTableCount;
-        this.stars = _stars;
+        this.rating = _stars;
         this.longitude = _longitude;
         this.latitude = _latitude;
         this.placeID = _placeID;
     }
 
+    public Pub(String _placeID, Integer _freeTablesCount) {
+        this.placeID = _placeID;
+        this.freeTablesCount = _freeTablesCount;
+    }
+
     public void setDistance(int _distance) {
         this.distance = _distance;
+    }
+
+    public void setFreeTablesCount(Integer _freeTablesCount) {
+        this.freeTablesCount = _freeTablesCount;
     }
 
     public String getPubName() {
@@ -34,8 +39,8 @@ public class Pub {
         return distance;
     }
 
-    public Double getStars() {
-        return stars;
+    public Float getRating() {
+        return rating;
     }
 
     public Integer getFreeTablesCount() {

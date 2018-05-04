@@ -28,14 +28,6 @@ public class PlaceArrayAdapter
     private LatLngBounds mBounds;
     private ArrayList<PlaceAutocomplete> mResultList;
 
-    /**
-     * Constructor
-     *
-     * @param context  Context
-     * @param resource Layout resource
-     * @param bounds   Used to specify the search bounds
-     * @param filter   Used to specify place types
-     */
     public PlaceArrayAdapter(Context context, int resource, LatLngBounds bounds,
                              AutocompleteFilter filter) {
         super(context, resource);
