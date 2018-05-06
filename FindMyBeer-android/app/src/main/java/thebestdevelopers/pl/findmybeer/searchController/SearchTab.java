@@ -66,6 +66,7 @@ public class SearchTab extends AppCompatActivity implements ItemClickListener, G
     private static final int GOOGLE_API_CLIENT_ID = 0;
     private GoogleApiClient mGoogleApiClient;
     private ProgressBar spinner;
+    Boolean newLocationSet = false;
 
 
     @Override
@@ -96,7 +97,6 @@ public class SearchTab extends AppCompatActivity implements ItemClickListener, G
             manageLocation(null);
             sortingTypeChooser = new SortingTypeChooser(pubs);
             pubs = sortingTypeChooser.getSortedList(sortingType);
-
             mAdapter.notifyDataSetChanged();
         } else {
             Toast.makeText(this, "There's no Google Services installed", Toast.LENGTH_LONG).show();
@@ -163,8 +163,13 @@ public class SearchTab extends AppCompatActivity implements ItemClickListener, G
                 Location location = new Location("");
                 location.setLatitude(latitude);
                 location.setLongitude(longitude);
+                newLocationSet = true;
                 manageLocation(location);
 
+            }
+            else {
+                newLocationSet = false;
+                manageLocation(null);
             }
             pubs = sortingTypeChooser.getSortedList(sortingType);
             mAdapter.notifyDataSetChanged();
@@ -271,15 +276,14 @@ public class SearchTab extends AppCompatActivity implements ItemClickListener, G
     }
 
     private void manageLocation(final Location chosenLocation) {
-        Toast.makeText(this, "google services working", Toast.LENGTH_LONG).show();
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         android.location.LocationListener mLocationListener = new android.location.LocationListener() {
             @Override
             public void onLocationChanged(final Location location) {
-                if (chosenLocation != null) {
+                if (chosenLocation != null && newLocationSet) {
                     mAdapter.updateLocation(chosenLocation);
                 }
-                else {
+                else if (!newLocationSet) {
                     mAdapter.updateLocation(location);
                 }
                 pubs = sortingTypeChooser.getSortedList(sortingType);

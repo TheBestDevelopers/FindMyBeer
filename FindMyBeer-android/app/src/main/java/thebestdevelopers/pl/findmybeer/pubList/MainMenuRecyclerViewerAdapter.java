@@ -81,7 +81,7 @@ public class MainMenuRecyclerViewerAdapter extends RecyclerView.Adapter<MainMenu
 
     private void setTextViews(Pub currentPub, Integer distance, ViewHolder holder) {
         holder.textViewPubName.setText(currentPub.getPubName());
-        if (distance > 5000)
+        if (distance > 10000)
             setTextCountingDistance(holder);
         else if (distance > 1000)
             setDistanceKilometers(distance, holder);

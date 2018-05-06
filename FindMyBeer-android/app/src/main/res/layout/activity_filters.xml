@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginRight="10dp"
     tools:context="thebestdevelopers.pl.findmybeer.searchController.Filters">
 
     <ScrollView
@@ -27,7 +30,7 @@
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/roundedbutton"
                     android:backgroundTint="#B3FFFFFF"
@@ -52,16 +55,22 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+               >
 
                 <AutoCompleteTextView
                     android:id="@+id/autoCompleteTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="Enter Place Here"
+                   />
 
-                    android:layout_marginTop="50dp"
-                    android:hint="Enter Place Here" />
-
+                <android.support.v7.widget.AppCompatCheckBox
+                    android:id="@+id/mUseMyLocationCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="Use my location" />
                 <TextView
                     android:id="@+id/header"
                     android:layout_width="wrap_content"
@@ -71,7 +80,8 @@
                     android:layout_below="@+id/autoCompleteTextView"
                     android:layout_marginTop="20dp"
                     android:text="Selected Place:"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
+                    <!--android:layout_marginStart="10dp"/>-->
 
                 <TextView
                     android:id="@+id/name"
@@ -80,49 +90,18 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_below="@+id/header"
-                    android:layout_marginTop="20dp" />
+                    android:layout_marginTop="10dp"
+                    />
+
                 <TextView
                     android:id="@+id/address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:layout_below="@+id/name"/>
+                    android:layout_below="@+id/name"
 
-                <TextView
-                    android:id="@+id/place_id"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/address"/>
-
-                <TextView
-                    android:id="@+id/phone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/place_id"
-                    android:autoLink="phone"/>
-
-                <TextView
-                    android:id="@+id/web"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/phone"
-                    android:autoLink="web"/>
-
-                <TextView
-                    android:id="@+id/att"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:autoLink="web"/>
+                    android:layout_marginBottom="20dp"/>
 
                 <ImageView
                     android:id="@+id/poweredBy"
@@ -131,17 +110,9 @@
                     android:layout_above="@+id/att"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:src="@drawable/powered_by_google_light"/>
+                    android:src="@drawable/powered_by_google_light"
 
-                <ImageView
-                    android:id="@+id/truiton_image"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_above="@+id/poweredBy"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginBottom="-20dp"
-                   />
+                    android:layout_marginBottom="20dp"/>
 
             </LinearLayout>
 
@@ -154,7 +125,7 @@
                     android:id="@+id/mTextViewSort"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+
                     android:text="Sort by..."
                     android:textAlignment="textStart"
                     android:textColor="@android:color/black"
@@ -174,14 +145,13 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="500dp"
+                android:layout_height="250dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/mTextViewConveniences"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
                     android:text="Additional conveniences:"
                     android:textAlignment="textStart"
                     android:textColor="@android:color/black"

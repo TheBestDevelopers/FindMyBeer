@@ -79,7 +79,6 @@ public class HomeTab extends AppCompatActivity implements ItemClickListener, Goo
         sortingTypeChooser = new SortingTypeChooser(pubs);
         if (googleServicesAvailable()) {
             manageLocation();
-            Toast.makeText(this, "google services working", Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(this, "There's no Google Services installed", Toast.LENGTH_LONG).show();
         }
@@ -198,7 +197,6 @@ public class HomeTab extends AppCompatActivity implements ItemClickListener, Goo
     }
 
     private void manageLocation() {
-        Toast.makeText(this, "google services working", Toast.LENGTH_LONG).show();
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         android.location.LocationListener mLocationListener = new android.location.LocationListener() {
             @Override

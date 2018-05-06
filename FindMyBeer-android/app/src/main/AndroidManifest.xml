@@ -61,21 +61,22 @@
             android:name=".Register"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".HomeTab"
-            android:screenOrientation="portrait" />
+            android:name=".HomeTab" />
+            <!--android:screenOrientation="portrait" />-->
         <activity
-            android:name=".favController.FavTab"
-            android:screenOrientation="portrait" />
+            android:name=".favController.FavTab" />
+            <!--android:screenOrientation="portrait" />-->
         <activity
             android:name=".searchController.SearchTab"
-            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
+            <!--android:screenOrientation="portrait"-->
+
         <activity
-            android:name=".mapsController.MapTab"
-            android:screenOrientation="portrait" />
+            android:name=".mapsController.MapTab" />
+            <!--android:screenOrientation="portrait" />-->
         <activity
-            android:name=".ProfileTab"
-            android:screenOrientation="portrait" />
+            android:name=".ProfileTab" />
+            <!--android:screenOrientation="portrait" />-->
         <meta-data
             android:name="vom.google.android.geo.API_KEY"
             android:value="@string/google_places_key" />

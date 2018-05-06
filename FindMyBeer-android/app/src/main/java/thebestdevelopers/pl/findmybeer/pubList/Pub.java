@@ -27,10 +27,6 @@ public class Pub {
         this.distance = _distance;
     }
 
-    public void setFreeTablesCount(Integer _freeTablesCount) {
-        this.freeTablesCount = _freeTablesCount;
-    }
-
     public String getPubName() {
         return pubName;
     }

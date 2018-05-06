@@ -1,17 +1,20 @@
 package thebestdevelopers.pl.findmybeer.searchController;
 
+import android.content.Context;
 import android.content.Intent;
-import android.location.Location;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,27 +42,23 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
     ListView mListViewSorting;
     String checkedSortingType;
     ArrayList<String> sortingTypes;
-
     ArrayAdapter<String> arrayAdapterConveniences;
     ListView mListViewConveniences;
     ArrayList<String> conveniences = new ArrayList<>();
     ArrayList<String> checkedConveniences = new ArrayList<>();
     ArrayList<Integer> checkedConveniencesPositions = new ArrayList<>();
-    int checkedSortingTypePosition = -1;
+    int checkedSortingTypePosition = 0;
+    CheckBox mUseMyLocationCheckBox;
 
-    private static final String LOG_TAG = "MainActivity";
     private static final int GOOGLE_API_CLIENT_ID = 0;
     private AutoCompleteTextView mAutocompleteTextView;
+
     private TextView mNameTextView;
     private TextView mAddressTextView;
-    private TextView mIdTextView;
-    private TextView mPhoneTextView;
-    private TextView mWebTextView;
-    private TextView mAttTextView;
     private GoogleApiClient mGoogleApiClient;
     private PlaceArrayAdapter mPlaceArrayAdapter;
     private static final LatLngBounds BOUNDS_MOUNTAIN_VIEW = new LatLngBounds(
-            new LatLng(37.398160, -122.180831), new LatLng(37.430610, -121.972090));
+            new LatLng(0, 0), new LatLng(0, 0));
     String placeId = "";
     double latitude, longitude;
 
@@ -67,43 +66,22 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filters);
-
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.
+                SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        mUseMyLocationCheckBox = findViewById(R.id.mUseMyLocationCheckBox);
+        mUseMyLocationCheckBox.setChecked(true);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        checkedSortingTypePosition = preferences.getInt("checkedSortingType", 0);
+        for (int i = 0; i < preferences.getInt("checkedConveniencesSize", 0); ++i) {
+            checkedConveniencesPositions.add(preferences.getInt("checkedConveniences" + i, 0));
+        }
+        setAAutoCompleteAdapter();
+        setSortingTypeChooser();
+        setConveniencesChooser();
 
-        mGoogleApiClient = new GoogleApiClient.Builder(Filters.this)
-                .addApi(Places.GEO_DATA_API)
-                .enableAutoManage(this, GOOGLE_API_CLIENT_ID, this)
-                .addConnectionCallbacks(this)
-                .build();
-        mAutocompleteTextView = (AutoCompleteTextView) findViewById(R.id
-                .autoCompleteTextView);
-        mAutocompleteTextView.setThreshold(3);
-        mNameTextView = (TextView) findViewById(R.id.name);
-        mAddressTextView = (TextView) findViewById(R.id.address);
-        mIdTextView = (TextView) findViewById(R.id.place_id);
-        mPhoneTextView = (TextView) findViewById(R.id.phone);
-        mWebTextView = (TextView) findViewById(R.id.web);
-        mAttTextView = (TextView) findViewById(R.id.att);
-        mAutocompleteTextView.setOnItemClickListener(mAutocompleteClickListener);
-        mPlaceArrayAdapter = new PlaceArrayAdapter(this, android.R.layout.simple_list_item_1,
-                BOUNDS_MOUNTAIN_VIEW, null);
-        mAutocompleteTextView.setAdapter(mPlaceArrayAdapter);
 
-        SortingTypesStore sortingTypesStore = new SortingTypesStore();
-        sortingTypes = sortingTypesStore.getSortingTypes();
-        arrayAdapterSortingTypes = new ArrayAdapter<>(this,android.R.layout.simple_list_item_single_choice, sortingTypes);
-        mListViewSorting = findViewById(R.id.mListViewSorting);
-        mListViewSorting.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        mListViewSorting.setAdapter(arrayAdapterSortingTypes);
-        mListViewSorting.setItemChecked(0, true);
-
-        MockConveniencesTypes mockConveniencesTypes = new MockConveniencesTypes();
-        conveniences = mockConveniencesTypes.getConveniences();
-        arrayAdapterConveniences = new ArrayAdapter<>(this,android.R.layout.simple_list_item_single_choice, conveniences);
-        mListViewConveniences = findViewById(R.id.mListViewConveniences);
-        mListViewConveniences.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        mListViewConveniences.setAdapter(arrayAdapterConveniences);
     }
 
     private AdapterView.OnItemClickListener mAutocompleteClickListener
@@ -123,24 +101,15 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
         @Override
         public void onResult(PlaceBuffer places) {
             if (!places.getStatus().isSuccess()) {
-                Log.e(LOG_TAG, "Place query did not complete. Error: " +
-                        places.getStatus().toString());
                 return;
             }
-            // Selecting the first object buffer.
             final Place place = places.get(0);
-            CharSequence attributions = places.getAttributions();
             LatLng placeLatLong = place.getLatLng();
             latitude = placeLatLong.latitude;
-            longitude = placeLatLong.longitude;;
-            mNameTextView.setText(Html.fromHtml(place.getName() + ""));
-            mAddressTextView.setText(Html.fromHtml(place.getAddress() + ""));
-            mIdTextView.setText(Html.fromHtml(place.getId() + ""));
-            mPhoneTextView.setText(Html.fromHtml(place.getPhoneNumber() + ""));
-            mWebTextView.setText(place.getWebsiteUri() + "");
-            if (attributions != null) {
-                mAttTextView.setText(Html.fromHtml(attributions.toString()));
-            }
+            longitude = placeLatLong.longitude;
+            mNameTextView.setText((place.getName()));
+            mAddressTextView.setText((place.getAddress()));
+            mUseMyLocationCheckBox.setChecked(false);
         }
     };
 
@@ -151,11 +120,7 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.e(LOG_TAG, "Google Places API connection failed with error code: "
-                + connectionResult.getErrorCode());
-
-        Toast.makeText(this,
-                "Google Places API connection failed with error code:" +
+        Toast.makeText(this,"Google Places API connection failed with error code:" +
                         connectionResult.getErrorCode(),
                 Toast.LENGTH_LONG).show();
     }
@@ -165,17 +130,17 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
         mPlaceArrayAdapter.setGoogleApiClient(null);
     }
 
-
     @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putInt("checkedSortingType", checkedSortingTypePosition);
-        savedInstanceState.putIntegerArrayList("checkedConveniences", checkedConveniencesPositions);
-    }
+    public void onPause() {
+        super.onPause();
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt("checkedSortingType", checkedSortingTypePosition);
+        editor.putInt("checkedConveniencesSize", checkedConveniencesPositions.size());
+        for (Integer position : checkedConveniencesPositions)
+            editor.putInt("checkedConveniences" + position, position);
+        editor.apply();
 
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        mListViewSorting.setItemChecked(savedInstanceState.getInt("checkedSortingType"), true);
     }
 
     public void mButtonCancelOnClick(View v) {
@@ -188,10 +153,57 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
         Intent output = new Intent();
         output.putExtra("sorting type", checkedSortingType);
         output.putExtra("conveniences", checkedConveniences);
-        output.putExtra("latitude", latitude);
-        output.putExtra("longitude", longitude);
+        if (mUseMyLocationCheckBox.isChecked()) {
+            output.putExtra("latitude", 0);
+            output.putExtra("longitude", 0);
+        } else {
+            output.putExtra("latitude", latitude);
+            output.putExtra("longitude", longitude);
+        }
         setResult(RESULT_OK, output);
         finish();
+    }
+
+    private void setAAutoCompleteAdapter() {
+        mGoogleApiClient = new GoogleApiClient.Builder(Filters.this)
+                .addApi(Places.GEO_DATA_API)
+                .enableAutoManage(this, GOOGLE_API_CLIENT_ID, this)
+                .addConnectionCallbacks(this)
+                .build();
+        mAutocompleteTextView = (AutoCompleteTextView) findViewById(R.id
+                .autoCompleteTextView);
+        mAutocompleteTextView.setThreshold(3);
+        mNameTextView = (TextView) findViewById(R.id.name);
+        mAddressTextView = (TextView) findViewById(R.id.address);
+        mAutocompleteTextView.setOnItemClickListener(mAutocompleteClickListener);
+        mPlaceArrayAdapter = new PlaceArrayAdapter(this, android.R.layout.simple_list_item_1,
+                BOUNDS_MOUNTAIN_VIEW, null);
+        mAutocompleteTextView.setAdapter(mPlaceArrayAdapter);
+    }
+
+    private void setSortingTypeChooser() {
+        SortingTypesStore sortingTypesStore = new SortingTypesStore();
+        sortingTypes = sortingTypesStore.getSortingTypes();
+        arrayAdapterSortingTypes = new ArrayAdapter<>(this,android.R.layout.simple_list_item_single_choice, sortingTypes);
+        mListViewSorting = findViewById(R.id.mListViewSorting);
+        mListViewSorting.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        mListViewSorting.setAdapter(arrayAdapterSortingTypes);
+        mListViewSorting.setItemChecked(0, true);
+        mListViewSorting.setItemChecked(checkedSortingTypePosition, true);
+        checkedSortingTypePosition = 0;
+    }
+
+    private void setConveniencesChooser() {
+        MockConveniencesTypes mockConveniencesTypes = new MockConveniencesTypes();
+        conveniences = mockConveniencesTypes.getConveniences();
+        arrayAdapterConveniences = new ArrayAdapter<>(this,android.R.layout.simple_list_item_single_choice, conveniences);
+        mListViewConveniences = findViewById(R.id.mListViewConveniences);
+        mListViewConveniences.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        mListViewConveniences.setAdapter(arrayAdapterConveniences);
+        for (Integer position : checkedConveniencesPositions) {
+            mListViewConveniences.setItemChecked(position, true);
+        }
+        checkedConveniencesPositions.clear();
     }
 
     private void getCheckedSortingType() {
@@ -212,4 +224,5 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
             }
         }
     }
+
 }
