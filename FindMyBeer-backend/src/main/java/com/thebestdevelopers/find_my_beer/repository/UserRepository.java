@@ -1,6 +1,7 @@
 package com.thebestdevelopers.find_my_beer.repository;
 
 
+import com.thebestdevelopers.find_my_beer.model.UserEntity;
 import com.thebestdevelopers.find_my_beer.model.UserEntityF;
 import org.springframework.data.jpa.repository.JpaRepository;
 
