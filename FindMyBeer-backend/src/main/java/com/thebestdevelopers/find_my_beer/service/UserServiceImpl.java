@@ -14,7 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Wiktor Florencki
+ * @author Dominik Florencki
+ * Modyfikacje: Jakub Pisula
  */
 @Service
 public class UserServiceImpl implements UserService {
@@ -48,6 +49,9 @@ public class UserServiceImpl implements UserService {
         ModelMapper mapper = new ModelMapper();
         return mapper.map(userDao.createUser(username,password,role), UserDTO.class);
     }
+
+    @Override
+    public Boolean changeUserPassword(String username, String password, String newPassword){ return userDao.changeUserPassword(username, password, newPassword);}
 
     @Override
     public Boolean deleteUser(String username, String password) {

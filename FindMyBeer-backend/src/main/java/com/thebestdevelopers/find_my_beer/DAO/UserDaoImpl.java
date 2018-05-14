@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * @author Dominik Florencki
+ * Modyfikacje: Jakub Pisula
  */
 @Service
 public class UserDaoImpl implements UserDao{
@@ -33,6 +34,17 @@ public class UserDaoImpl implements UserDao{
         roleEntityF.setUserByUserId(userEntityF);
         userEntityF.setRoleByUserId(roleEntityF);
         return userEntityF;
+    }
+
+    @Override
+    public Boolean changeUserPassword(String username, String password, String newPassword) {
+        UserEntityF userEntityF = userRepository.findByUsernameAndPassword(username,password).get(0);
+        if(userEntityF.getPassword().equals(password)) {
+            userEntityF.setPassword(newPassword);
+            userRepository.save(userEntityF);
+            return true;
+        } else return false;
+
     }
 
     @Override

@@ -6,18 +6,21 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 
 /**
- * @author Dominik Florencki
+ * @author Jakub Pisula
  */
-public class GetUserParam implements Serializable {
+public class EditUserParam implements Serializable {
     private String username;
     private String password;
+    private String newPassword;
 
 
     @JsonCreator
-    public GetUserParam(@JsonProperty("username") String username,
-                        @JsonProperty("password") String password){
+    public EditUserParam(@JsonProperty("username") String username,
+                        @JsonProperty("password") String password,
+                        @JsonProperty("newPassword") String newPassword){
         this.username = username;
         this.password = password;
+        this.newPassword = newPassword;
     }
 
     public String getUsername() {
@@ -36,4 +39,7 @@ public class GetUserParam implements Serializable {
         this.password = password;
     }
 
+    public String getNewPassword() {
+        return newPassword;
+    }
 }

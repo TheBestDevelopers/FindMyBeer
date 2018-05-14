@@ -6,9 +6,11 @@ import org.springframework.stereotype.Repository;
 
 /**
  * @author Dominik Florencki
+ * Modyfikacje: Jakub Pisula
  */
 @Repository
 public interface UserDao{
     UserEntityF createUser(String username, String password, String role);
+    Boolean changeUserPassword(String username, String password, String newPassword);
     Boolean deleteUser(String username, String password);
 }
