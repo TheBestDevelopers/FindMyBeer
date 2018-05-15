@@ -3,6 +3,7 @@ package com.thebestdevelopers.find_my_beer.controller.userControllerParam;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**

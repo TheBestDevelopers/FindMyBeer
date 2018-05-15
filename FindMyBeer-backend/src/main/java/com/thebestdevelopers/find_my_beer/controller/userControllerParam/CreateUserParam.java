@@ -3,14 +3,18 @@ package com.thebestdevelopers.find_my_beer.controller.userControllerParam;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
  * @author Dominik Florencki
  */
 public class CreateUserParam implements Serializable {
+    @NotNull
     private String username;
+    @NotNull
     private String password;
+    @NotNull
     private String role;
 
     public CreateUserParam() {
