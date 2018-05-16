@@ -21,7 +21,7 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @PostMapping("")
+    @GetMapping("")
     public UserDTO getUser(@Valid @RequestBody GetUserParam param){return userService.getUser(param.getUsername(),param.getPassword()); }
 
     @GetMapping("")
@@ -32,7 +32,7 @@ public class UserController {
         return userService.createUser(param.getUsername(),param.getPassword(), param.getRole());
     }
 
-    @PostMapping("changeUserPassword")
+    @PutMapping("changeUserPassword")
     public Boolean changeUserPassword (@Valid @RequestBody EditUserParam param){
         return userService.changeUserPassword(param.getUsername(), param.getPassword(), param.getNewPassword());
     }
