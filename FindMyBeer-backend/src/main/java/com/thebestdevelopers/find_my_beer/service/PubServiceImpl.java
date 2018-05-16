@@ -1,16 +1,13 @@
 package com.thebestdevelopers.find_my_beer.service;
 
-import com.thebestdevelopers.find_my_beer.DAO.UserDao;
-import com.thebestdevelopers.find_my_beer.DTO.UserDTO;
-import com.thebestdevelopers.find_my_beer.model.UserEntityF;
-import com.thebestdevelopers.find_my_beer.repository.UserRepository;
+import com.thebestdevelopers.find_my_beer.DAO.PubDao;
+
+import com.thebestdevelopers.find_my_beer.DTO.PubDTO;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,19 +16,24 @@ import java.util.List;
 @Service
 public class PubServiceImpl implements PubService {
 
+    @Autowired
+    PubDao pubDao;
+
     @Override
-    public UserDTO getPub(String username, String password) {
+    public PubDTO getPub(String username, String password) {
         return null;
     }
 
     @Override
-    public List<UserDTO> getAllPubs() {
+    public List<PubDTO> getAllPubs() {
         return null;
     }
 
     @Override
-    public UserDTO createPub(String username, String password, String role) {
-        return null;
+    public PubDTO createPub(String pubName) {
+
+        ModelMapper mapper = new ModelMapper();
+        return mapper.map(pubDao.createPub(pubName), PubDTO.class);
     }
 
     @Override

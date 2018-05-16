@@ -1,6 +1,6 @@
 package com.thebestdevelopers.find_my_beer.service;
 
-import com.thebestdevelopers.find_my_beer.DTO.UserDTO;
+import com.thebestdevelopers.find_my_beer.DTO.PubDTO;
 
 import java.util.List;
 
@@ -9,9 +9,9 @@ import java.util.List;
  * Modyfikacje: Jakub Pisula
  */
 public interface PubService {
-    UserDTO getPub(String username, String password);
-    List<UserDTO> getAllPubs();
-    UserDTO createPub(String username, String password, String role);
+    PubDTO getPub(String username, String password);
+    List<PubDTO> getAllPubs();
+    PubDTO createPub(String pubName);
     Boolean changePubPassword(String username, String password, String newPassword);
     Boolean deletePub(String username, String password);
 }
