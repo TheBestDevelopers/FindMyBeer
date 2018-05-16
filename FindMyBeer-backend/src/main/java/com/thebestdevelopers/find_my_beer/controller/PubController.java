@@ -13,6 +13,8 @@ import javax.validation.Valid;
 import java.io.Serializable;
 /**
  * @author Jakub Pisula
+ * Modified by: Dominik Florencki
+ * The Controller to manage the pub account ONLY
  */
 
 @RestController

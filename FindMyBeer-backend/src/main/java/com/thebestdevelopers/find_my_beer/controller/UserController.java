@@ -13,6 +13,7 @@ import java.util.List;
 
 /**
  * @author Dominik Florencki
+ * The Controller to manage the user account ONLY
  */
 @RestController
 @RequestMapping("api/users/")
