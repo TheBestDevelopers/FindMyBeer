@@ -7,7 +7,7 @@ import java.util.Objects;
 @Table(name = "role", schema = "public", catalog = "d86n3p8h6i057d")
 public class RoleEntity {
     private String role;
-    private int userId;
+    private long userId;
     private UserEntity userByUserId;
 
     @Basic
@@ -22,11 +22,11 @@ public class RoleEntity {
 
     @Id
     @Column(name = "user_id", nullable = false)
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 

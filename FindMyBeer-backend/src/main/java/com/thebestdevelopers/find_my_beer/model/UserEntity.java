@@ -9,30 +9,30 @@ import java.util.Objects;
 @GenericGenerator(name = "seq8", strategy = "sequence-identity", parameters = @org.hibernate.annotations.Parameter(name = "user_id_sequence", value = "user_id_sequence"))
 @Table(name = "user", schema = "public", catalog = "d86n3p8h6i057d")
 public class UserEntity {
-    private int userId;
-    private String login;
+    private long userId;
+    private String username;
     private String password;
     private RoleEntity roleByUserId;
 
     @Id
     @GeneratedValue(generator = "seq8")
     @Column(name = "user_id", nullable = false)
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 
     @Basic
-    @Column(name = "login", nullable = false, length = 100)
-    public String getLogin() {
-        return login;
+    @Column(name = "username", nullable = false, length = 100)
+    public String getUsername() {
+        return username;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Basic
@@ -51,14 +51,14 @@ public class UserEntity {
         if (o == null || getClass() != o.getClass()) return false;
         UserEntity that = (UserEntity) o;
         return userId == that.userId &&
-                Objects.equals(login, that.login) &&
+                Objects.equals(username, that.username) &&
                 Objects.equals(password, that.password);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(userId, login, password);
+        return Objects.hash(userId, username, password);
     }
 
     @OneToOne(mappedBy = "userByUserId")

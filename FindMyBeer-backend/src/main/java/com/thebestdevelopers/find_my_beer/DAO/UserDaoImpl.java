@@ -1,11 +1,11 @@
 package com.thebestdevelopers.find_my_beer.DAO;
 
-import com.thebestdevelopers.find_my_beer.model.RoleEntityF;
-import com.thebestdevelopers.find_my_beer.model.UserEntityF;
+import com.thebestdevelopers.find_my_beer.model.RoleEntity;
+import com.thebestdevelopers.find_my_beer.model.UserEntity;
 import com.thebestdevelopers.find_my_beer.repository.RoleRepository;
 import com.thebestdevelopers.find_my_beer.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCrypt;
+//import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 /**
@@ -21,48 +21,49 @@ public class UserDaoImpl implements UserDao{
     RoleRepository roleRepository;
 
 
-
-    public static String hashPassword(String password_plaintext) {
-        String salt = BCrypt.gensalt(12);
-        String hashed_password = BCrypt.hashpw(password_plaintext, salt);
-
-        return(hashed_password);
-    }
+//
+//    public static String hashPassword(String password_plaintext) {
+//        String salt = BCrypt.gensalt(12);
+//        String hashed_password = BCrypt.hashpw(password_plaintext, salt);
+//
+//        return(hashed_password);
+//    }
 
     @Override
-    public UserEntityF createUser(String username, String password, String role) {
+    public UserEntity createUser(String username, String password, String role) {
 
-        UserEntityF userEntityF = new UserEntityF();
-        userEntityF.setUsername(username);
-        userEntityF.setPassword(hashPassword(password));
+        UserEntity userEntity = new UserEntity();
+        userEntity.setUsername(username);
+        //userEntity.setPassword(hashPassword(password));
+        userEntity.setPassword(password);
 
-        userEntityF = userRepository.save(userEntityF);
+        userEntity = userRepository.save(userEntity);
 
-        RoleEntityF roleEntityF = new RoleEntityF();
-        roleEntityF.setRole(role);
-        roleEntityF.setUserId(userEntityF.getUserId());
-        roleEntityF = roleRepository.save(roleEntityF);
-        roleEntityF.setUserByUserId(userEntityF);
-        userEntityF.setRoleByUserId(roleEntityF);
-        return userEntityF;
+        RoleEntity roleEntity = new RoleEntity();
+        roleEntity.setRole(role);
+        roleEntity.setUserId(userEntity.getUserId());
+        roleEntity = roleRepository.save(roleEntity);
+        roleEntity.setUserByUserId(userEntity);
+        userEntity.setRoleByUserId(roleEntity);
+        return userEntity;
     }
 
     @Override
     public Boolean changeUserPassword(String username, String password, String newPassword) {
-        UserEntityF userEntityF = userRepository.findByUsernameAndPassword(username,password).get(0);
-        if(hashPassword(userEntityF.getPassword()).equals(hashPassword(password))) {
-            userEntityF.setPassword(hashPassword(newPassword));
-            userRepository.save(userEntityF);
+        UserEntity userEntity = userRepository.findByUsernameAndPassword(username,password).get(0);
+//        if(hashPassword(userEntity.getPassword()).equals(hashPassword(password))) {
+//            userEntity.setPassword(hashPassword(newPassword));
+//            userRepository.save(userEntity);
             return true;
-        } else return false;
+//        } else return false;
 
     }
 
     @Override
     public Boolean deleteUser(String username, String password) {
-        UserEntityF userEntityF = userRepository.findByUsernameAndPassword(username,password).get(0);
-        roleRepository.deleteById(userEntityF.getUserId());
-        userRepository.deleteById(userEntityF.getUserId());
+        UserEntity userEntity = userRepository.findByUsernameAndPassword(username,password).get(0);
+        roleRepository.deleteById(userEntity.getUserId());
+        userRepository.deleteById(userEntity.getUserId());
         return true;
     }
 }
