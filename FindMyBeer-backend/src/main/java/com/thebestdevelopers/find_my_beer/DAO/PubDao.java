@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PubDao {
     PubEntity createPub(String pubName);
+    PubEntity getPubInfo(int userId, int pubId);
 }

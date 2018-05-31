@@ -4,10 +4,8 @@ import com.thebestdevelopers.find_my_beer.DTO.PubDTO;
 import com.thebestdevelopers.find_my_beer.controller.pubControllerParam.CreatePubParam;
 import com.thebestdevelopers.find_my_beer.service.PubService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.Serializable;
@@ -27,4 +25,10 @@ public class PubController implements Serializable {
     public PubDTO createUser(@Valid @RequestBody CreatePubParam param) {
         return pubService.createPub(param.getPubName());
     }
+
+    @GetMapping("getPubInfo")
+    public PubDTO getPubInfo(@RequestParam("userID") int userId, @RequestParam("pubID") int pubId){
+        return pubService.getPubInfo(userId, pubId);
+    }
+
 }

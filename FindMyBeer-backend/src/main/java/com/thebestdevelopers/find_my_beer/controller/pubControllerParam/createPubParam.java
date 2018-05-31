@@ -26,12 +26,12 @@ public class CreatePubParam implements Serializable {
     public void setPubName(String pubName) {
         this.pubName = pubName;
     }
-
+//
 //    public String getPhoto() {
 //        return this.photo;
 //    }
 //
 //    public void setPhoto(String photo) {
 //        this.photo = photo;
-//    }
+//   }
 }

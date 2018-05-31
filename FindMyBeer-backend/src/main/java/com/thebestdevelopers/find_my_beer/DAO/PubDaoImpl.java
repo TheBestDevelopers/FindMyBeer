@@ -21,7 +21,12 @@ public class PubDaoImpl implements PubDao {
 
         pubEntity = pubRepository.save(pubEntity);
         return pubEntity;
+    }
 
+    @Override
+    public  PubEntity getPubInfo(int userId, int pubId) {
+        PubEntity pubEntity = new PubEntity();
 
+        return pubEntity;
     }
 }

@@ -14,4 +14,5 @@ public interface PubService {
     PubDTO createPub(String pubName);
     Boolean changePubPassword(String username, String password, String newPassword);
     Boolean deletePub(String username, String password);
+    PubDTO getPubInfo(int userId, int pubId);
 }

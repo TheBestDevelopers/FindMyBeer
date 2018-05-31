@@ -1,17 +1,18 @@
 package com.thebestdevelopers.find_my_beer.DTO;
 
 /**
-* @author Jakub Pisula
+*   @author Grzegorz Nowak
 */
-public class PubDTO {
+public class PubInfoDTO {
+
     private long id;
     private String pubName;
     private String gks;
 
-    public PubDTO() {
+    public PubInfoDTO() {
     }
 
-    public PubDTO(long user_id, String pubName) {
+    public PubInfoDTO(long user_id, String pubName) {
         this.id = user_id;
         this.pubName = pubName;
     }
@@ -40,4 +41,3 @@ public class PubDTO {
         this.gks = gks;
     }
 }
-
