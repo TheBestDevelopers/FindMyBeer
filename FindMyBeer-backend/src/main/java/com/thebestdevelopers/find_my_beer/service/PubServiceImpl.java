@@ -4,11 +4,8 @@ import com.thebestdevelopers.find_my_beer.DAO.PubDao;
 
 import com.thebestdevelopers.find_my_beer.DTO.PubDTO;
 
-import com.thebestdevelopers.find_my_beer.model.AddressesEntity;
-import com.thebestdevelopers.find_my_beer.model.PubEntity;
-import com.thebestdevelopers.find_my_beer.model.UserEntity;
-import com.thebestdevelopers.find_my_beer.repository.AddressRepository;
-import com.thebestdevelopers.find_my_beer.repository.PubRepository;
+import com.thebestdevelopers.find_my_beer.model.*;
+import com.thebestdevelopers.find_my_beer.repository.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +26,18 @@ public class PubServiceImpl implements PubService {
 
     @Autowired
     AddressRepository addressRepository;
+
+    @Autowired
+    ConvenienceRepository convenienceRepository;
+
+    @Autowired
+    ConvenienceTypeRepository convenienceTypeRepository;
+
+    @Autowired
+    TableRepository tableRepository;
+
+    @Autowired
+    TableDetailsRepository tableDetailsRepository;
 
     @Override
     public PubDTO getPub(String username, String password) {
@@ -62,6 +71,17 @@ public class PubServiceImpl implements PubService {
         PubEntity pubEntity = pubRepository.findByPubId(pubId).get(0);
         AddressesEntity addressesEntity = addressRepository.findByPubId(pubId).get(0);
 
+        List<ConveniencesEntity> conveniencesEntityList = convenienceRepository.findByPubId(pubId);
+        for (ConveniencesEntity conveniencesEntity : conveniencesEntityList) {
+            ConvenienceTypesEntity convenienceTypesEntity = convenienceTypeRepository.findByConvenienceTypesId(conveniencesEntity.getConvenienceTypesId()).get(0);
+            System.out.println(convenienceTypesEntity.getDescription());
+        }
+
+        List<TablesEntity> tablesEntityList = tableRepository.findByPubId(pubId);
+        for(TablesEntity tablesEntity : tablesEntityList){
+            TableDetailsEntity tableDetailsEntity = tableDetailsRepository.findByTableId(tablesEntity.getTableId());
+            System.out.println(tableDetailsEntity.getPlaces()+"     "+tableDetailsEntity.isOccupied());
+        }
 
 
         PubDTO pubDTO =new PubDTO();
