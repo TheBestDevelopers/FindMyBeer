@@ -1,24 +1,29 @@
 package com.thebestdevelopers.find_my_beer.model;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
+@GenericGenerator(name = "seq9", strategy = "sequence-identity", parameters = @org.hibernate.annotations.Parameter(name = "ratings_id_sequence", value = "ratings_id_sequence"))
 @Table(name = "ratings", schema = "public", catalog = "d86n3p8h6i057d")
 public class RatingsEntity {
-    private int pubIdPk;
+    private int ratingsId;
     private int clientId;
-    private String rate;
+    private Double rate;
+    private Integer pubId;
     private ClientEntity clientByClientId;
 
     @Id
-    @Column(name = "pub_id_pk", nullable = false)
-    public int getPubIdPk() {
-        return pubIdPk;
+    @GeneratedValue(generator = "seq9")
+    @Column(name = "ratings_id", nullable = false)
+    public int getRatingsId() {
+        return ratingsId;
     }
 
-    public void setPubIdPk(int pubIdPk) {
-        this.pubIdPk = pubIdPk;
+    public void setRatingsId(int ratingsId) {
+        this.ratingsId = ratingsId;
     }
 
     @Basic
@@ -32,13 +37,23 @@ public class RatingsEntity {
     }
 
     @Basic
-    @Column(name = "rate", nullable = true, length = 100)
-    public String getRate() {
+    @Column(name = "rate", nullable = true, precision = 0)
+    public Double getRate() {
         return rate;
     }
 
-    public void setRate(String rate) {
+    public void setRate(Double rate) {
         this.rate = rate;
+    }
+
+    @Basic
+    @Column(name = "pub_id", nullable = true)
+    public Integer getPubId() {
+        return pubId;
+    }
+
+    public void setPubId(Integer pubId) {
+        this.pubId = pubId;
     }
 
     @Override
@@ -46,15 +61,16 @@ public class RatingsEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         RatingsEntity that = (RatingsEntity) o;
-        return pubIdPk == that.pubIdPk &&
+        return ratingsId == that.ratingsId &&
                 clientId == that.clientId &&
-                Objects.equals(rate, that.rate);
+                Objects.equals(rate, that.rate) &&
+                Objects.equals(pubId, that.pubId);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(pubIdPk, clientId, rate);
+        return Objects.hash(ratingsId, clientId, rate, pubId);
     }
 
     @ManyToOne
