@@ -1,28 +1,34 @@
 package com.thebestdevelopers.find_my_beer.DTO;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
 *   @author Grzegorz Nowak
 */
 public class PubInfoDTO {
 
-    private long id;
     private String pubName;
-    private String gks;
+    private String vicinity;
+    List<ConveniencesDTO> conveniencesDTOList;
+    TablesDTO tablesDTO;
+    double rating;
+    boolean favourite;
+    boolean ourPub = true;
 
-    public PubInfoDTO() {
+    public PubInfoDTO(){
+
     }
 
-    public PubInfoDTO(long user_id, String pubName) {
-        this.id = user_id;
+    public PubInfoDTO(String pubName, String vicinity, List<ConveniencesDTO> conveniencesDTOList, TablesDTO tablesDTO, double rating, boolean favourite, boolean ourPub) {
         this.pubName = pubName;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
+        this.vicinity = vicinity;
+        this.conveniencesDTOList = conveniencesDTOList;
+        this.tablesDTO = tablesDTO;
+        this.rating = rating;
+        this.favourite = favourite;
+        this.ourPub = ourPub;
     }
 
     public String getPubName() {
@@ -33,11 +39,51 @@ public class PubInfoDTO {
         this.pubName = pubName;
     }
 
-    public String getGks() {
-        return gks;
+    public String getVicinity() {
+        return vicinity;
     }
 
-    public void setGks(String gks) {
-        this.gks = gks;
+    public void setVicinity(String vicinity) {
+        this.vicinity = vicinity;
+    }
+
+    public List<ConveniencesDTO> getConveniencesDTOList() {
+        return conveniencesDTOList;
+    }
+
+    public void setConveniencesDTOList(List<ConveniencesDTO> conveniencesDTOList) {
+        this.conveniencesDTOList = conveniencesDTOList;
+    }
+
+    public TablesDTO getTablesDTO() {
+        return tablesDTO;
+    }
+
+    public void setTablesDTO(TablesDTO tablesDTO) {
+        this.tablesDTO = tablesDTO;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public boolean isFavourite() {
+        return favourite;
+    }
+
+    public void setFavourite(boolean favourite) {
+        this.favourite = favourite;
+    }
+
+    public boolean isOurPub() {
+        return ourPub;
+    }
+
+    public void setOurPub(boolean ourPub) {
+        this.ourPub = ourPub;
     }
 }
