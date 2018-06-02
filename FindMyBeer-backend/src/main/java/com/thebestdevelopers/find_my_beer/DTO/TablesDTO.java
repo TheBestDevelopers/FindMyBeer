@@ -1,11 +1,19 @@
 package com.thebestdevelopers.find_my_beer.DTO;
 
 public class TablesDTO {
-   private int chair1;
-   private int chait2;
-   private int chair4;
-   private int chair6;
-   private int chair8;
+    private int chair1;
+    private int chair2;
+    private int chair4;
+    private int chair6;
+    private int chair8;
+
+    public TablesDTO(int chair1, int chair2, int chair4, int chair6, int chair8) {
+        this.chair1 = chair1;
+        this.chair2 = chair2;
+        this.chair4 = chair4;
+        this.chair6 = chair6;
+        this.chair8 = chair8;
+    }
 
     public int getChair1() {
         return chair1;
@@ -15,12 +23,12 @@ public class TablesDTO {
         this.chair1 = chair1;
     }
 
-    public int getChait2() {
-        return chait2;
+    public int getChair2() {
+        return chair2;
     }
 
-    public void setChait2(int chait2) {
-        this.chait2 = chait2;
+    public void setChair2(int chair2) {
+        this.chair2 = chair2;
     }
 
     public int getChair4() {
