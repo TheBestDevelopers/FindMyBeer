@@ -9,9 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @EnableJpaAuditing
-@EnableJpaRepositories("com.thebestdevelopers.find_my_beer.repository")/*
-@EntityScan("com.thebestdevelopers.find_my_beer.model")
-@ComponentScan("com.thebestdevelopers.find_my_beer")*/
+@EnableJpaRepositories("com.thebestdevelopers.find_my_beer.repository")
 public class FindMyBeerApplication {
 
 	public static void main(String[] args) {

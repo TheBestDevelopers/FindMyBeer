@@ -4,7 +4,7 @@
     "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
   <session-factory>
-    <property name="connection.url"><![CDATA[jdbc:postgresql://ec2-54-75-239-237.eu-west-1.compute.amazonaws.com:5432/d86n3p8h6i057d?sslmode=require&user=dmmmcpjtkopddk&password=8b7a4604c32500fb0d6ff1370279037b2c84e6b02453a294605be842c6844e17]]></property>
+    <property name="connection.url"><![CDATA[jdbc:postgresql://ec2-54-75-239-237.eu-west-1.compute.amazonaws.com:5432/d86n3p8h6i057d?sslmode=require]]></property>
     <property name="connection.driver_class">org.postgresql.Driver</property>
     <mapping class="com.thebestdevelopers.find_my_beer.model.RoleEntityF"/>
     <mapping class="com.thebestdevelopers.find_my_beer.model.UserEntityF"/>
@@ -22,8 +22,9 @@
     <mapping class="com.thebestdevelopers.find_my_beer.model.RoleEntity"/>
     <mapping class="com.thebestdevelopers.find_my_beer.model.UserEntity"/>
     <mapping class="com.thebestdevelopers.find_my_beer.model.RatingsEntity"/>
+    <mapping class="com.thebestdevelopers.find_my_beer.model.PersistentLoginsEntity"/>
 
-    <!-- <property name="connection.username"/> -->
+      <!-- <property name="connection.username"/> -->
     <!-- <property name="connection.password"/> -->
 
     <!-- DB schema will be updated if needed -->

@@ -6,9 +6,12 @@ import com.thebestdevelopers.find_my_beer.controller.userControllerParam.EditUse
 import com.thebestdevelopers.find_my_beer.controller.userControllerParam.GetUserParam;
 import com.thebestdevelopers.find_my_beer.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 /**
@@ -25,7 +28,10 @@ public class UserController {
     public UserDTO getUser(@Valid @RequestBody GetUserParam param){return userService.getUser(param.getUsername(),param.getPassword()); }
 
     @GetMapping("")
-    public List<UserDTO> getAllUser(){ return userService.getAllUser();}
+    public List<UserDTO> getAllUser(Principal principal){
+        User loginedUser = (User) ((Authentication) principal).getPrincipal();
+        return userService.getAllUser();
+    }
 
     @PostMapping("new")
     public UserDTO createUser(@Valid @RequestBody CreateUserParam param) {
