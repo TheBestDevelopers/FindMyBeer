@@ -12,4 +12,5 @@ import java.util.List;
  */
 public interface ConvenienceTypeRepository extends JpaRepository<ConvenienceTypesEntity, Long> {
     List<ConvenienceTypesEntity> findByConvenienceTypesId(int convenienceTypesId);
+    List<ConvenienceTypesEntity> findAll();
 }
