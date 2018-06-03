@@ -2,6 +2,9 @@
 /build/
 !gradle/wrapper/gradle-wrapper.jar
 
+#User
+.idea/workspace.xml
+
 ### STS ###
 .apt_generated
 .classpath
