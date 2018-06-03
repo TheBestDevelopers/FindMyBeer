@@ -1,46 +1,42 @@
 package com.thebestdevelopers.find_my_beer.DTO;
 
-import java.util.Map;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- *   @author Grzegorz Nowak
- */
+*   @author Grzegorz Nowak
+*/
 public class PubInfoDTO {
 
-    private String name;
+    private String pubName;
     private String vicinity;
-    Map<String, Boolean> conveniences;
-    TablesDTO tables;
+    List<ConveniencesDTO> conveniencesDTOList;
+    TablesDTO tablesDTO;
     double rating;
     boolean favourite;
     boolean ourPub = true;
 
     public PubInfoDTO(){
-        this.name = "404 not found";
-        this.vicinity = "";
-        this.conveniences = null;
-        this.tables = null;
-        this.rating = 0;
-        this.favourite = false;
-        this.ourPub = false;
+
     }
 
-    public PubInfoDTO(String pubName, String vicinity, Map<String, Boolean> convenienceMap, TablesDTO tablesDTO, double rating, boolean favourite, boolean ourPub) {
-        this.name = pubName;
+    public PubInfoDTO(String pubName, String vicinity, List<ConveniencesDTO> conveniencesDTOList, TablesDTO tablesDTO, double rating, boolean favourite, boolean ourPub) {
+        this.pubName = pubName;
         this.vicinity = vicinity;
-        this.conveniences = convenienceMap;
-        this.tables = tablesDTO;
+        this.conveniencesDTOList = conveniencesDTOList;
+        this.tablesDTO = tablesDTO;
         this.rating = rating;
         this.favourite = favourite;
         this.ourPub = ourPub;
     }
 
-    public String getName() {
-        return name;
+    public String getPubName() {
+        return pubName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPubName(String pubName) {
+        this.pubName = pubName;
     }
 
     public String getVicinity() {
@@ -51,20 +47,20 @@ public class PubInfoDTO {
         this.vicinity = vicinity;
     }
 
-    public Map<String, Boolean> getConveniences() {
-        return conveniences;
+    public List<ConveniencesDTO> getConveniencesDTOList() {
+        return conveniencesDTOList;
     }
 
-    public void setConveniences( Map<String, Boolean> conveniences) {
-        this.conveniences = conveniences;
+    public void setConveniencesDTOList(List<ConveniencesDTO> conveniencesDTOList) {
+        this.conveniencesDTOList = conveniencesDTOList;
     }
 
-    public TablesDTO getTables() {
-        return tables;
+    public TablesDTO getTablesDTO() {
+        return tablesDTO;
     }
 
-    public void setTables(TablesDTO tables) {
-        this.tables = tables;
+    public void setTablesDTO(TablesDTO tablesDTO) {
+        this.tablesDTO = tablesDTO;
     }
 
     public double getRating() {

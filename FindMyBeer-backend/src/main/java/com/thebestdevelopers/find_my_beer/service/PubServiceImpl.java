@@ -6,7 +6,6 @@ import com.thebestdevelopers.find_my_beer.DTO.ConveniencesDTO;
 import com.thebestdevelopers.find_my_beer.DTO.PubDTO;
 
 import com.thebestdevelopers.find_my_beer.DTO.PubInfoDTO;
-import com.thebestdevelopers.find_my_beer.DTO.TablesDTO;
 import com.thebestdevelopers.find_my_beer.model.*;
 import com.thebestdevelopers.find_my_beer.repository.*;
 import org.modelmapper.ModelMapper;
@@ -14,9 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Array;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Jakub Pisula
@@ -100,45 +98,41 @@ public class PubServiceImpl implements PubService {
     }
 
     @Override
-    public PubInfoDTO getPubInfo(int userId, int pubId){
-        PubEntity pubEntity;
-        try {
-            pubEntity = pubRepository.findByPubId(pubId).get(0);
-        }catch(IndexOutOfBoundsException error){
-            return new PubInfoDTO();
-        }
+    public PubDTO getPubInfo(int userId, int pubId){
+        PubEntity pubEntity = pubRepository.findByPubId(pubId).get(0);
         AddressesEntity addressesEntity = addressRepository.findByPubId(pubId).get(0);
         String address = addressesEntity.getStreet() + " " + addressesEntity.getNumber() + ", " + addressesEntity.getCity();
 
         List<ConveniencesEntity> conveniencesEntityList = convenienceRepository.findByPubId(pubId);
-        Map<String, Boolean> convenienceMap = new TreeMap<>();
-        List<ConvenienceTypesEntity> convenienceTypesEntityAll = convenienceTypeRepository.findAll();
-        convenienceTypesEntityAll.forEach(convenienceType ->{convenienceMap.put(convenienceType.getDescription(), false);});
+        List<ConveniencesDTO> conveniencesDTOList = new ArrayList<>();
         for (ConveniencesEntity conveniencesEntity : conveniencesEntityList) {
             ConvenienceTypesEntity convenienceTypesEntity = convenienceTypeRepository.findByConvenienceTypesId(
                     conveniencesEntity.getConvenienceTypesId()).get(0);
-            convenienceMap.replace(convenienceTypesEntity.getDescription(), true);
+            ConveniencesDTO conveniencesDTO = new ConveniencesDTO(convenienceTypesEntity.getDescription(), true);
+            conveniencesDTOList.add(conveniencesDTO);
+            System.out.println(convenienceTypesEntity.getDescription());
         }
 
         List<TablesEntity> tablesEntityList = tableRepository.findByPubId(pubId);
-        int[] numberOfTables = new int[9]; //9 -> tables with 1 chair to 8 chairs
+        //int[] numberOfTables = ;
         for(TablesEntity tablesEntity : tablesEntityList){
             TableDetailsEntity tableDetailsEntity = tableDetailsRepository.findByTableId(tablesEntity.getTableId());
-            numberOfTables[tableDetailsEntity.getPlaces()]++;
+
+            System.out.println(tableDetailsEntity.getPlaces()+"     "+tableDetailsEntity.isOccupied());
         }
 
         List<RatingsEntity> ratingsEntityList = ratingRepository.findByPubId(pubId);
-        DecimalFormat df = new DecimalFormat("#.##");
-        df.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.US));
-        double ratingAverage = Double.parseDouble(df.format(this.countRatingsAverage(ratingsEntityList)));
+        double ratingAverage = this.countRatingsAverage(ratingsEntityList);
+
         List<FavouritiesEntity> favouritiesEntityList = favouritesRepository.findByPubId(pubId);
         boolean isFavouriteFlag = this.isFavourite(favouritiesEntityList, userId);
 
-        //parsing number of tables witch 1, 2, 4, 6, 8 chairs
-        TablesDTO tablesDTO = new TablesDTO(numberOfTables[1],numberOfTables[2], numberOfTables[4], numberOfTables[6], numberOfTables[8]);
 
-        PubInfoDTO pubInfoDTO = new PubInfoDTO(pubEntity.getPubName(), address, convenienceMap, tablesDTO,ratingAverage, isFavouriteFlag, true);
 
-        return pubInfoDTO;
+        //PubInfoDTO pubInfoDTO = new PubInfoDTO(pubEntity.getPubName(), address, conveniencesDTOList, )
+
+
+        PubDTO pubDTO =new PubDTO();
+        return pubDTO;
     }
 }
