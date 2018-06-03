@@ -28,8 +28,8 @@ public class UserServiceImpl implements UserService {
     UserDao userDao;
 
     @Override
-    public UserDTO getUser(String username, String password) {
-        UserEntity userEntity = userRepository.findByUsernameAndPassword(username,password).get(0);
+    public UserDTO getUser(String username) {
+        UserEntity userEntity = userRepository.findByUsername(username).get(0);
         ModelMapper mapper = new ModelMapper();
         return mapper.map(userEntity,UserDTO.class);
     }

@@ -1,11 +1,13 @@
 package com.thebestdevelopers.find_my_beer.controller;
 
+import com.sun.deploy.security.UserDeclinedException;
 import com.thebestdevelopers.find_my_beer.DTO.UserDTO;
 import com.thebestdevelopers.find_my_beer.controller.userControllerParam.CreateUserParam;
 import com.thebestdevelopers.find_my_beer.controller.userControllerParam.EditUserParam;
 import com.thebestdevelopers.find_my_beer.controller.userControllerParam.GetUserParam;
 import com.thebestdevelopers.find_my_beer.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
@@ -24,12 +26,14 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @PostMapping("")
-    public UserDTO getUser(@Valid @RequestBody GetUserParam param){return userService.getUser(param.getUsername(),param.getPassword()); }
-
     @GetMapping("")
-    public List<UserDTO> getAllUser(Principal principal){
-        User loginedUser = (User) ((Authentication) principal).getPrincipal();
+    public UserDTO getUser(Principal principal){
+        User user = (User) ((Authentication) principal).getPrincipal();
+        return userService.getUser(user.getUsername());
+    }
+
+    @GetMapping("all")
+    public List<UserDTO> getAllUser(){
         return userService.getAllUser();
     }
 
@@ -39,11 +43,19 @@ public class UserController {
     }
 
     @PutMapping("changeUserPassword")
-    public Boolean changeUserPassword (@Valid @RequestBody EditUserParam param){
+    public Boolean changeUserPassword (@Valid @RequestBody EditUserParam param, Principal principal){
+        User user = (User) ((Authentication) principal).getPrincipal();
+        if(!user.getUsername().equals(param.getUsername()))
+            throw new UserDeclinedException("You don't have permission");
         return userService.changeUserPassword(param.getUsername(), param.getPassword(), param.getNewPassword());
     }
 
     @DeleteMapping("")
-    public Boolean deleteUser(@Valid @RequestBody GetUserParam param){return userService.deleteUser(param.getUsername(), param.getPassword());}
+    public Boolean deleteUser(@Valid @RequestBody GetUserParam param, Principal principal){
+        User user = (User) ((Authentication) principal).getPrincipal();
+        if(!user.getUsername().equals(param.getUsername()))
+            throw new UserDeclinedException("You don't have permission");
+        return userService.deleteUser(param.getUsername(), param.getPassword());
+    }
 
 }
