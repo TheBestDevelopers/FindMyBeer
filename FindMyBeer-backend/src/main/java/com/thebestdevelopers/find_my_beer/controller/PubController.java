@@ -4,6 +4,8 @@ import com.sun.deploy.security.UserDeclinedException;
 import com.thebestdevelopers.find_my_beer.DTO.PubDTO;
 import com.thebestdevelopers.find_my_beer.DTO.PubInfoDTO;
 import com.thebestdevelopers.find_my_beer.controller.pubControllerParam.CreatePubParam;
+import com.thebestdevelopers.find_my_beer.model.UserEntity;
+import com.thebestdevelopers.find_my_beer.repository.UserRepository;
 import com.thebestdevelopers.find_my_beer.service.PubService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -27,14 +29,20 @@ public class PubController implements Serializable {
     @Autowired
     PubService pubService;
 
+    @Autowired
+    UserRepository userRepository;
+
     @PostMapping("new")
     public PubDTO createUser(@Valid @RequestBody CreatePubParam param) {
         return pubService.createPub(param.getPubName());
     }
 
     @GetMapping("getPubInfo")
-    public PubInfoDTO getPubInfo(@RequestParam("userID") int userId, @RequestParam("pubID") int pubId){
-        return pubService.getPubInfo(userId, pubId);
+    public PubInfoDTO getPubInfo(@RequestParam("userID") int userId, @RequestParam("pubID") int pubId, Principal principal){
+        User user = (User) ((Authentication) principal).getPrincipal();
+        UserEntity userEntity = userRepository.findByUsername(user.getUsername()).get(0);
+
+        return pubService.getPubInfo((int)userEntity.getUserId(), pubId);
     }
 
 }
