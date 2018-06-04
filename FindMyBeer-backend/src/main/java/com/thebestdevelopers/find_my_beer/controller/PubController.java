@@ -3,6 +3,7 @@ package com.thebestdevelopers.find_my_beer.controller;
 import com.sun.deploy.security.UserDeclinedException;
 import com.thebestdevelopers.find_my_beer.DTO.PubDTO;
 import com.thebestdevelopers.find_my_beer.DTO.PubInfoDTO;
+import com.thebestdevelopers.find_my_beer.DTO.PubMenuDTO;
 import com.thebestdevelopers.find_my_beer.controller.pubControllerParam.CreatePubParam;
 import com.thebestdevelopers.find_my_beer.model.UserEntity;
 import com.thebestdevelopers.find_my_beer.repository.UserRepository;
@@ -45,4 +46,11 @@ public class PubController implements Serializable {
         return pubService.getPubInfo((int)userEntity.getUserId(), pubId);
     }
 
+    @GetMapping("getPubMenu")
+    public PubMenuDTO getPubMenu(@RequestParam("pubID") int pubId, Principal principal){
+        User user = (User) ((Authentication) principal).getPrincipal();
+        UserEntity userEntity = userRepository.findByUsername(user.getUsername()).get(0);
+
+        return pubService.getPubMenu(pubId);
+    }
 }

@@ -2,11 +2,8 @@ package com.thebestdevelopers.find_my_beer.service;
 
 import com.thebestdevelopers.find_my_beer.DAO.PubDao;
 
-import com.thebestdevelopers.find_my_beer.DTO.ConveniencesDTO;
-import com.thebestdevelopers.find_my_beer.DTO.PubDTO;
+import com.thebestdevelopers.find_my_beer.DTO.*;
 
-import com.thebestdevelopers.find_my_beer.DTO.PubInfoDTO;
-import com.thebestdevelopers.find_my_beer.DTO.TablesDTO;
 import com.thebestdevelopers.find_my_beer.model.*;
 import com.thebestdevelopers.find_my_beer.repository.*;
 import org.modelmapper.ModelMapper;
@@ -50,6 +47,12 @@ public class PubServiceImpl implements PubService {
 
     @Autowired
     FavouritesRepository favouritesRepository;
+
+    @Autowired
+    MenuRepository menuRepository;
+
+    @Autowired
+    ProductRepository productRepository;
 
     @Override
     public PubDTO getPub(String username, String password) {
@@ -140,5 +143,24 @@ public class PubServiceImpl implements PubService {
         PubInfoDTO pubInfoDTO = new PubInfoDTO(pubEntity.getPubName(), address, convenienceMap, tablesDTO,ratingAverage, isFavouriteFlag, true);
 
         return pubInfoDTO;
+    }
+
+    @Override
+    public PubMenuDTO getPubMenu(int pubId) {
+        PubEntity pubEntity;
+        try {
+            pubEntity = pubRepository.findByPubId(pubId).get(0);
+        }catch(IndexOutOfBoundsException error){
+            return new PubMenuDTO();
+        }
+
+        List<MenuEntity> menuEntityList = menuRepository.findByPubId(pubEntity.getPubId());
+        Map<String, Double> productsAndPrices = new TreeMap<>();
+        for(MenuEntity menuEntity : menuEntityList){
+            ProductsEntity productsEntity = productRepository.findByProdId(menuEntity.getProdId());
+            productsAndPrices.put(productsEntity.getDescription(), menuEntity.getPrice());
+        }
+
+        return new PubMenuDTO(productsAndPrices);
     }
 }

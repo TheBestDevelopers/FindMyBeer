@@ -2,6 +2,7 @@ package com.thebestdevelopers.find_my_beer.service;
 
 import com.thebestdevelopers.find_my_beer.DTO.PubDTO;
 import com.thebestdevelopers.find_my_beer.DTO.PubInfoDTO;
+import com.thebestdevelopers.find_my_beer.DTO.PubMenuDTO;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
@@ -18,4 +19,6 @@ public interface PubService {
     Boolean deletePub(String username, String password);
     @PreAuthorize("hasAnyAuthority('admin','client', 'pub')")
     PubInfoDTO getPubInfo(int userId, int pubId);
+    @PreAuthorize("hasAnyAuthority('admin','client', 'pub')")
+    PubMenuDTO getPubMenu(int pubId);
 }
