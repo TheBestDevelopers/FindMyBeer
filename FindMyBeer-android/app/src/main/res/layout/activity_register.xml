@@ -21,16 +21,17 @@
 
     <Button
         android:id="@+id/mButtonRegister"
-        android:layout_width="160dp"
+        android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:background="@drawable/roundedbutton"
+        android:backgroundTint="#B3FFFFFF"
         android:onClick="mButtonRegisterOnClick"
-        android:text="Zarejestruj się"
+        android:text="Sign up"
         android:textColor="@android:color/black"
-        android:textSize="16sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mEditTextPassword" />
@@ -66,12 +67,12 @@
 
     <TextView
         android:id="@+id/mTextPassword"
-        android:layout_width="60dp"
+        android:layout_width="101dp"
         android:layout_height="30dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="20dp"
-        android:text="Hasło:"
+        android:text="Password:"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="16sp"

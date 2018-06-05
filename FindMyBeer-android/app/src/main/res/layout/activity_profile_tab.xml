@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfileTab">
+
+    <android.support.design.widget.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/navigationtabs5"
+        android:layout_gravity="bottom"
+        android:background="@android:color/background_light"
+        app:menu="@menu/tabs_navigation"
+        />
+
+    <Button
+        android:id="@+id/bLogOut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="60dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/roundedbutton"
+        android:backgroundTint="#B3FFFFFF"
+        android:onClick="mButtonLogOutOnClick"
+        android:text="Log out"
+        app:layout_anchor="@+id/navigationtabs5"
+        app:layout_anchorGravity="top|center" />
+
+    <TextView
+        android:id="@+id/tLogin"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:text="TextView"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/bChange"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/roundedbutton"
+        android:backgroundTint="#B3FFFFFF"
+        android:onClick="mButtonChangePswOnClick"
+        android:text="      Change password"
+        android:textAlignment="viewStart"
+        app:layout_anchor="@+id/tLogin"
+        app:layout_anchorGravity="bottom|center" />
+
+    <Button
+        android:id="@+id/bDelete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="160dp"
+        android:background="@drawable/roundedbutton"
+        android:backgroundTint="#B3FFFFFF"
+        android:onClick="mButtonDeleteOnClick"
+        android:text="      Delete account"
+        android:textAlignment="viewStart" />
+
+
+
+</android.support.design.widget.CoordinatorLayout>

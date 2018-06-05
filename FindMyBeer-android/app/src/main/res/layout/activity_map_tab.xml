@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".mapsController.MapTab">
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigationtabs4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@android:color/background_light"
+        app:menu="@menu/tabs_navigation" />
+
+    <fragment
+        android:id="@+id/mapfragment"
+        android:name="com.google.android.gms.maps.MapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="fill" />
+
+    <Button
+        android:id="@+id/bSearch"
+        android:layout_width="78dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|top"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/roundedbutton"
+        android:backgroundTint="#B3FFFFFF"
+        android:onClick="onClick"
+        android:text="Search" />
+
+</android.support.design.widget.CoordinatorLayout>
