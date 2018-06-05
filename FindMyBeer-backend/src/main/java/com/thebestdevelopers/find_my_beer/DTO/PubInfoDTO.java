@@ -1,10 +1,14 @@
 package com.thebestdevelopers.find_my_beer.DTO;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import java.util.Map;
 
 /**
  *   @author Grzegorz Nowak
  */
+@JsonTypeName("result")
+@JsonTypeInfo(include= JsonTypeInfo.As.WRAPPER_OBJECT,use= JsonTypeInfo.Id.NAME)
 public class PubInfoDTO {
 
     private String name;

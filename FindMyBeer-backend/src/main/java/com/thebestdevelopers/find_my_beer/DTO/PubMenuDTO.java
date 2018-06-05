@@ -1,5 +1,8 @@
 package com.thebestdevelopers.find_my_beer.DTO;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import java.util.Map;
 import java.util.TreeMap;
 
