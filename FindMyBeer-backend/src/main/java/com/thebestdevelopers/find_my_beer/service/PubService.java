@@ -20,10 +20,10 @@ public interface PubService {
     PubDTO createPub(String pubName);
     Boolean changePubPassword(String username, String password, String newPassword);
     Boolean deletePub(String username, String password);
-    @PreAuthorize("hasAnyAuthority('admin','client', 'pub')")
+    //@PreAuthorize("hasAnyAuthority('admin','client', 'pub')")
     PubInfoDTO getPubInfo(int userId, int pubId);
-    @PreAuthorize("hasAnyAuthority('admin','client', 'pub')")
+    //@PreAuthorize("hasAnyAuthority('admin','client', 'pub')")
     PubMenuDTO getPubMenu(int pubId);
-    @PreAuthorize("hasAnyAuthority('admin','client', 'pub')")
+    //@PreAuthorize("hasAnyAuthority('admin','client', 'pub')")
     GetPubsDTO getPubs(Double longitude, Double latitude) throws IOException;
 }

@@ -197,7 +197,7 @@ public class PubServiceImpl implements PubService {
     @Override
     public GetPubsDTO getPubs(Double longitude, Double latitude) throws IOException {
 
-        final Double DISTANCE = 170.0; //distance in meters
+        final Double DISTANCE = 10000.0; //distance in meters
 
         final String URL = "https://maps.googleapis.com/maps/api/geocode/json";
         List<AddressesEntity> addressesEntityList = addressRepository.findAll();

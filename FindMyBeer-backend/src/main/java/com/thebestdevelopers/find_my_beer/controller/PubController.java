@@ -43,16 +43,16 @@ public class PubController implements Serializable {
 
     @GetMapping("getPubInfo")
     public PubInfoDTO getPubInfo(@RequestParam("userID") int userId, @RequestParam("pubID") int pubId, Principal principal){
-        User user = (User) ((Authentication) principal).getPrincipal();
-        UserEntity userEntity = userRepository.findByUsername(user.getUsername()).get(0);
+        //User user = (User) ((Authentication) principal).getPrincipal();
+        //UserEntity userEntity = userRepository.findByUsername(user.getUsername()).get(0);
 
-        return pubService.getPubInfo((int)userEntity.getUserId(), pubId);
+        return pubService.getPubInfo(userId, pubId);
     }
 
     @GetMapping("getPubMenu")
     public PubMenuDTO getPubMenu(@RequestParam("pubID") int pubId, Principal principal){
-        User user = (User) ((Authentication) principal).getPrincipal();
-        UserEntity userEntity = userRepository.findByUsername(user.getUsername()).get(0);
+        //User user = (User) ((Authentication) principal).getPrincipal();
+        //UserEntity userEntity = userRepository.findByUsername(user.getUsername()).get(0);
 
         return pubService.getPubMenu(pubId);
     }
