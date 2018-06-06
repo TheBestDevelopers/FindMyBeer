@@ -13,4 +13,5 @@ import java.util.List;
 public interface AddressRepository extends JpaRepository<AddressesEntity, Long> {
 
     List<AddressesEntity> findByPubId(int pubId);
+    List<AddressesEntity> findAll();
 }

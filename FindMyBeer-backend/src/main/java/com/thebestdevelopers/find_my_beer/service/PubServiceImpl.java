@@ -1,19 +1,32 @@
 package com.thebestdevelopers.find_my_beer.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thebestdevelopers.find_my_beer.DAO.PubDao;
 
 import com.thebestdevelopers.find_my_beer.DTO.*;
 
+import com.thebestdevelopers.find_my_beer.DTO.getPubsDTOs.GetPubsDTO;
+import com.thebestdevelopers.find_my_beer.DTO.getPubsDTOs.GoogleResponse;
+import com.thebestdevelopers.find_my_beer.DTO.getPubsDTOs.Location;
+import com.thebestdevelopers.find_my_beer.DTO.getPubsDTOs.Result;
 import com.thebestdevelopers.find_my_beer.model.*;
 import com.thebestdevelopers.find_my_beer.repository.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.*;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
+import java.util.List;
+
+
 
 /**
  * @author Jakub Pisula
@@ -162,5 +175,66 @@ public class PubServiceImpl implements PubService {
         }
 
         return new PubMenuDTO(productsAndPrices);
+    }
+
+    private Boolean isPubNear(Double currentLongitude, Double currentLatitude, Double pubLongitude, Double pubLatitude, Double chosenDistance){
+
+        final int earthRadius = 6371;
+
+        double longitudeDistance = Math.toRadians(currentLongitude - pubLongitude);
+        double latitudeDistance = Math.toRadians(currentLatitude - pubLatitude);
+        double a = Math.sin(latitudeDistance / 2) * Math.sin(latitudeDistance / 2)
+                + Math.cos(Math.toRadians(currentLatitude)) * Math.cos(Math.toRadians(pubLatitude))
+                * Math.sin(longitudeDistance / 2) * Math.sin(longitudeDistance / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double actualDistance = earthRadius * c * 1000; // convert to meters
+        if(actualDistance<=chosenDistance)
+            return true;
+        else
+            return false;
+    }
+
+    @Override
+    public GetPubsDTO getPubs(Double longitude, Double latitude) throws IOException {
+
+        final Double DISTANCE = 170.0; //distance in meters
+
+        final String URL = "https://maps.googleapis.com/maps/api/geocode/json";
+        List<AddressesEntity> addressesEntityList = addressRepository.findAll();
+        GoogleResponse response;
+        List<GoogleResponse> googleResponseList = new ArrayList<>();
+        for(AddressesEntity addressesEntity : addressesEntityList){
+            String fullAddress = addressesEntity.getStreet() + addressesEntity.getNumber() + ", " + addressesEntity.getCity();
+            URL url = new URL(URL + "?address=" + URLEncoder.encode(fullAddress, "UTF-8")
+                    + "&sensor=false&key=AIzaSyDwKGwZZQdhb3_pzexvUyTX4oZy2MGrypg");
+            URLConnection conn = url.openConnection();
+            InputStream in = conn.getInputStream() ;
+            ObjectMapper mapper = new ObjectMapper();
+            response = (GoogleResponse)mapper.readValue(in,GoogleResponse.class);
+            googleResponseList.add(response);
+            in.close();
+        }
+
+        int iter = 0;
+        List<Result> results = new ArrayList<>();
+        for(GoogleResponse googleResponse : googleResponseList) {
+            if(googleResponse.getStatus().equals("OK")) {
+                Location location = googleResponse.getResults()[0].getGeometry().getLocation();
+                Double pubLongitude = Double.parseDouble(location.getLng());
+                Double pubLatitude = Double.parseDouble(location.getLat());
+                if (this.isPubNear(longitude, latitude, pubLongitude, pubLatitude, DISTANCE)) {
+                    AddressesEntity currentAddress = addressesEntityList.get(iter);
+                    String pubName = pubRepository.findByPubId(addressesEntityList.get(iter).getPubId()).get(0).getPubName();
+                    String address = currentAddress.getStreet() + currentAddress.getNumber() + ", " + currentAddress.getCity();
+                    Result result = new Result(pubName, address, googleResponse.getResults()[0].getGeometry(),
+                            googleResponse.getResults()[0].getPlace_id(), true);
+                    results.add(result);
+               }
+            }
+            iter++;
+        }
+
+        Result[] resultsArray = new Result[results.size()];
+        return new GetPubsDTO(results.toArray(resultsArray));
     }
 }
