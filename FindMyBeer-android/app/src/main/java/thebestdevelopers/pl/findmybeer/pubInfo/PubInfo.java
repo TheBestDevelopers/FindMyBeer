@@ -35,9 +35,16 @@ public class PubInfo extends AppCompatActivity {
         //wczytanie info po wcisnieciu markera na mapie.
         Intent i = getIntent();
         Bundle b = i.getExtras();
+        String url;
         if (b != null) {
             id = (String) b.get("placeID"); //wczytanie id miejsca oznaczonego markerem
-            String url = getUrl(id);
+            if(id.charAt(0) == '!' && id.charAt(1) == '!' && id.charAt(2) == '!') {
+                String id2 = id.substring(3,id.length());
+                url = getUrl2(id2);
+            }
+            else
+                url = getUrl(id);
+
             GetJsonResult getNearbyPlacesData = new GetJsonResult(this);
             Object dataTransfer[] = new Object[1];
             dataTransfer[0] = url;
@@ -92,6 +99,16 @@ public class PubInfo extends AppCompatActivity {
         StringBuilder googlePlaceUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/details/json?placeid=");
         googlePlaceUrl.append(id);
         googlePlaceUrl.append("&key="+"AIzaSyB3iQRgruru1jotumbRTuzOYiWSePz41ZQ");
+        Log.d("created url", googlePlaceUrl.toString());
+        return googlePlaceUrl.toString();
+    }
+
+    //http://localhost:8080/api/pubs/getPubInfo?userID=2&pubID=3
+    private String getUrl2(String id) {
+        StringBuilder googlePlaceUrl = new StringBuilder("http://192.168.0.16:8080"); //temp
+        //TO DO
+        googlePlaceUrl.append("/api/pubs/getPubInfo?userID="+"2"); //zamiast 2 ma byc user id
+        googlePlaceUrl.append("&pubID="+id);
         Log.d("created url", googlePlaceUrl.toString());
         return googlePlaceUrl.toString();
     }

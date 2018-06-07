@@ -31,6 +31,18 @@
         android:background="@drawable/roundedbutton"
         android:backgroundTint="#B3FFFFFF"
         android:onClick="onClick"
-        android:text="Search" />
+        android:text="Google" />
+
+    <Button
+        android:id="@+id/bSearch2"
+        android:layout_width="78dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|top"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/roundedbutton"
+        android:backgroundTint="#B3FFFFFF"
+        android:onClick="onClick2"
+        android:text="App" />
 
 </android.support.design.widget.CoordinatorLayout>

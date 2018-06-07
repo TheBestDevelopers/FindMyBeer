@@ -17,16 +17,6 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/textView4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:text="Pub:" />
-
-            <TextView
                 android:id="@+id/tName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -82,7 +72,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:textColor="@color/black"
-                android:textSize="24sp" />
+                android:textSize="19sp" />
 
             <TextView
                 android:id="@+id/textView6"
@@ -102,7 +92,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:textColor="@color/black"
-                android:textSize="24sp" />
+                android:textSize="19sp" />
 
             <TextView
                 android:id="@+id/textView7"
@@ -122,7 +112,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:textColor="@color/black"
-                android:textSize="24sp" />
+                android:textSize="19sp" />
 
             <Button
                 android:id="@+id/bDirections"
@@ -149,6 +139,46 @@
                 android:backgroundTint="#B3FFFFFF"
                 android:onClick="mButtonMenuClick"
                 android:text="Menu" />
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:text="Conveniences:" />
+
+            <TextView
+                android:id="@+id/tConveniences"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:textColor="@color/black"
+                android:textSize="19sp" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:text="Tables:" />
+
+            <TextView
+                android:id="@+id/tTables"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:textColor="@color/black"
+                android:textSize="19sp" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

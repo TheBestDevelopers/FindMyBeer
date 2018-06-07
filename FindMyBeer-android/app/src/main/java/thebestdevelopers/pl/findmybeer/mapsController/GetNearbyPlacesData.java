@@ -50,7 +50,7 @@ public class GetNearbyPlacesData extends AsyncTask<Object, String, String> {
         {
             MarkerOptions markerOptions = new MarkerOptions();
             HashMap<String, String> googlePlace = nearbyPlaceList.get(i);
-
+            boolean ourPub = false;
             String placeName = googlePlace.get("place_name");
             String vicinity = googlePlace.get("vicinity");
             double lat = Double.parseDouble( googlePlace.get("lat"));
@@ -59,9 +59,18 @@ public class GetNearbyPlacesData extends AsyncTask<Object, String, String> {
             LatLng latLng = new LatLng( lat, lng);
             markerOptions.position(latLng);
             markerOptions.title(placeName);
-            markerOptions.snippet(id);
+            if (googlePlace.get("our_pub").isEmpty())
+                markerOptions.snippet(id);
+            else {
+                markerOptions.snippet("!!!" + id);
+                ourPub = true;
+            }
 
-            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+            if (ourPub)
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+            else
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+
             mMap.addMarker(markerOptions);
             mMap.animateCamera(CameraUpdateFactory.zoomTo(12));
         }

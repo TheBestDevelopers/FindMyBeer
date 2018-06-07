@@ -197,6 +197,24 @@ public class MapTab extends AppCompatActivity implements OnMapReadyCallback, Goo
         getNearbyPlacesData.execute(dataTransfer);
     }
 
+    public void onClick2(View v) {
+        mGoogleMap.clear();
+        Object dataTransfer[] = new Object[2];
+        GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
+        String url = getUrl2(latitude, longitude);
+        dataTransfer[0] = mGoogleMap;
+        dataTransfer[1] = url;
+        getNearbyPlacesData.execute(dataTransfer);
+    }
+
+    //http://localhost:8080/api/pubs/getPubs?longitude=18.976369&latitude=50.2301888
+    private String getUrl2(double lat, double lng) {
+        StringBuilder googlePlaceUrl = new StringBuilder("http://192.168.0.16:8080"); //tymczasowe ip komputera do testow
+        googlePlaceUrl.append("/api/pubs/getPubs?longitude="+lng+"&latitude="+lat);
+        Log.d("created url", googlePlaceUrl.toString());
+        return googlePlaceUrl.toString();
+    }
+
     private String getUrl(double lat, double lng, String nearby) {
         StringBuilder googlePlaceUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
         googlePlaceUrl.append("location="+lat+","+lng);
