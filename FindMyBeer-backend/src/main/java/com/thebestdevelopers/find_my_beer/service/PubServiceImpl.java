@@ -204,7 +204,7 @@ public class PubServiceImpl implements PubService {
         GoogleResponse response;
         List<GoogleResponse> googleResponseList = new ArrayList<>();
         for(AddressesEntity addressesEntity : addressesEntityList){
-            String fullAddress = addressesEntity.getStreet() + addressesEntity.getNumber() + ", " + addressesEntity.getCity();
+            String fullAddress = addressesEntity.getStreet() + " " + addressesEntity.getNumber() + ", " + addressesEntity.getCity();
             URL url = new URL(URL + "?address=" + URLEncoder.encode(fullAddress, "UTF-8")
                     + "&sensor=false&key=AIzaSyDwKGwZZQdhb3_pzexvUyTX4oZy2MGrypg");
             URLConnection conn = url.openConnection();
@@ -225,9 +225,9 @@ public class PubServiceImpl implements PubService {
                 if (this.isPubNear(longitude, latitude, pubLongitude, pubLatitude, DISTANCE)) {
                     AddressesEntity currentAddress = addressesEntityList.get(iter);
                     String pubName = pubRepository.findByPubId(addressesEntityList.get(iter).getPubId()).get(0).getPubName();
-                    String address = currentAddress.getStreet() + currentAddress.getNumber() + ", " + currentAddress.getCity();
+                    String address = currentAddress.getStreet() + " " + currentAddress.getNumber() + ", " + currentAddress.getCity();
                     Result result = new Result(pubName, address, googleResponse.getResults()[0].getGeometry(),
-                            googleResponse.getResults()[0].getPlace_id(), true);
+                            ((Integer)addressesEntityList.get(iter).getPubId()).toString(), true);
                     results.add(result);
                }
             }
