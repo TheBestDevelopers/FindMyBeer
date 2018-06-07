@@ -1,11 +1,15 @@
 package com.thebestdevelopers.find_my_beer.DTO.getPubsDTOs;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  *   @author Grzegorz Nowak
  */
 public class Result {
+
+    @JsonIgnore
+    private Integer pubId;
 
     private String name;
 
@@ -22,12 +26,21 @@ public class Result {
     public Result() {
     }
 
-    public Result(String name, String vicinity, Geometry geometry, String placeId, Boolean ourPub) {
+    public Result(Integer pubId, String name, String vicinity, Geometry geometry, String placeId, Boolean ourPub) {
+        this.pubId = pubId;
         this.name = name;
         this.vicinity = vicinity;
         this.geometry = geometry;
         this.placeId = placeId;
         this.ourPub = ourPub;
+    }
+
+    public Integer getPubId() {
+        return pubId;
+    }
+
+    public void setPubId(Integer pubId) {
+        this.pubId = pubId;
     }
 
     public String getName() {

@@ -43,4 +43,9 @@ public class ConveniencesServiceImpl implements ConveniencesService {
         }
         return new ConveniencesDTO(conveniencesNames);
     }
+
+    @Override
+    public ConveniencesDTO getPubsWithConveniences(Double longitude, Double latitude, String[] conveniences) {
+        return null;
+    }
 }

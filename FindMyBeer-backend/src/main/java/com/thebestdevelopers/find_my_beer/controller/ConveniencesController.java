@@ -4,10 +4,7 @@ import com.thebestdevelopers.find_my_beer.DTO.ConveniencesDTO;
 import com.thebestdevelopers.find_my_beer.DTO.PubInfoDTO;
 import com.thebestdevelopers.find_my_beer.service.ConveniencesService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.Serializable;
 import java.security.Principal;
@@ -40,5 +37,17 @@ public class ConveniencesController implements Serializable{
         //throw new UserDeclinedException("You don't have permission");
 
         return conveniencesService.getPubConveniences(pubId);
+    }
+
+    @PutMapping("getPubsWithConveniences")
+    public ConveniencesDTO getPubsWithConveniences(@RequestParam("longitude") Double longitude,
+                                                   @RequestParam("latitude") Double latitude,
+                                                   @RequestParam("conveniences") String[] conveniences,
+                                                   Principal principal){
+        //User user = (User) ((Authentication) principal).getPrincipal();
+        //if(!user.getUsername().equals(param.getUsername()))
+        //throw new UserDeclinedException("You don't have permission");
+
+        return conveniencesService.getPubsWithConveniences(longitude, latitude, conveniences);
     }
 }
