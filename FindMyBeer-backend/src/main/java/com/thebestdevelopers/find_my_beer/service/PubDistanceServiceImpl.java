@@ -8,21 +8,26 @@ import com.thebestdevelopers.find_my_beer.model.AddressesEntity;
 import com.thebestdevelopers.find_my_beer.model.PubEntity;
 import com.thebestdevelopers.find_my_beer.repository.AddressRepository;
 import com.thebestdevelopers.find_my_beer.repository.PubRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
+/**
+ * @author Grzegorz Nowak
+ *
+ */
 public class PubDistanceServiceImpl implements PubDistanceService {
 
-    final Double DISTANCE = 10000.0; //distance in meters
-
+    final Double CHOSEN_DISTANCE = 10000.0; //distance in meters
+    Double distance = 0.0;
     AddressRepository addressRepository;
     PubRepository pubRepository;
 
@@ -42,15 +47,19 @@ public class PubDistanceServiceImpl implements PubDistanceService {
                 + Math.cos(Math.toRadians(currentLatitude)) * Math.cos(Math.toRadians(pubLatitude))
                 * Math.sin(longitudeDistance / 2) * Math.sin(longitudeDistance / 2);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        double actualDistance = earthRadius * c * 1000; // convert to meters
 
-        return actualDistance;
+        DecimalFormat df = new DecimalFormat("#.##");
+        df.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.US));
+
+        return Double.parseDouble(df.format(earthRadius * c * 1000));
     }
 
     @Override
     public Boolean isPubNear(Double currentLongitude, Double currentLatitude, Double pubLongitude, Double pubLatitude){
 
-        if(this.getPubDistance(currentLongitude, currentLatitude, pubLongitude, pubLatitude)<=DISTANCE)
+        this.distance = this.getPubDistance(currentLongitude, currentLatitude, pubLongitude, pubLatitude);
+
+        if(distance <= CHOSEN_DISTANCE)
             return true;
         else
             return false;
@@ -85,7 +94,7 @@ public class PubDistanceServiceImpl implements PubDistanceService {
                     AddressesEntity currentAddress = addressesEntityList.get(iter);
                     PubEntity pubEntity = pubRepository.findByPubId(addressesEntityList.get(iter).getPubId()).get(0);
                     String address = currentAddress.getStreet() + " " + currentAddress.getNumber() + ", " + currentAddress.getCity();
-                    Result result = new Result(pubEntity.getPubId(), pubEntity.getPubName(), address, googleResponse.getResults()[0].getGeometry(),
+                    Result result = new Result(pubEntity.getPubId(), this.distance, pubEntity.getPubName(), address, googleResponse.getResults()[0].getGeometry(),
                             ((Integer)addressesEntityList.get(iter).getPubId()).toString(), true);
                     results.add(result);
                 }

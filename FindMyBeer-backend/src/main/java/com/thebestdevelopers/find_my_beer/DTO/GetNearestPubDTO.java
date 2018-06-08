@@ -1,5 +1,6 @@
 package com.thebestdevelopers.find_my_beer.DTO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
@@ -14,22 +15,35 @@ public class GetNearestPubDTO {
 
     private Double rating;
 
+    @JsonIgnore
     private Double longitude;
 
+    @JsonIgnore
     private Double latitude;
 
     private int freeTable;
 
-    public GetNearestPubDTO(int pubId, String pubName, Double rating, Double longitude, Double latitude, int freeTable) {
+    private Double distance;
+
+    public GetNearestPubDTO(int pubId, String pubName, Double rating, Double longitude, Double latitude, int freeTable, Double distance) {
         this.id = pubId;
         this.name = pubName;
         this.rating = rating;
         this.longitude = longitude;
         this.latitude = latitude;
         this.freeTable = freeTable;
+        this.distance = distance;
     }
 
     public GetNearestPubDTO() {
+    }
+
+    public Double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Double distance) {
+        this.distance = distance;
     }
 
     public int getId() {

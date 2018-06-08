@@ -68,4 +68,16 @@ public class PubController implements Serializable {
 
         return pubService.getNearestPubs(longitude, latitude);
     }
+
+    @PutMapping("getPubsWithConveniences")
+    public List<GetNearestPubDTO> getPubsWithConveniences(@RequestParam("longitude") Double longitude,
+                                                   @RequestParam("latitude") Double latitude,
+                                                   @RequestParam("conveniences") String[] conveniences,
+                                                   Principal principal) throws IOException {
+        //User user = (User) ((Authentication) principal).getPrincipal();
+        //if(!user.getUsername().equals(param.getUsername()))
+        //throw new UserDeclinedException("You don't have permission");
+
+        return pubService.getPubsWithConveniences(longitude, latitude, conveniences);
+    }
 }

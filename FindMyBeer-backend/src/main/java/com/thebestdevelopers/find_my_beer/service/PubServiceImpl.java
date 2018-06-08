@@ -24,6 +24,7 @@ import java.util.List;
 
 /**
  * @author Jakub Pisula
+ * Modyfications: Gzegorz Nowak
  */
 @Service
 public class PubServiceImpl implements PubService {
@@ -90,11 +91,15 @@ public class PubServiceImpl implements PubService {
 
     private double countRatingsAverage(List<RatingsEntity> ratingsEntityList) {
         double ratingsValuesSum = 0;
+        double ratingAverage = 0;
         for(RatingsEntity ratingsEntity : ratingsEntityList){
             ratingsValuesSum += ratingsEntity.getRate();
         }
+        ratingAverage = ratingsValuesSum/ratingsEntityList.size();
+        DecimalFormat df = new DecimalFormat("#.##");
+        df.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.US));
 
-        return ratingsValuesSum/ratingsEntityList.size();
+        return Double.parseDouble(df.format(ratingAverage));
     }
 
     private int countFreeTables(List<TablesEntity> tablesEntityList){
@@ -148,16 +153,14 @@ public class PubServiceImpl implements PubService {
         }
 
         List<RatingsEntity> ratingsEntityList = ratingRepository.findByPubId(pubId);
-        DecimalFormat df = new DecimalFormat("#.##");
-        df.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.US));
-        double ratingAverage = Double.parseDouble(df.format(this.countRatingsAverage(ratingsEntityList)));
         List<FavouritiesEntity> favouritiesEntityList = favouritesRepository.findByPubId(pubId);
         boolean isFavouriteFlag = this.isFavourite(favouritiesEntityList, userId);
 
         //parsing number of tables witch 1, 2, 4, 6, 8 chairs
         TablesDTO tablesDTO = new TablesDTO(numberOfTables[1],numberOfTables[2], numberOfTables[4], numberOfTables[6], numberOfTables[8]);
 
-        PubInfoDTO pubInfoDTO = new PubInfoDTO(pubEntity.getPubName(), address, convenienceMap, tablesDTO,ratingAverage, isFavouriteFlag, true);
+        PubInfoDTO pubInfoDTO = new PubInfoDTO(pubEntity.getPubName(), address, convenienceMap, tablesDTO,
+                this.countRatingsAverage(ratingsEntityList), isFavouriteFlag, true);
 
         return pubInfoDTO;
     }
@@ -190,10 +193,7 @@ public class PubServiceImpl implements PubService {
         return new GetPubsDTO(results.toArray(resultsArray));
     }
 
-    @Override
-    public List<GetNearestPubDTO> getNearestPubs(Double longitude, Double latitude) throws IOException {
-        PubDistanceServiceImpl pubDistanceService = new PubDistanceServiceImpl(addressRepository, pubRepository);
-        List<Result> results = pubDistanceService.getNearPubs(longitude, latitude);
+    private List<GetNearestPubDTO> getPubsWithTabes(List<Result> results){ //similar to getPubs byt returns other informations
         List<GetNearestPubDTO> getNearestPubDTOList = new ArrayList<>();
         Double averageRating;
         int numberOfFreeTables;
@@ -203,9 +203,54 @@ public class PubServiceImpl implements PubService {
             Location location = result.getGeometry().getLocation();
             Double pubLongitude = Double.parseDouble(location.getLng());
             Double pubLatitude = Double.parseDouble(location.getLat());
-            GetNearestPubDTO getNearestPubDTO = new GetNearestPubDTO(result.getPubId(), result.getName(), averageRating, pubLongitude, pubLatitude, numberOfFreeTables);
+            GetNearestPubDTO getNearestPubDTO = new GetNearestPubDTO(result.getPubId(), result.getName(), averageRating,
+                    pubLongitude, pubLatitude, numberOfFreeTables, result.getDistance());
             getNearestPubDTOList.add(getNearestPubDTO);
         }
         return getNearestPubDTOList;
+    }
+
+    @Override
+    public List<GetNearestPubDTO> getNearestPubs(Double longitude, Double latitude) throws IOException {
+        PubDistanceServiceImpl pubDistanceService = new PubDistanceServiceImpl(addressRepository, pubRepository);
+        List<Result> results = pubDistanceService.getNearPubs(longitude, latitude);
+
+        return this.getPubsWithTabes(results);
+    }
+
+    Boolean isHaveConveniences(int pubId, String[] conveniences){
+
+        List<ConveniencesEntity> conveniencesEntityList = convenienceRepository.findByPubId(pubId);
+        boolean flag = false;
+        for(String convenience : conveniences){
+            flag = false;
+            for(ConveniencesEntity conveniencesEntiy : conveniencesEntityList){
+                   ConvenienceTypesEntity convenienceTypesEntity = convenienceTypeRepository.findByConvenienceTypesId(conveniencesEntiy.getConvenienceTypesId()).get(0);
+                if(convenience.equals(convenienceTypesEntity.getDescription())){
+                    flag = true;
+                    break;
+                }
+            }
+            if(!flag)
+                return false;
+            }
+        return true;
+    }
+
+    @Override
+    public List<GetNearestPubDTO> getPubsWithConveniences(Double longitude, Double latitude, String[] conveniences) throws IOException {
+
+        PubDistanceServiceImpl pubDistanceService = new PubDistanceServiceImpl(addressRepository, pubRepository);
+        List<Result> results = pubDistanceService.getNearPubs(longitude, latitude);
+
+        List<GetNearestPubDTO> getNearestPubDTOList = this.getPubsWithTabes(results);
+        List<GetNearestPubDTO> getNearestPubWithConveniencesDTOList = new ArrayList<>();
+        for (GetNearestPubDTO getNearestPubDTO : getNearestPubDTOList) {
+            if(this.isHaveConveniences(getNearestPubDTO.getId(), conveniences)){
+                getNearestPubWithConveniencesDTOList.add(getNearestPubDTO);
+            }
+        }
+
+        return getNearestPubWithConveniencesDTOList;
     }
 }

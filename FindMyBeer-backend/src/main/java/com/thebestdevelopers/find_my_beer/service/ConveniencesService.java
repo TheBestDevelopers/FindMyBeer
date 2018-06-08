@@ -16,7 +16,4 @@ public interface ConveniencesService {
     ConveniencesDTO getAllConveniences();
     //@PreAuthorize("hasAnyAuthority('admin','client', 'pub')")
     ConveniencesDTO getPubConveniences(int pubId);
-    //@PreAuthorize("hasAnyAuthority('admin','client', 'pub')")
-    ConveniencesDTO getPubsWithConveniences(Double longitude, Double latitude, String[] conveniences) throws IOException;
-
 }

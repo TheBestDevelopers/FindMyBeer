@@ -2,6 +2,8 @@ package com.thebestdevelopers.find_my_beer.service;
 
 
 import com.thebestdevelopers.find_my_beer.DTO.ConveniencesDTO;
+import com.thebestdevelopers.find_my_beer.DTO.GetNearestPubDTO;
+import com.thebestdevelopers.find_my_beer.DTO.getPubsDTOs.Location;
 import com.thebestdevelopers.find_my_beer.DTO.getPubsDTOs.Result;
 import com.thebestdevelopers.find_my_beer.model.ConvenienceTypesEntity;
 import com.thebestdevelopers.find_my_beer.model.ConveniencesEntity;
@@ -53,14 +55,6 @@ public class ConveniencesServiceImpl implements ConveniencesService {
         }
         return new ConveniencesDTO(conveniencesNames);
     }
-
-    @Override
-    public ConveniencesDTO getPubsWithConveniences(Double longitude, Double latitude, String[] conveniences) throws IOException {
-        PubDistanceServiceImpl pubDistanceService = new PubDistanceServiceImpl(addressRepository, pubRepository);
-        List<Result> results = pubDistanceService.getNearPubs(longitude, latitude);
-
-        return null;
-    }
-
-
 }
+
+

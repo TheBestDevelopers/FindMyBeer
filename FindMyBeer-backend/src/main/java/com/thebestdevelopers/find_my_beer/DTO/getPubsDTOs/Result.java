@@ -11,6 +11,9 @@ public class Result {
     @JsonIgnore
     private Integer pubId;
 
+    @JsonIgnore
+    private Double distance;
+
     private String name;
 
     private String vicinity;
@@ -26,13 +29,22 @@ public class Result {
     public Result() {
     }
 
-    public Result(Integer pubId, String name, String vicinity, Geometry geometry, String placeId, Boolean ourPub) {
+    public Result(Integer pubId, Double distance, String name, String vicinity, Geometry geometry, String placeId, Boolean ourPub) {
         this.pubId = pubId;
+        this.distance = distance;
         this.name = name;
         this.vicinity = vicinity;
         this.geometry = geometry;
         this.placeId = placeId;
         this.ourPub = ourPub;
+    }
+
+    public Double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Double distance) {
+        this.distance = distance;
     }
 
     public Integer getPubId() {
