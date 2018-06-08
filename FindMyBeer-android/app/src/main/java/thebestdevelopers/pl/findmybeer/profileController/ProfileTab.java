@@ -1,6 +1,9 @@
-package thebestdevelopers.pl.findmybeer;
+package thebestdevelopers.pl.findmybeer.profileController;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.ActionBar;
@@ -10,6 +13,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import thebestdevelopers.pl.findmybeer.BottomNavigationViewHelper;
+import thebestdevelopers.pl.findmybeer.HomeTab;
+import thebestdevelopers.pl.findmybeer.Login;
+import thebestdevelopers.pl.findmybeer.R;
 import thebestdevelopers.pl.findmybeer.favController.FavTab;
 import thebestdevelopers.pl.findmybeer.mapsController.MapTab;
 import thebestdevelopers.pl.findmybeer.searchController.SearchTab;
@@ -67,22 +74,49 @@ public class ProfileTab extends AppCompatActivity {
 
     public void mButtonLogOutOnClick(View v){
         //obsluga wylogowania
-
-        Intent myIntent = new Intent(getApplicationContext(), Login.class);
-        startActivity(myIntent);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure you want to log out?")
+                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //temp - potem wylogowanie
+                        Intent myIntent = new Intent(getApplicationContext(), Login.class);
+                        startActivity(myIntent);
+                    }
+                })
+                .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
     public void mButtonChangePswOnClick(View v){
         //obsluga zmiany hasla
 
-        Intent myIntent = new Intent(getApplicationContext(), HomeTab.class);
+        Intent myIntent = new Intent(getApplicationContext(), ChangePasswordActivity.class);
         startActivity(myIntent);
     }
 
     public void mButtonDeleteOnClick(View v){
         //obsluga usuniecia konta
 
-        Intent myIntent = new Intent(getApplicationContext(), Login.class);
-        startActivity(myIntent);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure you want to delete your account?")
+                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //temp - potem usuniecie konta
+                        Intent myIntent = new Intent(getApplicationContext(), Login.class);
+                        startActivity(myIntent);
+                    }
+                })
+                .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 }

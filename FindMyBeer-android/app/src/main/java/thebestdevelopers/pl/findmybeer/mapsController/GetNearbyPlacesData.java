@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-public class GetNearbyPlacesData extends AsyncTask<Object, String, String> {
+public class GetNearbyPlacesData extends AsyncTask<Object, String, String>{
 
     private String googlePlacesData;
     private GoogleMap mMap;
@@ -21,7 +21,7 @@ public class GetNearbyPlacesData extends AsyncTask<Object, String, String> {
     List<HashMap<String, String>> nearbyPlaceList;
 
     @Override
-    protected String doInBackground(Object... objects){
+    protected String doInBackground(Object... objects) {
         mMap = (GoogleMap)objects[0];
         url = (String)objects[1];
 
@@ -29,7 +29,6 @@ public class GetNearbyPlacesData extends AsyncTask<Object, String, String> {
         try {
             googlePlacesData = downloadUrl.readUrl(url);
         } catch (IOException e) {
-            e.printStackTrace();
         }
 
         return googlePlacesData;

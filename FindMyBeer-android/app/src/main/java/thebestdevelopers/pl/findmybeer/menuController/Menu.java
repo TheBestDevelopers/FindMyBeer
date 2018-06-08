@@ -6,26 +6,20 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
-
-import java.util.ArrayList;
 
 import thebestdevelopers.pl.findmybeer.BottomNavigationViewHelper;
 import thebestdevelopers.pl.findmybeer.HomeTab;
-import thebestdevelopers.pl.findmybeer.ProfileTab;
+import thebestdevelopers.pl.findmybeer.profileController.ProfileTab;
 import thebestdevelopers.pl.findmybeer.R;
 import thebestdevelopers.pl.findmybeer.searchController.SearchTab;
-import thebestdevelopers.pl.findmybeer.favController.FavRecyclerViewAdapter;
 import thebestdevelopers.pl.findmybeer.favController.FavTab;
-import thebestdevelopers.pl.findmybeer.favController.PubData;
 import thebestdevelopers.pl.findmybeer.mapsController.MapTab;
 
 public class Menu extends AppCompatActivity {
 
-    ArrayList<PubData> mMenuList;
+
     String mId, mName, mAddress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,24 +37,14 @@ public class Menu extends AppCompatActivity {
         Bundle b = intent.getExtras();
         if (b != null) {
             mId = (String) b.get("placeID");
-            mName = (String) b.get("placeName");
-            mAddress = (String) b.get("placeAddress");
         }
 
+        String url = getUrl(mId);
+        GetJsonResult getMenuData = new GetJsonResult(this);
+        Object dataTransfer[] = new Object[1];
+        dataTransfer[0] = url;
+        getMenuData.execute(dataTransfer);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.menu_list);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        mMenuList = new ArrayList<>();
-
-        //dodanie elementow do listy - pobranie z bazy
-        //tymczasowe rozwiazanie
-        for (int temp = 0; temp < 10; temp++)
-            mMenuList.add(new PubData("", "Beer", "Porter"));
-
-        recyclerView.setAdapter(new FavRecyclerViewAdapter(mMenuList, recyclerView));
 
         Intent i;
         tabs.setOnNavigationItemSelectedListener
@@ -98,5 +82,13 @@ public class Menu extends AppCompatActivity {
                         return true;
                     }
                 });
+    }
+
+    private String getUrl(String id) {
+        StringBuilder menuUrl = new StringBuilder(getResources().getString(R.string.databaseIP));
+        menuUrl.append("/api/pubs/getPubMenu?pubID=");
+        menuUrl.append(id);
+        Log.d("created url", menuUrl.toString());
+        return menuUrl.toString();
     }
 }

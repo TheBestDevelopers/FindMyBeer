@@ -34,7 +34,7 @@ import com.google.android.gms.maps.model.Marker;
 import thebestdevelopers.pl.findmybeer.BottomNavigationViewHelper;
 import thebestdevelopers.pl.findmybeer.favController.FavTab;
 import thebestdevelopers.pl.findmybeer.HomeTab;
-import thebestdevelopers.pl.findmybeer.ProfileTab;
+import thebestdevelopers.pl.findmybeer.profileController.ProfileTab;
 import thebestdevelopers.pl.findmybeer.pubInfo.PubInfo;
 import thebestdevelopers.pl.findmybeer.R;
 import thebestdevelopers.pl.findmybeer.searchController.SearchTab;
@@ -194,6 +194,7 @@ public class MapTab extends AppCompatActivity implements OnMapReadyCallback, Goo
         String url = getUrl(latitude, longitude, "pub");
         dataTransfer[0] = mGoogleMap;
         dataTransfer[1] = url;
+
         getNearbyPlacesData.execute(dataTransfer);
     }
 
@@ -209,7 +210,7 @@ public class MapTab extends AppCompatActivity implements OnMapReadyCallback, Goo
 
     //http://localhost:8080/api/pubs/getPubs?longitude=18.976369&latitude=50.2301888
     private String getUrl2(double lat, double lng) {
-        StringBuilder googlePlaceUrl = new StringBuilder("http://192.168.0.16:8080"); //tymczasowe ip komputera do testow
+        StringBuilder googlePlaceUrl = new StringBuilder(getResources().getString(R.string.databaseIP));
         googlePlaceUrl.append("/api/pubs/getPubs?longitude="+lng+"&latitude="+lat);
         Log.d("created url", googlePlaceUrl.toString());
         return googlePlaceUrl.toString();

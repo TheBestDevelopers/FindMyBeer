@@ -5,9 +5,9 @@ public class MenuData {
     private String mName, mType;
 
 
-    public MenuData(String type, String name) {
-        mName = mType;
-        mType = mName;
+    public MenuData(String name, String type) {
+        mName = name;
+        mType = type;
     }
 
     public String getName() {

@@ -23,9 +23,8 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/findmybeer"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <meta-data
@@ -60,44 +59,36 @@
         <activity
             android:name=".Register"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".HomeTab" />
-            <!--android:screenOrientation="portrait" />-->
-        <activity
-            android:name=".favController.FavTab" />
-            <!--android:screenOrientation="portrait" />-->
+        <activity android:name=".HomeTab" />
+        <!-- android:screenOrientation="portrait" /> -->
+        <activity android:name=".favController.FavTab" />
+        <!-- android:screenOrientation="portrait" /> -->
         <activity
             android:name=".searchController.SearchTab"
             android:windowSoftInputMode="adjustPan" />
-            <!--android:screenOrientation="portrait"-->
+        <!-- android:screenOrientation="portrait" -->
 
-        <activity
-            android:name=".mapsController.MapTab" />
-            <!--android:screenOrientation="portrait" />-->
-        <activity
-            android:name=".ProfileTab" />
-            <!--android:screenOrientation="portrait" />-->
+        <activity android:name=".mapsController.MapTab" />
+        <!-- android:screenOrientation="portrait" /> -->
+        <activity android:name=".profileController.ProfileTab" />
+        <!-- android:screenOrientation="portrait" /> -->
         <meta-data
             android:name="vom.google.android.geo.API_KEY"
             android:value="@string/google_places_key" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_places_key" />
-        <!--<meta-data-->
-            <!--android:name="com.google.android.maps.v2.API_KEY"-->
-            <!--android:value="@string/google_maps_key" />-->
+        <!-- <meta-data -->
+        <!-- android:name="com.google.android.maps.v2.API_KEY" -->
+        <!-- android:value="@string/google_maps_key" /> -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-
-
-
-
-
         <activity android:name=".pubInfo.PubInfo" />
         <activity android:name=".menuController.Menu" />
-        <activity android:name=".searchController.Filters"></activity>
+        <activity android:name=".searchController.Filters" />
+        <activity android:name=".profileController.ChangePasswordActivity"></activity>
     </application>
 
 </manifest>

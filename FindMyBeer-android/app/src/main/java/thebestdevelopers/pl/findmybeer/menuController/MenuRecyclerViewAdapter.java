@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import java.util.ArrayList;
 import thebestdevelopers.pl.findmybeer.R;
-import thebestdevelopers.pl.findmybeer.pubInfo.PubInfo;
 
 public class MenuRecyclerViewAdapter extends RecyclerView.Adapter {
 
@@ -20,12 +19,12 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter {
     // dzięki temu wywołujemy findViewById() tylko raz dla każdego elementu
     private class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView mName;
-        public TextView mAddress;
+        public TextView mPrice;
 
         public MyViewHolder(View v) {
             super(v);
             mName = (TextView) v.findViewById(R.id.fav_name);
-            mAddress = (TextView) v.findViewById(R.id.fav_address);
+            mPrice = (TextView) v.findViewById(R.id.fav_address);
         }
     }
 
@@ -50,7 +49,7 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter {
         // uzupełniamy layout artykułu
         MenuData data = mMenuList.get(i);
         ((MyViewHolder) viewHolder).mName.setText(data.getName());
-        ((MyViewHolder) viewHolder).mAddress.setText(data.getAdress());
+        ((MyViewHolder) viewHolder).mPrice.setText(data.getAdress());
     }
 
     @Override

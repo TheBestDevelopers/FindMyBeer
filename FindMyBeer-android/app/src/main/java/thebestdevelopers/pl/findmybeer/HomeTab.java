@@ -34,6 +34,7 @@ import java.util.ArrayList;
 
 import thebestdevelopers.pl.findmybeer.favController.FavTab;
 import thebestdevelopers.pl.findmybeer.mapsController.MapTab;
+import thebestdevelopers.pl.findmybeer.profileController.ProfileTab;
 import thebestdevelopers.pl.findmybeer.pubInfo.PubInfo;
 import thebestdevelopers.pl.findmybeer.pubList.ItemClickListener;
 import thebestdevelopers.pl.findmybeer.pubList.MainMenuRecyclerViewerAdapter;
