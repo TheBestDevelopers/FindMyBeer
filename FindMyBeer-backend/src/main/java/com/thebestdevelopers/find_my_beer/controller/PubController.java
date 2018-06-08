@@ -1,25 +1,18 @@
 package com.thebestdevelopers.find_my_beer.controller;
 
-import com.sun.deploy.security.UserDeclinedException;
-import com.thebestdevelopers.find_my_beer.DTO.PubDTO;
-import com.thebestdevelopers.find_my_beer.DTO.PubInfoDTO;
-import com.thebestdevelopers.find_my_beer.DTO.PubMenuDTO;
+import com.thebestdevelopers.find_my_beer.DTO.*;
 import com.thebestdevelopers.find_my_beer.DTO.getPubsDTOs.GetPubsDTO;
-import com.thebestdevelopers.find_my_beer.DTO.getPubsDTOs.GoogleResponse;
 import com.thebestdevelopers.find_my_beer.controller.pubControllerParam.CreatePubParam;
-import com.thebestdevelopers.find_my_beer.model.UserEntity;
 import com.thebestdevelopers.find_my_beer.repository.UserRepository;
 import com.thebestdevelopers.find_my_beer.service.PubService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.IOException;
 import java.io.Serializable;
 import java.security.Principal;
+import java.util.List;
 
 /**
  * @author Jakub Pisula
@@ -63,5 +56,16 @@ public class PubController implements Serializable {
         //UserEntity userEntity = userRepository.findByUsername(user.getUsername()).get(0);
 
         return pubService.getPubs(longitude, latitude);
+    }
+
+    @PostMapping("getNearestPubs")
+    public List<GetNearestPubDTO> getNearestPubs(@RequestParam("longitude") Double longitude,
+                                                 @RequestParam("latitude") Double latitude,
+                                                 Principal principal) throws IOException {
+        //User user = (User) ((Authentication) principal).getPrincipal();
+        //if(!user.getUsername().equals(param.getUsername()))
+        //throw new UserDeclinedException("You don't have permission");
+
+        return pubService.getNearestPubs(longitude, latitude);
     }
 }
