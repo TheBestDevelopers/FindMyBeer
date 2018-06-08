@@ -1,11 +1,7 @@
 package com.thebestdevelopers.find_my_beer.service;
 
-import com.thebestdevelopers.find_my_beer.DTO.PubDTO;
-import com.thebestdevelopers.find_my_beer.DTO.PubInfoDTO;
-import com.thebestdevelopers.find_my_beer.DTO.PubMenuDTO;
+import com.thebestdevelopers.find_my_beer.DTO.*;
 import com.thebestdevelopers.find_my_beer.DTO.getPubsDTOs.GetPubsDTO;
-import com.thebestdevelopers.find_my_beer.DTO.getPubsDTOs.GoogleResponse;
-import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.io.IOException;
 import java.util.List;
@@ -26,4 +22,6 @@ public interface PubService {
     PubMenuDTO getPubMenu(int pubId);
     //@PreAuthorize("hasAnyAuthority('admin','client', 'pub')")
     GetPubsDTO getPubs(Double longitude, Double latitude) throws IOException;
+    //@PreAuthorize("hasAnyAuthority('admin','client', 'pub')")
+    List<GetNearestPubDTO> getNearestPubs(Double longitude, Double latitude) throws IOException;
 }

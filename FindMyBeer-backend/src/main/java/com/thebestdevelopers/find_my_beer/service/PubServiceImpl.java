@@ -1,12 +1,10 @@
 package com.thebestdevelopers.find_my_beer.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thebestdevelopers.find_my_beer.DAO.PubDao;
 
 import com.thebestdevelopers.find_my_beer.DTO.*;
 
 import com.thebestdevelopers.find_my_beer.DTO.getPubsDTOs.GetPubsDTO;
-import com.thebestdevelopers.find_my_beer.DTO.getPubsDTOs.GoogleResponse;
 import com.thebestdevelopers.find_my_beer.DTO.getPubsDTOs.Location;
 import com.thebestdevelopers.find_my_beer.DTO.getPubsDTOs.Result;
 import com.thebestdevelopers.find_my_beer.model.*;
@@ -20,10 +18,6 @@ import java.text.DecimalFormatSymbols;
 import java.util.*;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLEncoder;
 import java.util.List;
 
 
@@ -101,6 +95,16 @@ public class PubServiceImpl implements PubService {
         }
 
         return ratingsValuesSum/ratingsEntityList.size();
+    }
+
+    private int countFreeTables(List<TablesEntity> tablesEntityList){
+        int numberOfFreeTables = 0;
+        for (TablesEntity tablesEntity : tablesEntityList){
+            TableDetailsEntity tableDetailsEntity = tableDetailsRepository.findByTableId(tablesEntity.getTableId());
+            if(!tableDetailsEntity.isOccupied())
+                numberOfFreeTables++;
+        }
+        return numberOfFreeTables;
     }
 
     private boolean isFavourite(List<FavouritiesEntity> favouritiesEntityList, int clientId){
@@ -184,5 +188,24 @@ public class PubServiceImpl implements PubService {
         List<Result> results = pubDistanceService.getNearPubs(longitude, latitude);
         Result[] resultsArray = new Result[results.size()];
         return new GetPubsDTO(results.toArray(resultsArray));
+    }
+
+    @Override
+    public List<GetNearestPubDTO> getNearestPubs(Double longitude, Double latitude) throws IOException {
+        PubDistanceServiceImpl pubDistanceService = new PubDistanceServiceImpl(addressRepository, pubRepository);
+        List<Result> results = pubDistanceService.getNearPubs(longitude, latitude);
+        List<GetNearestPubDTO> getNearestPubDTOList = new ArrayList<>();
+        Double averageRating;
+        int numberOfFreeTables;
+        for (Result result : results){
+            averageRating = this.countRatingsAverage(ratingRepository.findByPubId(result.getPubId()));
+            numberOfFreeTables = this.countFreeTables(tableRepository.findByPubId(result.getPubId()));
+            Location location = result.getGeometry().getLocation();
+            Double pubLongitude = Double.parseDouble(location.getLng());
+            Double pubLatitude = Double.parseDouble(location.getLat());
+            GetNearestPubDTO getNearestPubDTO = new GetNearestPubDTO(result.getPubId(), result.getName(), averageRating, pubLongitude, pubLatitude, numberOfFreeTables);
+            getNearestPubDTOList.add(getNearestPubDTO);
+        }
+        return getNearestPubDTOList;
     }
 }

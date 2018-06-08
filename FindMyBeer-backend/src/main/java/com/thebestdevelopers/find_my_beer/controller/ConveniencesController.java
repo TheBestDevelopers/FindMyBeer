@@ -6,6 +6,7 @@ import com.thebestdevelopers.find_my_beer.service.ConveniencesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.security.Principal;
 
@@ -43,11 +44,12 @@ public class ConveniencesController implements Serializable{
     public ConveniencesDTO getPubsWithConveniences(@RequestParam("longitude") Double longitude,
                                                    @RequestParam("latitude") Double latitude,
                                                    @RequestParam("conveniences") String[] conveniences,
-                                                   Principal principal){
+                                                   Principal principal) throws IOException {
         //User user = (User) ((Authentication) principal).getPrincipal();
         //if(!user.getUsername().equals(param.getUsername()))
         //throw new UserDeclinedException("You don't have permission");
 
         return conveniencesService.getPubsWithConveniences(longitude, latitude, conveniences);
     }
+
 }
