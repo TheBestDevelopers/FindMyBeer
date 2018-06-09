@@ -11,22 +11,50 @@ import java.util.TreeMap;
  */
 public class PubMenuDTO {
 
-    private Map<String, Double> result;
+    //private Map<String, Double> result;
+    private String menu;
+    private Integer size;
+
+    public PubMenuDTO(String menu, Integer size) {
+        this.menu = menu;
+        this.size = size;
+    }
 
     public PubMenuDTO() {
-        this.result = new TreeMap<>();
-        result.put("Product not found", 0.0);
+        this.size = 0;
+        this.menu = "";
     }
 
-    public PubMenuDTO(Map<String, Double> productsAndPrices) {
-        this.result = productsAndPrices;
+    public String getMenu() {
+        return menu;
     }
 
-    public Map<String, Double> getResult() {
-        return result;
+    public void setMenu(String menu) {
+        this.menu = menu;
     }
 
-    public void setResult(Map<String, Double> result) {
-        this.result = result;
+    public Integer getSize() {
+        return size;
     }
+
+    public void setSize(Integer size) {
+        this.size = size;
+    }
+
+    //    public PubMenuDTO() {
+//        this.result = new TreeMap<>();
+//        result.put("Product not found", 0.0);
+//    }
+
+//    public PubMenuDTO(Map<String, Double> productsAndPrices) {
+//        this.result = productsAndPrices;
+//    }
+//
+//    public Map<String, Double> getResult() {
+//        return result;
+//    }
+//
+//    public void setResult(Map<String, Double> result) {
+//        this.result = result;
+//    }
 }

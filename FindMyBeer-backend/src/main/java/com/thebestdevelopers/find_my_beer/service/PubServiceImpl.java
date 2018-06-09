@@ -175,13 +175,18 @@ public class PubServiceImpl implements PubService {
         }
 
         List<MenuEntity> menuEntityList = menuRepository.findByPubId(pubEntity.getPubId());
-        Map<String, Double> productsAndPrices = new TreeMap<>();
+//        Map<String, Double> productsAndPrices = new TreeMap<>();
+//        for(MenuEntity menuEntity : menuEntityList){
+//            ProductsEntity productsEntity = productRepository.findByProdId(menuEntity.getProdId());
+//            productsAndPrices.put(productsEntity.getDescription(), menuEntity.getPrice());
+//        }
+
+        String productsAndPrices = "";
         for(MenuEntity menuEntity : menuEntityList){
             ProductsEntity productsEntity = productRepository.findByProdId(menuEntity.getProdId());
-            productsAndPrices.put(productsEntity.getDescription(), menuEntity.getPrice());
+            productsAndPrices += productsEntity.getDescription() + ":" + menuEntity.getPrice() + " ";
         }
-
-        return new PubMenuDTO(productsAndPrices);
+        return new PubMenuDTO(productsAndPrices, menuEntityList.size());
     }
 
     @Override
@@ -225,7 +230,7 @@ public class PubServiceImpl implements PubService {
         for(String convenience : conveniences){
             flag = false;
             for(ConveniencesEntity conveniencesEntiy : conveniencesEntityList){
-                   ConvenienceTypesEntity convenienceTypesEntity = convenienceTypeRepository.findByConvenienceTypesId(conveniencesEntiy.getConvenienceTypesId()).get(0);
+                ConvenienceTypesEntity convenienceTypesEntity = convenienceTypeRepository.findByConvenienceTypesId(conveniencesEntiy.getConvenienceTypesId()).get(0);
                 if(convenience.equals(convenienceTypesEntity.getDescription())){
                     flag = true;
                     break;
@@ -233,7 +238,7 @@ public class PubServiceImpl implements PubService {
             }
             if(!flag)
                 return false;
-            }
+        }
         return true;
     }
 
