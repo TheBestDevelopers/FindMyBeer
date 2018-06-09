@@ -3,12 +3,14 @@ package thebestdevelopers.pl.findmybeer.profileController;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -29,6 +31,7 @@ public class ProfileTab extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_profile_tab);
         overridePendingTransition(0, 0);
         BottomNavigationView tabs = (BottomNavigationView) findViewById(R.id.navigationtabs5);
@@ -94,14 +97,12 @@ public class ProfileTab extends AppCompatActivity {
 
     public void mButtonChangePswOnClick(View v){
         //obsluga zmiany hasla
-
         Intent myIntent = new Intent(getApplicationContext(), ChangePasswordActivity.class);
         startActivity(myIntent);
     }
 
     public void mButtonDeleteOnClick(View v){
         //obsluga usuniecia konta
-
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Are you sure you want to delete your account?")
                 .setPositiveButton("YES", new DialogInterface.OnClickListener() {
@@ -118,5 +119,21 @@ public class ProfileTab extends AppCompatActivity {
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
+    }
+    //url do usuniecia konta
+    private String getUrl(String id) {
+        StringBuilder googlePlaceUrl = new StringBuilder(getResources().getString(R.string.databaseIP));
+        googlePlaceUrl.append(id);
+        googlePlaceUrl.append("&key="+"AIzaSyB3iQRgruru1jotumbRTuzOYiWSePz41ZQ");
+        Log.d("created url", googlePlaceUrl.toString());
+        return googlePlaceUrl.toString();
+    }
+    //url do wylogowania
+    private String getUrl2(String id) {
+        StringBuilder googlePlaceUrl = new StringBuilder(getResources().getString(R.string.databaseIP));
+        googlePlaceUrl.append(id);
+        googlePlaceUrl.append("&key="+"AIzaSyB3iQRgruru1jotumbRTuzOYiWSePz41ZQ");
+        Log.d("created url", googlePlaceUrl.toString());
+        return googlePlaceUrl.toString();
     }
 }

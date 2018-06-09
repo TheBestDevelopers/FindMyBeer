@@ -1,6 +1,7 @@
 package thebestdevelopers.pl.findmybeer.pubInfo;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +29,7 @@ public class PubInfo extends AppCompatActivity {
         setContentView(R.layout.activity_pub_info);
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         overridePendingTransition(0, 0);
 
         mName = (TextView)findViewById(R.id.tName);

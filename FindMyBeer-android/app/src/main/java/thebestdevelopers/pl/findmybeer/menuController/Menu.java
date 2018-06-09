@@ -1,6 +1,7 @@
 package thebestdevelopers.pl.findmybeer.menuController;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.ActionBar;
@@ -27,6 +28,7 @@ public class Menu extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_menu);
         BottomNavigationView tabs = (BottomNavigationView) findViewById(R.id.navigationtabs5);
         BottomNavigationViewHelper.disableShiftMode(tabs);

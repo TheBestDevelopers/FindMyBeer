@@ -1,7 +1,10 @@
 package thebestdevelopers.pl.findmybeer.mapsController;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.annotation.NonNull;
@@ -32,6 +35,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 
 import thebestdevelopers.pl.findmybeer.BottomNavigationViewHelper;
+import thebestdevelopers.pl.findmybeer.Manifest;
 import thebestdevelopers.pl.findmybeer.favController.FavTab;
 import thebestdevelopers.pl.findmybeer.HomeTab;
 import thebestdevelopers.pl.findmybeer.profileController.ProfileTab;
@@ -54,6 +58,7 @@ public class MapTab extends AppCompatActivity implements OnMapReadyCallback, Goo
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         if (googleServicesAvailable()) {
             setContentView(R.layout.activity_map_tab);
@@ -131,6 +136,7 @@ public class MapTab extends AppCompatActivity implements OnMapReadyCallback, Goo
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
             Toast.makeText(this, "No access to the location services", Toast.LENGTH_LONG).show();
+            //ActivityCompat.requestPermissions(this,new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             return;
         }
         mGoogleMap.setMyLocationEnabled(true);
@@ -143,6 +149,24 @@ public class MapTab extends AppCompatActivity implements OnMapReadyCallback, Goo
                 .addConnectionCallbacks(this).addOnConnectionFailedListener(this)
                 .build();
         mGoogleApiClient.connect();
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
     }
 
     @Override
@@ -194,8 +218,19 @@ public class MapTab extends AppCompatActivity implements OnMapReadyCallback, Goo
         String url = getUrl(latitude, longitude, "pub");
         dataTransfer[0] = mGoogleMap;
         dataTransfer[1] = url;
+        try {
+            getNearbyPlacesData.execute(dataTransfer);
+        } catch(Exception e) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Cannot connect to the server!")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
 
-        getNearbyPlacesData.execute(dataTransfer);
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }
     }
 
     public void onClick2(View v) {
@@ -205,7 +240,19 @@ public class MapTab extends AppCompatActivity implements OnMapReadyCallback, Goo
         String url = getUrl2(latitude, longitude);
         dataTransfer[0] = mGoogleMap;
         dataTransfer[1] = url;
-        getNearbyPlacesData.execute(dataTransfer);
+        try {
+            getNearbyPlacesData.execute(dataTransfer);
+        } catch (Exception e) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Cannot connect to the server!")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }
     }
 
     //http://localhost:8080/api/pubs/getPubs?longitude=18.976369&latitude=50.2301888

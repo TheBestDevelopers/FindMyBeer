@@ -1,6 +1,7 @@
 package thebestdevelopers.pl.findmybeer.favController;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.ActionBar;
@@ -34,6 +35,7 @@ public class FavTab extends AppCompatActivity {
         BottomNavigationViewHelper.disableShiftMode(tabs);
         overridePendingTransition(0, 0);
         tabs.getMenu().findItem(R.id.action_fav).setChecked(true);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.fav_list);
         recyclerView.setHasFixedSize(true);
