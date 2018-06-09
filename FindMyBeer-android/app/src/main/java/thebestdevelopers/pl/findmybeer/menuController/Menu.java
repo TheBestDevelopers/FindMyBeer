@@ -30,7 +30,7 @@ public class Menu extends AppCompatActivity {
         actionBar.hide();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_menu);
-        BottomNavigationView tabs = (BottomNavigationView) findViewById(R.id.navigationtabs5);
+        BottomNavigationView tabs = (BottomNavigationView) findViewById(R.id.navigationtabs6);
         BottomNavigationViewHelper.disableShiftMode(tabs);
         overridePendingTransition(0, 0);
         tabs.getMenu().findItem(R.id.action_map).setChecked(true);
@@ -46,7 +46,6 @@ public class Menu extends AppCompatActivity {
         Object dataTransfer[] = new Object[1];
         dataTransfer[0] = url;
         getMenuData.execute(dataTransfer);
-
 
         Intent i;
         tabs.setOnNavigationItemSelectedListener

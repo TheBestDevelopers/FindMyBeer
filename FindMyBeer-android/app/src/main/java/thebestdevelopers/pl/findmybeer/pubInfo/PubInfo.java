@@ -3,25 +3,33 @@ package thebestdevelopers.pl.findmybeer.pubInfo;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import thebestdevelopers.pl.findmybeer.BottomNavigationViewHelper;
+import thebestdevelopers.pl.findmybeer.HomeTab;
 import thebestdevelopers.pl.findmybeer.R;
 import thebestdevelopers.pl.findmybeer.favController.FavTab;
 import thebestdevelopers.pl.findmybeer.favController.PubData;
+import thebestdevelopers.pl.findmybeer.mapsController.MapTab;
 import thebestdevelopers.pl.findmybeer.menuController.Menu;
+import thebestdevelopers.pl.findmybeer.profileController.ProfileTab;
+import thebestdevelopers.pl.findmybeer.searchController.SearchTab;
 
 public class PubInfo extends AppCompatActivity {
 
     public TextView mName, mRating, mAddress, mPhone, mWebsite;
-    String id;
+    String id, id2;
     private ArrayList<PubData> mFavList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +39,10 @@ public class PubInfo extends AppCompatActivity {
         actionBar.hide();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         overridePendingTransition(0, 0);
+        BottomNavigationView tabs = (BottomNavigationView) findViewById(R.id.navigationtabs7);
+        BottomNavigationViewHelper.disableShiftMode(tabs);
+        overridePendingTransition(0, 0);
+        tabs.getMenu().findItem(R.id.action_map).setChecked(true);
 
         mName = (TextView)findViewById(R.id.tName);
         mAddress = (TextView)findViewById(R.id.tAddress);
@@ -42,7 +54,7 @@ public class PubInfo extends AppCompatActivity {
         if (b != null) {
             id = (String) b.get("placeID"); //wczytanie id miejsca oznaczonego markerem
             if(id.charAt(0) == '!' && id.charAt(1) == '!' && id.charAt(2) == '!') { //puby z naszej bazy maja na poczatku id trzy wykrzykniki, aby latwiej rozpoznawac
-                String id2 = id.substring(3,id.length());
+                id2 = id.substring(3,id.length());
                 url = getUrl2(id2);
             }
             else
@@ -53,6 +65,43 @@ public class PubInfo extends AppCompatActivity {
             dataTransfer[0] = url;
             getNearbyPlacesData.execute(dataTransfer);
         }
+
+        Intent temp;
+        tabs.setOnNavigationItemSelectedListener
+                (new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        Intent temp;
+                        switch (item.getItemId()) {
+                            case R.id.action_home:
+                                temp = new Intent(getApplicationContext(), HomeTab.class);
+                                temp.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                startActivity(temp);
+                                break;
+                            case R.id.action_search:
+                                temp = new Intent(getApplicationContext(), SearchTab.class);
+                                temp.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                startActivity(temp);
+                                break;
+                            case R.id.action_fav:
+                                temp = new Intent(getApplicationContext(), FavTab.class);
+                                temp.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                startActivity(temp);
+                                break;
+                            case R.id.action_map:
+                                temp = new Intent(getApplicationContext(), MapTab.class);
+                                temp.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                startActivity(temp);
+                                break;
+                            case R.id.action_user:
+                                temp = new Intent(getApplicationContext(), ProfileTab.class);
+                                temp.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                startActivity(temp);
+                                break;
+                        }
+                        return true;
+                    }
+                });
     }
 
     /**
@@ -107,7 +156,7 @@ public class PubInfo extends AppCompatActivity {
 
     public void mButtonMenuClick(View v) {
         Intent myIntent = new Intent(getApplicationContext(), Menu.class);
-        myIntent.putExtra("placeID", id);
+        myIntent.putExtra("placeID", id2);
         startActivity(myIntent);
     }
 

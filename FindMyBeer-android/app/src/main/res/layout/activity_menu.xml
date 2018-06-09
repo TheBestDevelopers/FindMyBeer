@@ -33,7 +33,7 @@
     <android.support.design.widget.BottomNavigationView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/navigationtabs5"
+        android:id="@+id/navigationtabs6"
         android:layout_gravity="bottom"
         android:background="@android:color/background_light"
         app:menu="@menu/tabs_navigation"

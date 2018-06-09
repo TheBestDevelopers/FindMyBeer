@@ -41,17 +41,16 @@ public class DataMenuParser {
     public HashMap<String, String> parse(String jsonData)
     {
         JSONArray jsonArray = null;
-        JSONObject jsonObject;
+        JSONObject jsonObject = null;
         JSONObject jObjectResult = null;
 
         Log.d("json data", jsonData);
 
         try {
             jsonObject = new JSONObject(jsonData);
-            jObjectResult = (JSONObject) jsonObject.get("result");
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return getMenu(jObjectResult);
+        return getMenu(jsonObject);
     }
 }

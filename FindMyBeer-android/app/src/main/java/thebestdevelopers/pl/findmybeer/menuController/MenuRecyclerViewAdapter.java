@@ -48,8 +48,10 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int i) {
         // uzupełniamy layout artykułu
         MenuData data = mMenuList.get(i);
-        ((MyViewHolder) viewHolder).mName.setText(data.getName());
-        ((MyViewHolder) viewHolder).mPrice.setText(data.getAdress());
+        String str = data.getName();
+        str = str.replace('_',' ');
+        ((MyViewHolder) viewHolder).mName.setText(str);
+        ((MyViewHolder) viewHolder).mPrice.setText("Cena: " + data.getAdress() + " zł");
     }
 
     @Override

@@ -81,9 +81,9 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
             price = str.substring(loc+1,str.length());
             mMenuList.add(new MenuData(type, price));
         }
-        int loc = menu.indexOf(':');
-        type = menu.substring(0,loc);
-        price = menu.substring(loc+1,menu.length());
-        mMenuList.add(new MenuData(type, price));
+            int loc = menu.indexOf(':');
+            type = menu.substring(0, loc);
+            price = menu.substring(loc + 1, menu.length());
+            mMenuList.add(new MenuData(type, price));
     }
 }
