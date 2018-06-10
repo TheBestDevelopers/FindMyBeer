@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ import thebestdevelopers.pl.findmybeer.mapsController.MapTab;
 
 public class FavTab extends AppCompatActivity {
 
-    String mId, mName, mAddress;
+    String mId;
     ArrayList<PubData> mfavList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,17 +46,13 @@ public class FavTab extends AppCompatActivity {
         //przekazane info z pubinfo
         if (mfavList == null)
             mfavList = new ArrayList<>();
-
-        Intent intent = getIntent();
-        Bundle b = intent.getExtras();
-        if (b != null) {
-            mId = (String) b.get("placeID"); //wczytanie id miejsca oznaczonego markerem
-            mName = (String) b.get("placeName");
-            mAddress = (String) b.get("placeAddress");
-                if (mId != null && mName != null && mAddress != null)
-                    mfavList.add(new PubData(mId, mName, mAddress));
-        }
-
+/*
+        String url = getUrl(mId);
+        GetJsonResult getFavData = new GetJsonResult(this);
+        Object dataTransfer[] = new Object[1];
+        dataTransfer[0] = url;
+        getFavData.execute(dataTransfer);
+*/
 
         //trzeba przeslac do bazy
         //dodanie elementow do listy - pobranie z bazy
@@ -96,5 +93,15 @@ public class FavTab extends AppCompatActivity {
                         return true;
                     }
                 });
+    }
+
+    //TO_DO
+    //otrzymuje user id
+    private String getUrl(String id) {
+        StringBuilder menuUrl = new StringBuilder(getResources().getString(R.string.databaseIP));
+        menuUrl.append("/api/pubs/getPubMenu?pubID=");
+        menuUrl.append(id);
+        Log.d("created url", menuUrl.toString());
+        return menuUrl.toString();
     }
 }

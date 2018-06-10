@@ -41,7 +41,6 @@ public class FavRecyclerViewAdapter extends RecyclerView.Adapter {
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.fav_layout, viewGroup, false);
 
-
         //przejscie do widoku pubu
         view.setOnClickListener(new View.OnClickListener() {
             @Override

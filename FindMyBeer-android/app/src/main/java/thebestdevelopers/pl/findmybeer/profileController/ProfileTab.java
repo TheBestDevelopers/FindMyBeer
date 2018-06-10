@@ -40,7 +40,7 @@ public class ProfileTab extends AppCompatActivity {
         Intent i;
 
         mLoginText = (TextView)findViewById(R.id.tLogin);
-        mLoginText.setText("Imie Nazwisko");
+        mLoginText.setText("User name");
 
         tabs.setOnNavigationItemSelectedListener
                 (new BottomNavigationView.OnNavigationItemSelectedListener() {
