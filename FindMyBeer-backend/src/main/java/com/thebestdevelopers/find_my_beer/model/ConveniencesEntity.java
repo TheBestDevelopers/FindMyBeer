@@ -5,8 +5,13 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.Objects;
 
+
+/**
+ * @author Grzegorz Nowak
+ *
+ */
 @Entity
-@GenericGenerator(name = "seq1", strategy = "sequence-identity", parameters = @org.hibernate.annotations.Parameter(name = "convenience_id_sequence", value = "convenience_id_sequence"))
+@GenericGenerator(name = "seq1", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator", parameters = @org.hibernate.annotations.Parameter(name = "convenience_id_sequence", value = "convenience_id_sequence"))
 @Table(name = "conveniences", schema = "public", catalog = "d86n3p8h6i057d")
 public class ConveniencesEntity {
     private int pubId;

@@ -4,6 +4,11 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
 
+
+/**
+ * @author Grzegorz Nowak
+ *
+ */
 @Entity
 @Table(name = "pub", schema = "public", catalog = "d86n3p8h6i057d")
 public class PubEntity {

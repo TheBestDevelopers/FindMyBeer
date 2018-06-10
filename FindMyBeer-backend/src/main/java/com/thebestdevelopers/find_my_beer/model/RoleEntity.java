@@ -3,6 +3,11 @@ package com.thebestdevelopers.find_my_beer.model;
 import javax.persistence.*;
 import java.util.Objects;
 
+
+/**
+ * @author Grzegorz Nowak
+ *
+ */
 @Entity
 @Table(name = "role", schema = "public", catalog = "d86n3p8h6i057d")
 public class RoleEntity {

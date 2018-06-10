@@ -5,6 +5,11 @@ import javafx.scene.effect.Bloom;
 
 import java.util.List;
 
+
+/**
+ * @author Grzegorz Nowak
+ *
+ */
 public class ConveniencesDTO {
 
     @JsonProperty("result")

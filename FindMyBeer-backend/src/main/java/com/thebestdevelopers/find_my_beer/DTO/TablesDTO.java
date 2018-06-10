@@ -1,5 +1,10 @@
 package com.thebestdevelopers.find_my_beer.DTO;
 
+
+/**
+ * @author Grzegorz Nowak
+ *
+ */
 public class TablesDTO {
     private int chair1;
     private int chair2;

@@ -6,8 +6,13 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
 
+
+/**
+ * @author Grzegorz Nowak
+ *
+ */
 @Entity
-@GenericGenerator(name = "seq5", strategy = "sequence-identity", parameters = @org.hibernate.annotations.Parameter(name = "photo_id_sequence", value = "photo_id_sequence"))
+@GenericGenerator(name = "seq5", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator", parameters = @org.hibernate.annotations.Parameter(name = "photo_id_sequence", value = "photo_id_sequence"))
 @Table(name = "photos", schema = "public", catalog = "d86n3p8h6i057d")
 public class PhotosEntity {
     private int photoId;

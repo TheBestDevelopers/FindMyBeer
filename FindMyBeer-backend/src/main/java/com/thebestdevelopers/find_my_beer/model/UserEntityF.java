@@ -10,7 +10,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "user", schema = "main", catalog = "d86n3p8h6i057d")
-@GenericGenerator(name = "seq", strategy = "sequence-identity", parameters = @org.hibernate.annotations.Parameter(name = "user_id_seq", value = "user_id_seq"))
+@GenericGenerator(name = "seq", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator", parameters = @org.hibernate.annotations.Parameter(name = "user_id_seq", value = "user_id_seq"))
 public class UserEntityF {
     private long userId;
     private String password;
