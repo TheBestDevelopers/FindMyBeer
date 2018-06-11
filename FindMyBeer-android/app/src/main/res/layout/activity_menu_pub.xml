@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".menuController.Menu">
+    tools:context=".pubView.pubMenuController.Menu">
 
     <TextView
         android:id="@+id/tMenu"
@@ -36,7 +36,7 @@
         android:id="@+id/navigationtabs"
         android:layout_gravity="bottom"
         android:background="@android:color/background_light"
-        app:menu="@menu/tabs_navigation"
+        app:menu="@menu/tabs_navigation_pub"
         />
 
 </android.support.design.widget.CoordinatorLayout>

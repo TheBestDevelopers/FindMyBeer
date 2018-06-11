@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:design="http://schemas.android.com/tools">
+    <item
+        android:id = "@+id/action_home"
+        android:title = "Home"
+        android:icon="@drawable/ic_home"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id = "@+id/action_edit"
+        android:title = "Edit"
+        android:icon="@drawable/ic_edit"
+        android:iconTint="@color/black"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id = "@+id/action_user"
+        android:title = "Profile"
+        android:icon="@drawable/ic_user"
+        android:iconTint="@color/black"
+        app:showAsAction="ifRoom"
+        />
+
+</menu>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".profileController.ProfileTab">
+    tools:context=".pubView.pubProfileController.ProfileTab">
 
     <android.support.design.widget.BottomNavigationView
         android:layout_width="match_parent"
@@ -79,7 +79,7 @@
         android:background="@drawable/roundedbutton"
         android:backgroundTint="#B3FFFFFF"
         android:onClick="mButtonTemp"
-        android:text="      Go to pub view - temp"
+        android:text="      Go to user view - temp"
         android:textAlignment="viewStart" />
 
 

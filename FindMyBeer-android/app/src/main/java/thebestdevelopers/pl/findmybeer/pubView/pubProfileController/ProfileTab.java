@@ -1,27 +1,24 @@
-package thebestdevelopers.pl.findmybeer.profileController;
+package thebestdevelopers.pl.findmybeer.pubView.pubProfileController;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import thebestdevelopers.pl.findmybeer.BottomNavigationViewHelper;
-import thebestdevelopers.pl.findmybeer.HomeTab;
 import thebestdevelopers.pl.findmybeer.Login;
 import thebestdevelopers.pl.findmybeer.R;
-import thebestdevelopers.pl.findmybeer.favController.FavTab;
-import thebestdevelopers.pl.findmybeer.mapsController.MapTab;
 import thebestdevelopers.pl.findmybeer.pubView.pubDetailsController.PubDetails;
-import thebestdevelopers.pl.findmybeer.searchController.SearchTab;
+import thebestdevelopers.pl.findmybeer.pubView.pubEditController.PubEdit;
 
 public class ProfileTab extends AppCompatActivity {
 
@@ -32,7 +29,7 @@ public class ProfileTab extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        setContentView(R.layout.activity_profile_tab);
+        setContentView(R.layout.activity_profile_pub);
         overridePendingTransition(0, 0);
         BottomNavigationView tabs = (BottomNavigationView) findViewById(R.id.navigationtabs5);
         BottomNavigationViewHelper.disableShiftMode(tabs);
@@ -41,35 +38,29 @@ public class ProfileTab extends AppCompatActivity {
 
         mLoginText = (TextView)findViewById(R.id.tLogin);
         mLoginText.setText("User name");
-
+        Intent temp;
         tabs.setOnNavigationItemSelectedListener
                 (new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        Intent i;
+                        Intent temp;
                         switch (item.getItemId()) {
                             case R.id.action_home:
-                                i = new Intent(getApplicationContext(), HomeTab.class);
-                                i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                                startActivity(i);
+                                temp = new Intent(getApplicationContext(), PubDetails.class);
+                                temp.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                startActivity(temp);
                                 break;
-                            case R.id.action_fav:
-                                i = new Intent(getApplicationContext(), FavTab.class);
-                                i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                                startActivity(i);
+                            case R.id.action_edit:
+                                temp = new Intent(getApplicationContext(), PubEdit.class);
+                                temp.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                startActivity(temp);
                                 break;
-                            case R.id.action_search:
-                                i = new Intent(getApplicationContext(), SearchTab.class);
-                                i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                                startActivity(i);
-                                break;
-                            case R.id.action_map:
-                                i = new Intent(getApplicationContext(), MapTab.class);
-                                i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                                startActivity(i);
+                            case R.id.action_user:
+                                //temp = new Intent(getApplicationContext(), ProfileTab.class);
+                                //temp.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                //startActivity(temp);
                                 break;
                         }
-
                         return true;
                     }
                 });
@@ -103,7 +94,7 @@ public class ProfileTab extends AppCompatActivity {
 
     public void mButtonTemp(View v){
         //obsluga zmiany hasla
-        Intent myIntent = new Intent(getApplicationContext(), PubDetails.class);
+        Intent myIntent = new Intent(getApplicationContext(), thebestdevelopers.pl.findmybeer.HomeTab.class);
         startActivity(myIntent);
     }
 

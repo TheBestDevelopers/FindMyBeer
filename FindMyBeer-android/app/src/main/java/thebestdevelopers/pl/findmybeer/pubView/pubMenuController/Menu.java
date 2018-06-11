@@ -1,22 +1,20 @@
-package thebestdevelopers.pl.findmybeer.menuController;
+package thebestdevelopers.pl.findmybeer.pubView.pubMenuController;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
 import thebestdevelopers.pl.findmybeer.BottomNavigationViewHelper;
-import thebestdevelopers.pl.findmybeer.HomeTab;
-import thebestdevelopers.pl.findmybeer.profileController.ProfileTab;
 import thebestdevelopers.pl.findmybeer.R;
-import thebestdevelopers.pl.findmybeer.searchController.SearchTab;
-import thebestdevelopers.pl.findmybeer.favController.FavTab;
-import thebestdevelopers.pl.findmybeer.mapsController.MapTab;
+import thebestdevelopers.pl.findmybeer.pubView.pubDetailsController.PubDetails;
+import thebestdevelopers.pl.findmybeer.pubView.pubEditController.PubEdit;
+import thebestdevelopers.pl.findmybeer.pubView.pubProfileController.ProfileTab;
 
 public class Menu extends AppCompatActivity {
 
@@ -25,27 +23,26 @@ public class Menu extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu);
+        setContentView(R.layout.activity_menu_pub);
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        setContentView(R.layout.activity_menu);
         BottomNavigationView tabs = (BottomNavigationView) findViewById(R.id.navigationtabs);
         BottomNavigationViewHelper.disableShiftMode(tabs);
         overridePendingTransition(0, 0);
-        tabs.getMenu().findItem(R.id.action_map).setChecked(true);
+        tabs.getMenu().findItem(R.id.action_home).setChecked(true);
 
         Intent intent = getIntent();
         Bundle b = intent.getExtras();
         if (b != null) {
             mId = (String) b.get("placeID");
         }
-
+        /*
         String url = getUrl(mId);
         GetJsonResult getMenuData = new GetJsonResult(this);
         Object dataTransfer[] = new Object[1];
         dataTransfer[0] = url;
-        getMenuData.execute(dataTransfer);
+        getMenuData.execute(dataTransfer); */
 
         Intent i;
         tabs.setOnNavigationItemSelectedListener
@@ -55,22 +52,12 @@ public class Menu extends AppCompatActivity {
                         Intent i;
                         switch (item.getItemId()) {
                             case R.id.action_home:
-                                i = new Intent(getApplicationContext(), HomeTab.class);
+                                i = new Intent(getApplicationContext(), PubDetails.class);
                                 i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                 startActivity(i);
                                 break;
-                            case R.id.action_search:
-                                i = new Intent(getApplicationContext(), SearchTab.class);
-                                i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                                startActivity(i);
-                                break;
-                            case R.id.action_fav:
-                                i = new Intent(getApplicationContext(), FavTab.class);
-                                i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                                startActivity(i);
-                                break;
-                            case R.id.action_map:
-                                i = new Intent(getApplicationContext(), MapTab.class);
+                            case R.id.action_edit:
+                                i = new Intent(getApplicationContext(), PubEdit.class);
                                 i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                 startActivity(i);
                                 break;

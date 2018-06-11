@@ -88,7 +88,14 @@
         <activity android:name=".pubInfo.PubInfo" />
         <activity android:name=".menuController.Menu" />
         <activity android:name=".searchController.Filters" />
-        <activity android:name=".profileController.ChangePasswordActivity"></activity>
+        <activity android:name=".profileController.ChangePasswordActivity" />
+        <activity android:name=".pubView.pubDetailsController.PubDetails" />
+        <activity android:name=".pubView.pubEditController.PubEdit" />
+        <activity android:name=".pubView.pubMenuController.Menu" />
+        <activity android:name=".pubView.pubProfileController.ProfileTab" />
+        <activity android:name=".pubView.pubEditController.pubEditConveniences.editConveniences" />
+        <activity android:name=".pubView.pubEditController.pubEditMenu.editMenu" />
+        <activity android:name=".pubView.pubEditController.pubEditTables.editTables"></activity>
     </application>
 
 </manifest>

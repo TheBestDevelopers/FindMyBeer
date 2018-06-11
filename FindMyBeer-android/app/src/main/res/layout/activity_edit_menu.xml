@@ -4,39 +4,51 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".menuController.Menu">
+    tools:context=".pubView.pubEditController.pubEditMenu.editMenu">
 
     <TextView
-        android:id="@+id/tMenu"
+        android:id="@+id/tEdit"
         android:layout_marginTop="5dp"
         android:textColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
-        android:text="Menu"
+        android:text="Edit Menu"
         android:textAlignment="center"
         android:textSize="24sp"
         android:textStyle="bold" />
-
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="50dp">
+        android:layout_marginTop="60dp">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/menu_list"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="60dp"/>
-    </RelativeLayout>
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
+            <Button
+                android:id="@+id/bChange"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/roundedbutton"
+                android:backgroundTint="#B3FFFFFF"
+                android:onClick="mButtonChangeClick"
+                android:text="Apply changes" />
+
+        </LinearLayout>
+    </ScrollView>
     <android.support.design.widget.BottomNavigationView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/navigationtabs"
         android:layout_gravity="bottom"
         android:background="@android:color/background_light"
-        app:menu="@menu/tabs_navigation"
+        app:menu="@menu/tabs_navigation_pub"
         />
 
 </android.support.design.widget.CoordinatorLayout>
