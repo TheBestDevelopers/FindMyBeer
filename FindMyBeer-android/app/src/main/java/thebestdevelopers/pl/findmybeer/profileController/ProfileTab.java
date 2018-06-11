@@ -12,6 +12,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import thebestdevelopers.pl.findmybeer.BottomNavigationViewHelper;
@@ -33,6 +37,24 @@ public class ProfileTab extends AppCompatActivity {
         actionBar.hide();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_profile_tab);
+        //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
+        /*
+        TextView txt = (TextView) findViewById(R.id.tLogin);
+        txt.setVisibility(View.GONE);
+        Button btn = (Button) findViewById(R.id.bLogOut);
+        btn.setVisibility(View.GONE);
+        Button btn2 = (Button) findViewById(R.id.bChange);
+        btn2.setVisibility(View.GONE);
+        Button btn3 = (Button) findViewById(R.id.bDelete);
+        btn3.setVisibility(View.GONE);
+        Button btn4 = (Button) findViewById(R.id.bTemp);
+        btn4.setVisibility(View.GONE);
+        */
+        ProgressBar spinner = (ProgressBar)findViewById(R.id.mProgressBarHome);
+        spinner.setVisibility(View.GONE);
+
+
         overridePendingTransition(0, 0);
         BottomNavigationView tabs = (BottomNavigationView) findViewById(R.id.navigationtabs5);
         BottomNavigationViewHelper.disableShiftMode(tabs);

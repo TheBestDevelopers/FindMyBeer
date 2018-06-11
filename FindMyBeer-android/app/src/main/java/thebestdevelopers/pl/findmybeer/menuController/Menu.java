@@ -9,6 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import thebestdevelopers.pl.findmybeer.BottomNavigationViewHelper;
 import thebestdevelopers.pl.findmybeer.HomeTab;
@@ -26,6 +30,14 @@ public class Menu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+        TextView txt = (TextView) findViewById(R.id.tMenu);
+        txt.setVisibility(View.GONE);
+        RelativeLayout v = (RelativeLayout) findViewById(R.id.bView);
+        v.setVisibility(View.GONE);
+        ProgressBar spinner = (ProgressBar)findViewById(R.id.mProgressBarHome);
+        spinner.setVisibility(View.VISIBLE);
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);

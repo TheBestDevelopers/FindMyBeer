@@ -12,7 +12,7 @@
         android:id="@+id/navigationtabs5"
         android:layout_gravity="bottom"
         android:background="@android:color/background_light"
-        app:menu="@menu/tabs_navigation"
+        app:menu="@menu/tabs_navigation_pub"
         />
 
     <Button

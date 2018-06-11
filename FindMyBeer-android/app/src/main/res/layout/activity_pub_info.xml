@@ -7,9 +7,17 @@
     tools:context=".pubInfo.PubInfo"
     android:orientation="vertical">
 
+    <ProgressBar
+        android:id="@+id/mProgressBarHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"/>
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/bView">
 
         <LinearLayout
             android:layout_width="match_parent"

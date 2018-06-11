@@ -1,4 +1,4 @@
-package thebestdevelopers.pl.findmybeer.pubInfo;
+package thebestdevelopers.pl.findmybeer.pubView.pubDetailsController;
 
 import android.app.Activity;
 import android.os.AsyncTask;
@@ -26,7 +26,6 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
     private String wifi, adaptedforthedisabled, boardgames, discountsforgroups;
     private String discountsforstudents, roastingroom, toilet;
     private String chair1, chair2, chair4, chair6, chair8;
-    private String favourite="", ourPub="false";
 
 
 
@@ -68,7 +67,6 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
             mRating = activity.findViewById(R.id.tRating);
             mRating.setText(rating+"/5");
 
-            bFav = activity.findViewById(R.id.bAddFav);
             bMenu = activity.findViewById(R.id.bMenu);
             mWebsite = activity.findViewById(R.id.tWebsite);
             mPhone = activity.findViewById(R.id.tPhone);
@@ -76,31 +74,6 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
             tTables = activity.findViewById(R.id.tTables);
 
             spinner = activity.findViewById(R.id.mProgressBarHome);
-
-            if (ourPub.equals("false")) {
-
-                mWebsite.setText(website);
-                mPhone.setText(phone);
-
-                bFav.setText("Cannot add to favourites");
-                bFav.setClickable(false);
-
-                bMenu.setText("There is no menu");
-                bMenu.setClickable(false);
-
-                tConveniences.setText("There is no info");
-                tTables.setText("There is no info");
-            }
-
-            if (ourPub.equals("true")) {
-                mWebsite.setText("There is no website");
-                mPhone.setText("There is no phone");
-
-                if (favourite.equals("true"))
-                    bFav.setText("Remove from favourites");
-
-                if (favourite.equals("false"))
-                    bFav.setText("Add to favourites");
 
                 String convs = "";
 
@@ -129,7 +102,6 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
                         "8 person table: " + chair8;
 
                 tTables.setText(chairs);
-            }
         }
         spinner.setVisibility(View.GONE);
         ScrollView v = (ScrollView) activity.findViewById(R.id.bView);
@@ -141,17 +113,7 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
             placeName = googlePlace.get("place_name");
             vicinity = googlePlace.get("vicinity");
             rating = googlePlace.get("rating");
-            if (googlePlace.get("ourPub").isEmpty()) {
-                website = googlePlace.get("web");
-                phone = googlePlace.get("phone");
-                if (website.equals(""))
-                    website = "There's no website";
-                if (phone.equals(""))
-                    phone = "There's no phone";
 
-            }
-            if (googlePlace.get("ourPub").equals("true")) {
-                ourPub = "true";
                 wifi = googlePlace.get("WI-FI");
                 adaptedforthedisabled = googlePlace.get("adapted for the disabled");
                 boardgames = googlePlace.get("board games");
@@ -166,7 +128,5 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
                 chair6 = googlePlace.get("chair6");
                 chair8 = googlePlace.get("chair8");
 
-                favourite = googlePlace.get("favourite");
-            }
     }
 }

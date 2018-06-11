@@ -5,9 +5,15 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
+
+import thebestdevelopers.pl.findmybeer.R;
 
 public class GetJsonResult extends AsyncTask<Object, String, String> {
     private String googlePlacesData;
@@ -48,5 +54,17 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
                         .show();
             }
         }
+        TextView txt = (TextView) activity.findViewById(R.id.tLogin);
+        txt.setVisibility(View.VISIBLE);
+        Button btn = (Button) activity.findViewById(R.id.bLogOut);
+        btn.setVisibility(View.VISIBLE);
+        Button btn2 = (Button) activity.findViewById(R.id.bChange);
+        btn2.setVisibility(View.VISIBLE);
+        Button btn3 = (Button) activity.findViewById(R.id.bDelete);
+        btn3.setVisibility(View.VISIBLE);
+        Button btn4 = (Button) activity.findViewById(R.id.bTemp);
+        btn4.setVisibility(View.VISIBLE);
+        ProgressBar spinner = (ProgressBar)activity.findViewById(R.id.mProgressBarHome);
+        spinner.setVisibility(View.GONE);
     }
 }

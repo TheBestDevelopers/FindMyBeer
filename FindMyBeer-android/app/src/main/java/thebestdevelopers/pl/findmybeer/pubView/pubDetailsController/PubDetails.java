@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import thebestdevelopers.pl.findmybeer.BottomNavigationViewHelper;
@@ -27,6 +29,13 @@ public class PubDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pub_details);
+/*
+        ScrollView v = (ScrollView) findViewById(R.id.bView);
+        v.setVisibility(View.GONE);
+        */
+        ProgressBar spinner = (ProgressBar)findViewById(R.id.mProgressBarHome);
+        spinner.setVisibility(View.GONE);
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -37,6 +46,13 @@ public class PubDetails extends AppCompatActivity {
         tabs.getMenu().findItem(R.id.action_home).setChecked(true);
 
         //pobranie jsona
+        /*
+        String url = getUrl(id);
+        GetJsonResult getNearbyPlacesData = new GetJsonResult(this);
+        Object dataTransfer[] = new Object[1];
+        dataTransfer[0] = url;
+        getNearbyPlacesData.execute(dataTransfer);
+        */
 
         Intent temp;
         tabs.setOnNavigationItemSelectedListener

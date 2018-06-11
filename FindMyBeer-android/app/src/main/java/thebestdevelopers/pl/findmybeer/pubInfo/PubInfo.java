@@ -12,6 +12,9 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -30,11 +33,15 @@ public class PubInfo extends AppCompatActivity {
 
     public TextView mName, mRating, mAddress, mPhone, mWebsite;
     String id, id2;
+    public ProgressBar spinner;
+    public ScrollView v;
     private ArrayList<PubData> mFavList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pub_info);
+        v = (ScrollView) findViewById(R.id.bView);
+        v.setVisibility(View.GONE);
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -46,6 +53,9 @@ public class PubInfo extends AppCompatActivity {
 
         mName = (TextView)findViewById(R.id.tName);
         mAddress = (TextView)findViewById(R.id.tAddress);
+
+        spinner = (ProgressBar)findViewById(R.id.mProgressBarHome);
+        spinner.setVisibility(View.VISIBLE);
 
         //wczytanie info po wcisnieciu markera na mapie.
         Intent i = getIntent();
@@ -172,7 +182,7 @@ public class PubInfo extends AppCompatActivity {
     private String getUrl2(String id) {
         StringBuilder googlePlaceUrl = new StringBuilder(getResources().getString(R.string.databaseIP)); //temp
         //TO DO
-        googlePlaceUrl.append("/api/pubs/getPubInfo?userID="+"2"); //zamiast 2 ma byc user id
+        googlePlaceUrl.append("/api/pubs/getPubInfo?userID="+"8"); //zamiast 2 ma byc user id
         googlePlaceUrl.append("&pubID="+id);
         Log.d("created url", googlePlaceUrl.toString());
         return googlePlaceUrl.toString();

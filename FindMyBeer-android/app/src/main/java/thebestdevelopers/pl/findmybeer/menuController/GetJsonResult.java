@@ -6,7 +6,10 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -60,6 +63,12 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
 
             recyclerView.setAdapter(new MenuRecyclerViewAdapter(mMenuList, recyclerView));
         }
+        TextView txt = (TextView) activity.findViewById(R.id.tMenu);
+        txt.setVisibility(View.VISIBLE);
+        RelativeLayout v = (RelativeLayout) activity.findViewById(R.id.bView);
+        v.setVisibility(View.VISIBLE);
+        ProgressBar spinner = (ProgressBar)activity.findViewById(R.id.mProgressBarHome);
+        spinner.setVisibility(View.GONE);
     }
 
     //{"result":{"menu": "beer1:7 beer2:6 beer3:8", "size" : "3"}}

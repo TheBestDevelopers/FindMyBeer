@@ -12,6 +12,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -32,6 +36,16 @@ public class FavTab extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         setContentView(R.layout.activity_fav_tab);
+
+        /*
+        TextView txt = (TextView) findViewById(R.id.tFavs);
+        txt.setVisibility(View.GONE);
+        RelativeLayout v = (RelativeLayout) findViewById(R.id.bView);
+        v.setVisibility(View.GONE);
+        */
+        ProgressBar spinner = (ProgressBar)findViewById(R.id.mProgressBarHome);
+        spinner.setVisibility(View.GONE);
+
         BottomNavigationView tabs = (BottomNavigationView) findViewById(R.id.navigationtabs2);
         BottomNavigationViewHelper.disableShiftMode(tabs);
         overridePendingTransition(0, 0);
