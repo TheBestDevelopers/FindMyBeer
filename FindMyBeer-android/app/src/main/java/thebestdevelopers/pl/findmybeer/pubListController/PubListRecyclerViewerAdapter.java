@@ -1,4 +1,4 @@
-package thebestdevelopers.pl.findmybeer.pubList;
+package thebestdevelopers.pl.findmybeer.pubListController;
 
 import java.util.ArrayList;
     import java.util.List;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
     import thebestdevelopers.pl.findmybeer.R;
 
-public class MainMenuRecyclerViewerAdapter extends RecyclerView.Adapter<MainMenuRecyclerViewerAdapter.ViewHolder> implements Filterable{
+public class PubListRecyclerViewerAdapter extends RecyclerView.Adapter<PubListRecyclerViewerAdapter.ViewHolder> implements Filterable{
     private List<Pub> pubs;
     private List<Pub> filteredPubs;
     Location userLocation;
@@ -51,7 +51,7 @@ public class MainMenuRecyclerViewerAdapter extends RecyclerView.Adapter<MainMenu
         notifyItemInserted(position);
     }
 
-    public MainMenuRecyclerViewerAdapter(List<Pub> _pubs) {
+    public PubListRecyclerViewerAdapter(List<Pub> _pubs) {
         userLocation = new Location("userLocation");
         userLocation.setLatitude(0.0);
         userLocation.setLongitude(0.0);
@@ -60,7 +60,7 @@ public class MainMenuRecyclerViewerAdapter extends RecyclerView.Adapter<MainMenu
     }
 
     @Override
-    public MainMenuRecyclerViewerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public PubListRecyclerViewerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View v = inflater.inflate(R.layout.pub_list_item, parent, false);
         ViewHolder vh = new ViewHolder(v);
@@ -69,24 +69,18 @@ public class MainMenuRecyclerViewerAdapter extends RecyclerView.Adapter<MainMenu
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-
         final Pub currentPub = filteredPubs.get(position);
-        Location pubLocation = new Location("pub");
-        pubLocation.setLatitude(currentPub.getLatitude());
-        pubLocation.setLongitude(currentPub.getLongitude());
-        Integer distance = (int) userLocation.distanceTo(pubLocation);
-        currentPub.setDistance(distance);
-        setTextViews(currentPub, distance, holder);
+        setTextViews(currentPub, holder);
     }
 
-    private void setTextViews(Pub currentPub, Integer distance, ViewHolder holder) {
+    private void setTextViews(Pub currentPub, ViewHolder holder) {
         holder.textViewPubName.setText(currentPub.getPubName());
-        if (distance > 10000)
+        if (currentPub.distance > 10000)
             setTextCountingDistance(holder);
-        else if (distance > 1000)
-            setDistanceKilometers(distance, holder);
+        else if (currentPub.distance > 1000)
+            setDistanceKilometers(currentPub.distance, holder);
         else
-            holder.textViewDistance.setText(distance + "m");
+            holder.textViewDistance.setText(currentPub.distance  + "m");
         holder.textViewStars.setText(currentPub.getRating().toString());
         holder.textViewFreeTables.setText(currentPub.getFreeTablesCount().toString());
     }

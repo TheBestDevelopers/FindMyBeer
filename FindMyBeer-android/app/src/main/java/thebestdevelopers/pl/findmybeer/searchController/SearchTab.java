@@ -1,5 +1,6 @@
 package thebestdevelopers.pl.findmybeer.searchController;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -12,10 +13,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,40 +24,31 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.PlaceBuffer;
-import com.google.android.gms.location.places.Places;
-import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 
 import thebestdevelopers.pl.findmybeer.BottomNavigationViewHelper;
 import thebestdevelopers.pl.findmybeer.HomeTab;
-import thebestdevelopers.pl.findmybeer.MockPubsData;
 import thebestdevelopers.pl.findmybeer.profileController.ProfileTab;
 import thebestdevelopers.pl.findmybeer.R;
 import thebestdevelopers.pl.findmybeer.favController.FavTab;
 import thebestdevelopers.pl.findmybeer.mapsController.MapTab;
 import thebestdevelopers.pl.findmybeer.pubInfo.PubInfo;
-import thebestdevelopers.pl.findmybeer.pubList.ItemClickListener;
-import thebestdevelopers.pl.findmybeer.pubList.MainMenuRecyclerViewerAdapter;
-import thebestdevelopers.pl.findmybeer.pubList.Pub;
+import thebestdevelopers.pl.findmybeer.pubListController.GetNearbyPubsTask;
+import thebestdevelopers.pl.findmybeer.pubListController.ItemClickListener;
+import thebestdevelopers.pl.findmybeer.pubListController.PubListRecyclerViewerAdapter;
+import thebestdevelopers.pl.findmybeer.pubListController.Pub;
 
 public class SearchTab extends AppCompatActivity implements ItemClickListener, GoogleApiClient.OnConnectionFailedListener,
         GoogleApiClient.ConnectionCallbacks  {
 
     private final int REQUEST_CODE = 0;
-    private MainMenuRecyclerViewerAdapter mAdapter;
+    private PubListRecyclerViewerAdapter mAdapter;
     public ArrayList<Pub> pubs = new ArrayList<>();
-    MockPubsData mockPubsData;
     private String sortingType = "distance ascending";
     SortingTypeChooser sortingTypeChooser;
     ArrayList<String> conveniences;
     private double longitude, latitude;
-    private static final int GOOGLE_API_CLIENT_ID = 0;
-    private GoogleApiClient mGoogleApiClient;
     private ProgressBar spinner;
     Boolean newLocationSet = false;
 
@@ -72,56 +61,12 @@ public class SearchTab extends AppCompatActivity implements ItemClickListener, G
         setBottomNavigationView();
         spinner = (ProgressBar)findViewById(R.id.mProgressBarSearch);
         spinner.setVisibility(View.VISIBLE);
-        mockPubsData = new MockPubsData();
-        mGoogleApiClient = new GoogleApiClient.Builder(SearchTab.this)
-                .addApi(Places.GEO_DATA_API)
-                .enableAutoManage(this, GOOGLE_API_CLIENT_ID, this)
-                .addConnectionCallbacks(this)
-                .build();
-        for (int i = 0 ; i< mockPubsData.getPubs().size(); ++i) {
-            PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi
-                    .getPlaceById(mGoogleApiClient, mockPubsData.getPubs().get(i).getPlaceID());
-            placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
-        }
-        setRecyclerView();
-        sortingTypeChooser = new SortingTypeChooser(pubs);
-      //  pubs = sortingTypeChooser.getSortedList(sortingType);
-
-    //   mAdapter.notifyDataSetChanged();
         if (googleServicesAvailable()) {
             manageLocation(null);
-            sortingTypeChooser = new SortingTypeChooser(pubs);
-            pubs = sortingTypeChooser.getSortedList(sortingType);
-            mAdapter.notifyDataSetChanged();
         } else {
             Toast.makeText(this, "There's no Google Services installed", Toast.LENGTH_LONG).show();
         }
     }
-
-    private ResultCallback<PlaceBuffer> mUpdatePlaceDetailsCallback
-            = new ResultCallback<PlaceBuffer>() {
-        @Override
-        public void onResult(PlaceBuffer places) {
-            if (!places.getStatus().isSuccess()) {
-                return;
-            }
-            final Place place = places.get(0);
-            LatLng placeLatLong = place.getLatLng();
-            latitude = placeLatLong.latitude;
-            longitude = placeLatLong.longitude;
-            String pubName = place.getName().toString();
-            Float rating = place.getRating();
-            String id = place.getId();
-            Integer freeTablesCount = mockPubsData.getFreeTablesCount(id);
-            Pub pub = new Pub(pubName, latitude, longitude, freeTablesCount, rating, id);
-            pubs.add(pub);
-            spinner.setVisibility(View.GONE);
-            setRecyclerView();
-            sortingTypeChooser = new SortingTypeChooser(pubs);
-            pubs = sortingTypeChooser.getSortedList(sortingType);
-            mAdapter.notifyDataSetChanged();
-        }
-    };
 
     @Override
     public void onConnected(Bundle bundle) {
@@ -241,20 +186,6 @@ public class SearchTab extends AppCompatActivity implements ItemClickListener, G
                 });
     }
 
-    private void setRecyclerView() {
-        RecyclerView recyclerView = findViewById(R.id.my_recycler_view);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
-                recyclerView.getContext(), DividerItemDecoration.VERTICAL);
-        recyclerView.addItemDecoration(dividerItemDecoration);
-        recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setHasFixedSize(true);
-        mAdapter = new MainMenuRecyclerViewerAdapter(pubs);
-        recyclerView.setAdapter(mAdapter);
-        mAdapter.setClickListener(this);
-    }
 
     public boolean googleServicesAvailable() {
         GoogleApiAvailability api = GoogleApiAvailability.getInstance();
@@ -272,17 +203,22 @@ public class SearchTab extends AppCompatActivity implements ItemClickListener, G
 
     private void manageLocation(final Location chosenLocation) {
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        final Activity activity = this;
         android.location.LocationListener mLocationListener = new android.location.LocationListener() {
             @Override
             public void onLocationChanged(final Location location) {
+                Location setLocation = null;
                 if (chosenLocation != null && newLocationSet) {
-                    mAdapter.updateLocation(chosenLocation);
+                    setLocation = chosenLocation;
                 }
                 else if (!newLocationSet) {
-                    mAdapter.updateLocation(location);
+                    setLocation = location;
                 }
-                pubs = sortingTypeChooser.getSortedList(sortingType);
-                mAdapter.notifyDataSetChanged();
+                if (setLocation != null) {
+                    longitude = setLocation.getLongitude();
+                    latitude = setLocation.getLatitude();
+                    manageHttpConnection(setLocation);
+                }
             }
 
             @Override
@@ -298,6 +234,24 @@ public class SearchTab extends AppCompatActivity implements ItemClickListener, G
             @Override
             public void onProviderDisabled(String s) {
 
+            }
+
+            private void manageHttpConnection(Location location) {
+                String url = getUrl();
+                GetNearbyPubsTask getMenuData = new GetNearbyPubsTask(activity, spinner, location);
+                Object dataTransfer[] = new Object[1];
+                dataTransfer[0] = url;
+                getMenuData.execute(dataTransfer);
+            }
+
+            private String getUrl() {
+                StringBuilder menuUrl = new StringBuilder(getResources().getString(R.string.databaseIP));
+                menuUrl.append("/api/pubs/getNearestPubs?longitude=");
+                menuUrl.append(longitude);
+                menuUrl.append("&latitude=");
+                menuUrl.append(latitude);
+                Log.d("created url", menuUrl.toString());
+                return menuUrl.toString();
             }
         };
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {

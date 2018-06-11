@@ -1,4 +1,4 @@
-package thebestdevelopers.pl.findmybeer.pubList;
+package thebestdevelopers.pl.findmybeer.pubListController;
 
 import android.view.View;
 

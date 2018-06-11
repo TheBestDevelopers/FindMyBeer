@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import thebestdevelopers.pl.findmybeer.pubList.Pub;
+import thebestdevelopers.pl.findmybeer.pubListController.Pub;
 
 
 public class SortingTypeChooser {
@@ -12,6 +12,12 @@ public class SortingTypeChooser {
     ArrayList<Pub> pubListToSort;
 
     public SortingTypeChooser(ArrayList<Pub> _listToSort) {
+        this.pubListToSort = _listToSort;
+    }
+
+    public  SortingTypeChooser() {}
+
+    public void setListToSort(ArrayList<Pub> _listToSort) {
         this.pubListToSort = _listToSort;
     }
 

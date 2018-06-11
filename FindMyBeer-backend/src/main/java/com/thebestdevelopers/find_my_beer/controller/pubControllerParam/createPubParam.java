@@ -5,15 +5,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 
-public class CreatePubParam implements Serializable {
+public class createPubParam implements Serializable {
     private String pubName;
 
 
-    public CreatePubParam() {
+    public createPubParam() {
     }
 
     @JsonCreator
-    public CreatePubParam(@JsonProperty("pubName") String pubName){
+    public createPubParam(@JsonProperty("pubName") String pubName){
         this.pubName = pubName;
 
 
