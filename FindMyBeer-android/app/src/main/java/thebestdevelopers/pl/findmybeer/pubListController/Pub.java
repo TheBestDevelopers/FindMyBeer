@@ -5,9 +5,9 @@ public class Pub {
     Integer distance = 0;
     Integer freeTablesCount;
     Double rating;
-    Integer id;
+    String id;
 
-    public Pub(String _pubName, Integer _distance, Integer _freeTableCount, Double _stars, Integer _id) {
+    public Pub(String _pubName, Integer _distance, Integer _freeTableCount, Double _stars, String _id) {
         this.pubName = _pubName;
         this.freeTablesCount = _freeTableCount;
         this.rating = _stars;
@@ -15,7 +15,7 @@ public class Pub {
         this.id = _id;
     }
 
-    public Pub(Integer _id, Integer _freeTablesCount) {
+    public Pub(String _id, Integer _freeTablesCount) {
         this.id = _id;
         this.freeTablesCount = _freeTablesCount;
     }
@@ -36,6 +36,6 @@ public class Pub {
         return freeTablesCount;
     }
 
-    public Integer getPlaceID() { return id; }
+    public String getPlaceID() { return id; }
 
 }

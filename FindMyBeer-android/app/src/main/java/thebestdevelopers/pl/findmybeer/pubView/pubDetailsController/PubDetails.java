@@ -77,6 +77,7 @@ public class PubDetails extends AppCompatActivity {
                                 startActivity(temp);
                                 break;
                         }
+                        finish();
                         return true;
                     }
                 });

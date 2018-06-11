@@ -77,6 +77,7 @@ public class editTables extends AppCompatActivity {
                                 startActivity(temp);
                                 break;
                         }
+                        finish();
                         return true;
                     }
                 });

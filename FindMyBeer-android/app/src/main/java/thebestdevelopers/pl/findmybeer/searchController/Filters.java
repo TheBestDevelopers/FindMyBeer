@@ -81,7 +81,6 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
         setSortingTypeChooser();
         setConveniencesChooser();
 
-
     }
 
     private AdapterView.OnItemClickListener mAutocompleteClickListener

@@ -61,6 +61,7 @@ public class ProfileTab extends AppCompatActivity {
                                 //startActivity(temp);
                                 break;
                         }
+                        finish();
                         return true;
                     }
                 });

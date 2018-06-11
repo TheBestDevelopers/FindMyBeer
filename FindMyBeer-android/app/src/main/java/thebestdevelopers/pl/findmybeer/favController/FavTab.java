@@ -104,6 +104,7 @@ public class FavTab extends AppCompatActivity {
                                 startActivity(i);
                                 break;
                         }
+                        finish();
                         return true;
                     }
                 });

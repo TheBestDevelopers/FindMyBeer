@@ -33,13 +33,12 @@ import thebestdevelopers.pl.findmybeer.profileController.ProfileTab;
 import thebestdevelopers.pl.findmybeer.R;
 import thebestdevelopers.pl.findmybeer.favController.FavTab;
 import thebestdevelopers.pl.findmybeer.mapsController.MapTab;
-import thebestdevelopers.pl.findmybeer.pubInfo.PubInfo;
 import thebestdevelopers.pl.findmybeer.pubListController.GetNearbyPubsTask;
-import thebestdevelopers.pl.findmybeer.pubListController.ItemClickListener;
 import thebestdevelopers.pl.findmybeer.pubListController.PubListRecyclerViewerAdapter;
 import thebestdevelopers.pl.findmybeer.pubListController.Pub;
+import thebestdevelopers.pl.findmybeer.searchController.Sorting.SortingTypeChooser;
 
-public class SearchTab extends AppCompatActivity implements ItemClickListener, GoogleApiClient.OnConnectionFailedListener,
+public class SearchTab extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener,
         GoogleApiClient.ConnectionCallbacks  {
 
     private final int REQUEST_CODE = 0;
@@ -50,6 +49,7 @@ public class SearchTab extends AppCompatActivity implements ItemClickListener, G
     ArrayList<String> conveniences;
     private double longitude, latitude;
     private ProgressBar spinner;
+    GetNearbyPubsTask getPubsData = null;
     Boolean newLocationSet = false;
 
 
@@ -82,14 +82,6 @@ public class SearchTab extends AppCompatActivity implements ItemClickListener, G
 
     @Override
     public void onConnectionSuspended(int i) {
-    }
-
-    @Override
-    public void onClick(View view, int position) {
-        final Pub selectedPub = pubs.get(position);
-        Intent i = new Intent(this, PubInfo.class);
-        i.putExtra("placeID", selectedPub.getPlaceID());
-        startActivity(i);
     }
 
     @Override
@@ -139,7 +131,10 @@ public class SearchTab extends AppCompatActivity implements ItemClickListener, G
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                mAdapter.getFilter().filter(newText);
+                if (getPubsData != null) {
+                    getPubsData.updateFilters(newText); //if user writes before api is loaded, the filter will not work until he changes it
+                                                        //when pubs are listed
+                }
                 return true;
             }
         });
@@ -181,6 +176,7 @@ public class SearchTab extends AppCompatActivity implements ItemClickListener, G
                                 startActivity(i);
                                 break;
                         }
+                        finish();
                         return true;
                     }
                 });
@@ -238,10 +234,10 @@ public class SearchTab extends AppCompatActivity implements ItemClickListener, G
 
             private void manageHttpConnection(Location location) {
                 String url = getUrl();
-                GetNearbyPubsTask getMenuData = new GetNearbyPubsTask(activity, spinner, location);
+                getPubsData = new GetNearbyPubsTask(activity, spinner, location);
                 Object dataTransfer[] = new Object[1];
                 dataTransfer[0] = url;
-                getMenuData.execute(dataTransfer);
+                getPubsData.execute(dataTransfer);
             }
 
             private String getUrl() {

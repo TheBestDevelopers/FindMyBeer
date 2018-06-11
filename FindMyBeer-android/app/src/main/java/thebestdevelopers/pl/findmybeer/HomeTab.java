@@ -100,6 +100,7 @@ public class HomeTab extends AppCompatActivity implements GoogleApiClient.OnConn
                                 startActivity(i);
                                 break;
                         }
+                        //finish();
                         return true;
                     }
                 });
@@ -160,7 +161,6 @@ public class HomeTab extends AppCompatActivity implements GoogleApiClient.OnConn
                 menuUrl.append(longitude);
                 menuUrl.append("&latitude=");
                 menuUrl.append(latitude);
-                Log.d("created url", menuUrl.toString());
                 return menuUrl.toString();
             }
 

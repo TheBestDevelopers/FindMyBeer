@@ -59,6 +59,7 @@ public class PubEdit extends AppCompatActivity {
                                 startActivity(temp);
                                 break;
                         }
+                        finish();
                         return true;
                     }
                 });

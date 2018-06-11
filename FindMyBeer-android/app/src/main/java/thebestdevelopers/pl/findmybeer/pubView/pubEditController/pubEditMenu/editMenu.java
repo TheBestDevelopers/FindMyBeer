@@ -56,6 +56,7 @@ public class editMenu extends AppCompatActivity {
                                 startActivity(temp);
                                 break;
                         }
+                        finish();
                         return true;
                     }
                 });

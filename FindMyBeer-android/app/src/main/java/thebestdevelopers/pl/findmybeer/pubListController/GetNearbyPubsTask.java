@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 import thebestdevelopers.pl.findmybeer.R;
 import thebestdevelopers.pl.findmybeer.pubInfo.PubInfo;
-import thebestdevelopers.pl.findmybeer.searchController.SortingTypeChooser;
+import thebestdevelopers.pl.findmybeer.searchController.Sorting.SortingTypeChooser;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -71,7 +71,7 @@ public class GetNearbyPubsTask extends AsyncTask<Object, String, String> impleme
     protected void onPostExecute(String s){
         spinner.setVisibility(View.GONE);
         if (timeout) {
-            Toast.makeText(mWeakActivity.get(),"Cannot connect to database. Try again later.", Toast.LENGTH_SHORT).show();
+           showAlert("Cannot connect to database. Try again later.");
         }
         else {
             NearbyPubsParser parser = new NearbyPubsParser();
@@ -84,10 +84,16 @@ public class GetNearbyPubsTask extends AsyncTask<Object, String, String> impleme
                     managePubsAdapter();
                 }
             } else {
-                Toast.makeText(mWeakActivity.get(), "There are no places nearby!", Toast.LENGTH_SHORT).show();
+                showAlert("There are no places nearby!");
             }
         }
 
+    }
+
+    public void updateFilters(String newText) {
+        if (mAdapter != null) {
+            mAdapter.getFilter().filter(newText);
+        }
     }
 
     private void setRecyclerView(Activity activity) {
@@ -109,6 +115,11 @@ public class GetNearbyPubsTask extends AsyncTask<Object, String, String> impleme
         mAdapter.setClickListener(this);
         pubs = sortingTypeChooser.getSortedList("distance ascending");
         mAdapter.notifyDataSetChanged();
+    }
+
+    private void showAlert(String message) {
+        //temporary solution - should appear a message box or a textview with this info and it should appear once...
+        Toast.makeText(mWeakActivity.get(), message, Toast.LENGTH_LONG).show();
     }
 
 }

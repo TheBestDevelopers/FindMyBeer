@@ -1,4 +1,4 @@
-package thebestdevelopers.pl.findmybeer.searchController;
+package thebestdevelopers.pl.findmybeer.searchController.Sorting;
 
 import java.util.ArrayList;
 import java.util.Collections;

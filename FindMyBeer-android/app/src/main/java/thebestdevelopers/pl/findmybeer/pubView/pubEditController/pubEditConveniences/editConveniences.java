@@ -56,6 +56,7 @@ public class editConveniences extends AppCompatActivity {
                                 startActivity(temp);
                                 break;
                         }
+                        finish();
                         return true;
                     }
                 });

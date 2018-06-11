@@ -23,7 +23,7 @@ public class DataPubParser {
         String favourite = "";
         String ourPub = "";
 
-        Log.d("DataParser","jsonobject ="+googlePlaceJson.toString());
+      //  Log.d("DataParser","jsonobject ="+googlePlaceJson.toString());
 
 
         try {

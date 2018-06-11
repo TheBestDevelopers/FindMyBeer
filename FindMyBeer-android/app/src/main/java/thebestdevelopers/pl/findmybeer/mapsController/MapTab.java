@@ -99,7 +99,7 @@ public class MapTab extends AppCompatActivity implements OnMapReadyCallback, Goo
                                 startActivity(i);
                                 break;
                         }
-
+                        finish();
                         return true;
                     }
                 });

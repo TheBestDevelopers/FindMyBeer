@@ -57,11 +57,13 @@ public class Login extends AppCompatActivity {
     public void mButtonLogInOnClick(View v){
         Intent myIntent = new Intent(getBaseContext(), HomeTab.class);
         startActivity(myIntent);
+        finish();
     }
 
     public void mButtonRegisterOnClick(View v){
         Intent myIntent = new Intent(getBaseContext(), Register.class);
         startActivity(myIntent);
+        finish();
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
