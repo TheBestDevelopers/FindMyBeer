@@ -1,6 +1,5 @@
 package thebestdevelopers.pl.findmybeer;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +15,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -28,20 +26,20 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
 
+import thebestdevelopers.pl.findmybeer.ApiController.HttpRequests;
 import thebestdevelopers.pl.findmybeer.favController.FavTab;
 import thebestdevelopers.pl.findmybeer.mapsController.MapTab;
 import thebestdevelopers.pl.findmybeer.profileController.ProfileTab;
 import thebestdevelopers.pl.findmybeer.pubInfo.PubInfo;
-import thebestdevelopers.pl.findmybeer.pubListController.GetNearbyPubsTask;
+import thebestdevelopers.pl.findmybeer.ApiController.DownloadUrl.DownloadUrlWithGetMethod;
+import thebestdevelopers.pl.findmybeer.ApiController.AsyncTasks.GetDataAsyncTask;
 import thebestdevelopers.pl.findmybeer.pubListController.ItemClickListener;
-import thebestdevelopers.pl.findmybeer.pubListController.NearbyPubsAsyncResponse;
+import thebestdevelopers.pl.findmybeer.ApiController.AsyncTasks.IAsyncResponse;
 import thebestdevelopers.pl.findmybeer.pubListController.NearbyPubsParser;
 import thebestdevelopers.pl.findmybeer.pubListController.Pub;
 import thebestdevelopers.pl.findmybeer.pubListController.PubListRecyclerViewerAdapter;
 import thebestdevelopers.pl.findmybeer.searchController.SearchTab;
 import thebestdevelopers.pl.findmybeer.searchController.Sorting.SortingTypeChooser;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class HomeTab extends AppCompatActivity implements ItemClickListener, GoogleApiClient.OnConnectionFailedListener,
         GoogleApiClient.ConnectionCallbacks {
@@ -54,6 +52,7 @@ public class HomeTab extends AppCompatActivity implements ItemClickListener, Goo
     SortingTypeChooser  sortingTypeChooser;
     RecyclerView recyclerView;
     ItemClickListener itemClickListener;
+    HttpRequests httpRequests;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +64,7 @@ public class HomeTab extends AppCompatActivity implements ItemClickListener, Goo
         spinner = (ProgressBar)findViewById(R.id.mProgressBarHome);
         spinner.setVisibility(View.VISIBLE);
         sortingTypeChooser = new SortingTypeChooser();
-
+        httpRequests = new HttpRequests(this);
         setRecyclerView();
 
         if (googleServicesAvailable()) {
@@ -130,7 +129,7 @@ public class HomeTab extends AppCompatActivity implements ItemClickListener, Goo
                                 startActivity(i);
                                 break;
                         }
-                        //finish();
+                        finish();
                         return true;
                     }
                 });
@@ -190,10 +189,10 @@ public class HomeTab extends AppCompatActivity implements ItemClickListener, Goo
             }
 
             private void manageHttpConnection() {
-                String url = getUrl();
+                String url = httpRequests.getNearbyPubsUrl(longitude, latitude);
                 Object dataTransfer[] = new Object[1];
                 dataTransfer[0] = url;
-                GetNearbyPubsTask asyncTask = (GetNearbyPubsTask) new GetNearbyPubsTask(new NearbyPubsAsyncResponse(){
+                GetDataAsyncTask asyncTask = (GetDataAsyncTask) new GetDataAsyncTask(new IAsyncResponse(){
                     @Override
                     public void processFinish(String result, Boolean timeout){
                         if (timeout) {
@@ -210,7 +209,7 @@ public class HomeTab extends AppCompatActivity implements ItemClickListener, Goo
                             }
                         }
                     }
-                }).execute(dataTransfer);
+                }, new DownloadUrlWithGetMethod()).execute(dataTransfer);
             }
 
             private void showAlert(String message) {
@@ -218,14 +217,6 @@ public class HomeTab extends AppCompatActivity implements ItemClickListener, Goo
                 Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
             }
 
-            private String getUrl() {
-                StringBuilder menuUrl = new StringBuilder(getResources().getString(R.string.databaseIP));
-                menuUrl.append("/api/pubs/getNearestPubs?longitude=");
-                menuUrl.append(longitude);
-                menuUrl.append("&latitude=");
-                menuUrl.append(latitude);
-                return menuUrl.toString();
-            }
 
             private void setListAdapter() {
                 mAdapter = new PubListRecyclerViewerAdapter(pubs);

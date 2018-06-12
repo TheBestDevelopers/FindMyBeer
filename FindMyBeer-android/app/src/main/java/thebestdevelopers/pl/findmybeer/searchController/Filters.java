@@ -1,13 +1,11 @@
 package thebestdevelopers.pl.findmybeer.searchController;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Html;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.view.WindowManager;
@@ -33,7 +31,12 @@ import com.google.android.gms.common.api.ResultCallback;
 
 import java.util.ArrayList;
 
+import thebestdevelopers.pl.findmybeer.ApiController.HttpRequests;
 import thebestdevelopers.pl.findmybeer.R;
+import thebestdevelopers.pl.findmybeer.ApiController.DownloadUrl.DownloadUrlWithGetMethod;
+import thebestdevelopers.pl.findmybeer.ApiController.AsyncTasks.GetDataAsyncTask;
+import thebestdevelopers.pl.findmybeer.ApiController.AsyncTasks.IAsyncResponse;
+import thebestdevelopers.pl.findmybeer.searchController.Conveniences.ConveniencesParser;
 
 public class Filters extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener,
         GoogleApiClient.ConnectionCallbacks {
@@ -60,7 +63,8 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
     private static final LatLngBounds BOUNDS_MOUNTAIN_VIEW = new LatLngBounds(
             new LatLng(0, 0), new LatLng(0, 0));
     String placeId = "";
-    double latitude, longitude;
+    Double latitude, longitude;
+    HttpRequests httpRequests;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +72,7 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
         setContentView(R.layout.activity_filters);
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
+        httpRequests = new HttpRequests(this);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.
                 SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         mUseMyLocationCheckBox = findViewById(R.id.mUseMyLocationCheckBox);
@@ -79,7 +84,7 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
         }
         setAAutoCompleteAdapter();
         setSortingTypeChooser();
-        setConveniencesChooser();
+        getConveniencesListFromApi();
 
     }
 
@@ -183,6 +188,7 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
     private void setSortingTypeChooser() {
         SortingTypesStore sortingTypesStore = new SortingTypesStore();
         sortingTypes = sortingTypesStore.getSortingTypes();
+
         arrayAdapterSortingTypes = new ArrayAdapter<>(this,android.R.layout.simple_list_item_single_choice, sortingTypes);
         mListViewSorting = findViewById(R.id.mListViewSorting);
         mListViewSorting.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
@@ -193,8 +199,6 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
     }
 
     private void setConveniencesChooser() {
-        MockConveniencesTypes mockConveniencesTypes = new MockConveniencesTypes();
-        conveniences = mockConveniencesTypes.getConveniences();
         arrayAdapterConveniences = new ArrayAdapter<>(this,android.R.layout.simple_list_item_single_choice, conveniences);
         mListViewConveniences = findViewById(R.id.mListViewConveniences);
         mListViewConveniences.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
@@ -222,6 +226,33 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
                 checkedConveniences.add(mListViewConveniences.getAdapter().getItem(i).toString());
             }
         }
+    }
+    private void getConveniencesListFromApi() {
+        String url = httpRequests.getConveniencesUrl();
+        Object dataTransfer[] = new Object[1];
+        dataTransfer[0] = url;
+        GetDataAsyncTask asyncTask = (GetDataAsyncTask) new GetDataAsyncTask(new IAsyncResponse(){
+            @Override
+            public void processFinish(String result, Boolean timeout){
+                if (timeout) {
+                    showAlert("Cannot connect to database. Try again later.");
+                }
+                else {
+                    ConveniencesParser parser = new ConveniencesParser();
+                    conveniences = parser.parse(result);
+                    if (conveniences != null && conveniences.size() != 0) {
+                       // spinner.setVisibility(View.GONE);
+                        setConveniencesChooser();
+                    } else {
+                        showAlert("There are no places nearby!");
+                    }
+                }
+            }
+        }, new DownloadUrlWithGetMethod()).execute(dataTransfer);
+    }
+    private void showAlert(String message) {
+        //temporary solution - should appear a message box or a textview with this info and it should appear once...
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
     }
 
 }

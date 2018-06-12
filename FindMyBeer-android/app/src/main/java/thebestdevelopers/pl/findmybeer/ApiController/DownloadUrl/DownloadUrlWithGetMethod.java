@@ -1,4 +1,4 @@
-package thebestdevelopers.pl.findmybeer.pubListController;
+package thebestdevelopers.pl.findmybeer.ApiController.DownloadUrl;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,7 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class DownloadNearbyPubsUrl {
+public class DownloadUrlWithGetMethod implements IDownloadUrl {
     public String readUrl(String myUrl) throws IOException
     {
         String data = "";
@@ -18,9 +18,7 @@ public class DownloadNearbyPubsUrl {
         try {
             URL url = new URL(myUrl);
             urlConnection=(HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod("POST");
-            urlConnection.setRequestProperty("longitude", "18.976369");
-            urlConnection.setRequestProperty("latitude", "50.2301888");
+            urlConnection.setRequestMethod("GET");
             urlConnection.setConnectTimeout(10000);
             urlConnection.connect();
 

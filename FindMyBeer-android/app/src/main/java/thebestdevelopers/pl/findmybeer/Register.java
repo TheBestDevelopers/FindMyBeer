@@ -19,5 +19,6 @@ public class Register extends AppCompatActivity {
     public void mButtonRegisterOnClick(View v){
         Intent myIntent = new Intent(getBaseContext(), HomeTab.class);
         startActivity(myIntent);
+        finish();
     }
 }

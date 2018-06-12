@@ -1,6 +1,5 @@
 package thebestdevelopers.pl.findmybeer.searchController;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -17,7 +16,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,6 +29,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
 
+import thebestdevelopers.pl.findmybeer.ApiController.HttpRequests;
 import thebestdevelopers.pl.findmybeer.BottomNavigationViewHelper;
 import thebestdevelopers.pl.findmybeer.HomeTab;
 import thebestdevelopers.pl.findmybeer.profileController.ProfileTab;
@@ -38,9 +37,10 @@ import thebestdevelopers.pl.findmybeer.R;
 import thebestdevelopers.pl.findmybeer.favController.FavTab;
 import thebestdevelopers.pl.findmybeer.mapsController.MapTab;
 import thebestdevelopers.pl.findmybeer.pubInfo.PubInfo;
-import thebestdevelopers.pl.findmybeer.pubListController.GetNearbyPubsTask;
+import thebestdevelopers.pl.findmybeer.ApiController.DownloadUrl.DownloadUrlWithGetMethod;
+import thebestdevelopers.pl.findmybeer.ApiController.AsyncTasks.GetDataAsyncTask;
 import thebestdevelopers.pl.findmybeer.pubListController.ItemClickListener;
-import thebestdevelopers.pl.findmybeer.pubListController.NearbyPubsAsyncResponse;
+import thebestdevelopers.pl.findmybeer.ApiController.AsyncTasks.IAsyncResponse;
 import thebestdevelopers.pl.findmybeer.pubListController.NearbyPubsParser;
 import thebestdevelopers.pl.findmybeer.pubListController.PubListRecyclerViewerAdapter;
 import thebestdevelopers.pl.findmybeer.pubListController.Pub;
@@ -56,11 +56,12 @@ public class SearchTab extends AppCompatActivity implements GoogleApiClient.OnCo
     SortingTypeChooser  sortingTypeChooser;
     RecyclerView recyclerView;
     ArrayList<String> conveniences;
-    private double longitude, latitude;
+    private Double longitude, latitude;
     private ProgressBar spinner;
-    GetNearbyPubsTask getPubsData = null;
+    GetDataAsyncTask getPubsData = null;
     Boolean newLocationSet = false;
     ItemClickListener itemClickListener;
+    HttpRequests httpRequests;
 
 
     @Override
@@ -75,6 +76,7 @@ public class SearchTab extends AppCompatActivity implements GoogleApiClient.OnCo
         itemClickListener = this;
         sortingTypeChooser = new SortingTypeChooser();
         setRecyclerView();
+        httpRequests = new HttpRequests(this);
 
         if (googleServicesAvailable()) {
             manageLocation(null);
@@ -251,7 +253,13 @@ public class SearchTab extends AppCompatActivity implements GoogleApiClient.OnCo
                 if (setLocation != null) {
                     longitude = setLocation.getLongitude();
                     latitude = setLocation.getLatitude();
-                    manageHttpConnection();
+                    //mozna sprawdzic czy lokalizacja zmienila sie o wiecej niz np 10m... ale nie wiem czy trzeba
+                    if (conveniences == null || conveniences.size() == 0) {
+                        manageGetPubsHttpConnection();
+                    }
+                    else {
+                        manageGetPubsWithConveniencesHttpConnection();
+                    }
                 }
             }
 
@@ -270,12 +278,13 @@ public class SearchTab extends AppCompatActivity implements GoogleApiClient.OnCo
 
             }
 
-            private void manageHttpConnection() {
-                String url = getUrl();
+            private void manageGetPubsHttpConnection() {
+                String url = httpRequests.getNearbyPubsUrl(longitude, latitude);
                 Object dataTransfer[] = new Object[1];
                 dataTransfer[0] = url;
+                //if (chosenLocation != location) ??? zeby ten spinner nie byl zawsze, tylko po zmianie lokalizacji przez usera
                 spinner.setVisibility(View.VISIBLE);
-                GetNearbyPubsTask asyncTask = (GetNearbyPubsTask) new GetNearbyPubsTask(new NearbyPubsAsyncResponse(){
+                GetDataAsyncTask asyncTask = (GetDataAsyncTask) new GetDataAsyncTask(new IAsyncResponse(){
 
                     @Override
                     public void processFinish(String result, Boolean timeout){
@@ -293,7 +302,34 @@ public class SearchTab extends AppCompatActivity implements GoogleApiClient.OnCo
                             }
                         }
                     }
-                }).execute(dataTransfer);
+                }, new DownloadUrlWithGetMethod()).execute(dataTransfer);
+            }
+
+            private void manageGetPubsWithConveniencesHttpConnection() {
+                String url = httpRequests.getPubsWithConveniencesUrl(longitude,latitude, conveniences);
+                Object dataTransfer[] = new Object[1];
+                dataTransfer[0] = url;
+                //if (chosenLocation != location) ??? zeby ten spinner nie byl zawsze, tylko po zmianie lokalizacji przez usera
+                spinner.setVisibility(View.VISIBLE);
+                GetDataAsyncTask asyncTask = (GetDataAsyncTask) new GetDataAsyncTask(new IAsyncResponse(){
+
+                    @Override
+                    public void processFinish(String result, Boolean timeout){
+                        if (timeout) {
+                            showAlert("Cannot connect to database. Try again later.");
+                        }
+                        else {
+                            NearbyPubsParser parser = new NearbyPubsParser();
+                            pubs = parser.parse(result);
+                            if (pubs != null && pubs.size() != 0) {
+                                spinner.setVisibility(View.GONE);
+                                setListAdapter();
+                            } else {
+                                showAlert("There are no places nearby!");
+                            }
+                        }
+                    }
+                }, new DownloadUrlWithGetMethod()).execute(dataTransfer);
             }
 
             private void showAlert(String message) {
@@ -301,21 +337,12 @@ public class SearchTab extends AppCompatActivity implements GoogleApiClient.OnCo
                 Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
             }
 
-            private String getUrl() {
-                StringBuilder menuUrl = new StringBuilder(getResources().getString(R.string.databaseIP));
-                menuUrl.append("/api/pubs/getNearestPubs?longitude=");
-                menuUrl.append(longitude);
-                menuUrl.append("&latitude=");
-                menuUrl.append(latitude);
-                return menuUrl.toString();
-            }
-
             private void setListAdapter() {
                 mAdapter = new PubListRecyclerViewerAdapter(pubs);
                 recyclerView.setAdapter(mAdapter);
                 sortingTypeChooser.setListToSort(pubs);
                 mAdapter.setClickListener(itemClickListener);
-                pubs = sortingTypeChooser.getSortedList("distance ascending");
+                pubs = sortingTypeChooser.getSortedList(sortingType);
                 mAdapter.notifyDataSetChanged();
             }
         };
