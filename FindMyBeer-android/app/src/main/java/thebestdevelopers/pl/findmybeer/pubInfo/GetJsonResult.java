@@ -110,8 +110,8 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
                     convs += "Adapted for the disabled\n";
                 if (boardgames.equals("true"))
                     convs += "Board games\n";
-                if (discountsforgroups.equals("true"))
-                    convs += "Discounts for groups\n";
+                //if (discountsforgroups.equals("true"))
+                //    convs += "Discounts for groups\n";
                 if (discountsforstudents.equals("true"))
                     convs += "Discounts for students\n";
                 if (roastingroom.equals("true"))

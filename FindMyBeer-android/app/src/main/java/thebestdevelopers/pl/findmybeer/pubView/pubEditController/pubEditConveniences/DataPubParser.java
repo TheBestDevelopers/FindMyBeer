@@ -1,4 +1,4 @@
-package thebestdevelopers.pl.findmybeer.pubView.pubDetailsController;
+package thebestdevelopers.pl.findmybeer.pubView.pubEditController.pubEditConveniences;
 
 import android.util.Log;
 
@@ -13,31 +13,10 @@ public class DataPubParser {
     private HashMap<String, String> getPlace(JSONObject googlePlaceJson)
     {
         HashMap<String, String> googlePlaceMap = new HashMap<>();
-        String placeName = "";
-        String vicinity = "";
-        String phone = "";
-        String rating = "";
-        String website = "";
-        String favourite = "";
-        String ourPub = "";
 
         Log.d("DataParser","jsonobject ="+googlePlaceJson.toString());
 
-
         try {
-            if (!googlePlaceJson.isNull("name")) {
-                placeName = googlePlaceJson.getString("name");
-            }
-            if (!googlePlaceJson.isNull("vicinity")) {
-                vicinity = googlePlaceJson.getString("vicinity");
-            }
-            if (!googlePlaceJson.isNull("rating")) {
-                rating = googlePlaceJson.getString("rating");
-            }
-            //if (!googlePlaceJson.isNull("ourPub")) {
-            //    ourPub = googlePlaceJson.getString("ourPub");
-            //}
-
             if (!googlePlaceJson.isNull("conveniences")) {
                 if (!googlePlaceJson.getJSONObject("conveniences").isNull("WI-FI"))
                     googlePlaceMap.put("WI-FI", googlePlaceJson.getJSONObject("conveniences").getString("WI-FI"));
@@ -60,39 +39,6 @@ public class DataPubParser {
                 if (!googlePlaceJson.getJSONObject("conveniences").isNull("TOILET"))
                     googlePlaceMap.put("toilet", googlePlaceJson.getJSONObject("conveniences").getString("TOILET"));
             }
-            if(!googlePlaceJson.isNull("tables")) {
-                if (!googlePlaceJson.getJSONObject("tables").isNull("chair1"))
-                    googlePlaceMap.put("chair1", googlePlaceJson.getJSONObject("tables").getString("chair1"));
-
-                if (!googlePlaceJson.getJSONObject("tables").isNull("chair2"))
-                    googlePlaceMap.put("chair2", googlePlaceJson.getJSONObject("tables").getString("chair2"));
-
-                //if (!googlePlaceJson.getJSONObject("tables").isNull("chair3"))
-                //    googlePlaceMap.put("chair3", googlePlaceJson.getJSONObject("tables").getString("chair3"));
-
-                if (!googlePlaceJson.getJSONObject("tables").isNull("chair4"))
-                    googlePlaceMap.put("chair4", googlePlaceJson.getJSONObject("tables").getString("chair4"));
-
-                //if (!googlePlaceJson.getJSONObject("tables").isNull("chair5"))
-                //    googlePlaceMap.put("chair5", googlePlaceJson.getJSONObject("tables").getString("chair5"));
-
-                if (!googlePlaceJson.getJSONObject("tables").isNull("chair6"))
-                    googlePlaceMap.put("chair6", googlePlaceJson.getJSONObject("tables").getString("chair6"));
-
-                //if (!googlePlaceJson.getJSONObject("tables").isNull("chair7"))
-                //    googlePlaceMap.put("chair7", googlePlaceJson.getJSONObject("tables").getString("chair7"));
-
-                if (!googlePlaceJson.getJSONObject("tables").isNull("chair8"))
-                    googlePlaceMap.put("chair8", googlePlaceJson.getJSONObject("tables").getString("chair8"));
-            }
-
-
-
-            googlePlaceMap.put("place_name", placeName);
-            googlePlaceMap.put("vicinity", vicinity);
-            googlePlaceMap.put("rating", rating);
-            googlePlaceMap.put("ourPub", ourPub);
-
         }
         catch (JSONException e) {
             e.printStackTrace();

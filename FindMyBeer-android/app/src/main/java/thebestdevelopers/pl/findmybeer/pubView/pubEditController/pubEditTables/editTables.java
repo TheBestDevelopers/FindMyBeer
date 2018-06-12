@@ -7,9 +7,12 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.NumberPicker;
+import android.widget.ProgressBar;
+import android.widget.ScrollView;
 
 import thebestdevelopers.pl.findmybeer.BottomNavigationViewHelper;
 import thebestdevelopers.pl.findmybeer.R;
@@ -19,11 +22,19 @@ import thebestdevelopers.pl.findmybeer.pubView.pubProfileController.ProfileTab;
 
 public class editTables extends AppCompatActivity {
 
+    String id;
     public NumberPicker np1, np2, np4, np6, np8;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_tables);
+
+        ScrollView v = (ScrollView) findViewById(R.id.bView);
+        v.setVisibility(View.GONE);
+
+        ProgressBar spinner = (ProgressBar)findViewById(R.id.mProgressBarHome);
+        spinner.setVisibility(View.VISIBLE);
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -52,7 +63,18 @@ public class editTables extends AppCompatActivity {
         np8 = findViewById(R.id.numberPicker8);
         np8.setMinValue(0);
         np8.setMaxValue(100);
-        //pobranie jsona
+
+        Intent i = getIntent();
+        Bundle b = i.getExtras();
+        if (b != null) {
+            id = (String) b.get("placeID");
+        }
+
+        String url = getUrl(id);
+        GetJsonResult getNearbyPlacesData = new GetJsonResult(this);
+        Object dataTransfer[] = new Object[1];
+        dataTransfer[0] = url;
+        getNearbyPlacesData.execute(dataTransfer);
 
         Intent temp;
         tabs.setOnNavigationItemSelectedListener
@@ -63,16 +85,19 @@ public class editTables extends AppCompatActivity {
                         switch (item.getItemId()) {
                             case R.id.action_home:
                                 temp = new Intent(getApplicationContext(), PubDetails.class);
+                                temp.putExtra("placeID", id);
                                 temp.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                 startActivity(temp);
                                 break;
                             case R.id.action_edit:
                                 temp = new Intent(getApplicationContext(), PubEdit.class);
+                                temp.putExtra("placeID", id);
                                 temp.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                 startActivity(temp);
                                 break;
                             case R.id.action_user:
                                 temp = new Intent(getApplicationContext(), ProfileTab.class);
+                                temp.putExtra("placeID", id);
                                 temp.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                 startActivity(temp);
                                 break;
@@ -85,5 +110,15 @@ public class editTables extends AppCompatActivity {
 
     public void mButtonChangeClick(View v) {
         //obsluga
+    }
+
+    //http://localhost:8080/api/pubs/getPubInfo?userID=2&pubID=3
+    private String getUrl(String id) {
+        StringBuilder googlePlaceUrl = new StringBuilder(getResources().getString(R.string.databaseIP)); //temp
+        //TO DO
+        googlePlaceUrl.append("/api/pubs/getPubInfo?userID="+"8"); //zamiast 2 ma byc user id
+        googlePlaceUrl.append("&pubID="+id);
+        Log.d("created url", googlePlaceUrl.toString());
+        return googlePlaceUrl.toString();
     }
 }
