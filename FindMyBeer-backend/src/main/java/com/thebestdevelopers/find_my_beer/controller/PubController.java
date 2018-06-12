@@ -2,7 +2,7 @@ package com.thebestdevelopers.find_my_beer.controller;
 
 import com.thebestdevelopers.find_my_beer.DTO.*;
 import com.thebestdevelopers.find_my_beer.DTO.getPubsDTOs.GetPubsDTO;
-import com.thebestdevelopers.find_my_beer.controller.pubControllerParam.createPubParam;
+import com.thebestdevelopers.find_my_beer.controller.pubControllerParam.CreatePubParam;
 import com.thebestdevelopers.find_my_beer.repository.UserRepository;
 import com.thebestdevelopers.find_my_beer.service.PubService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ public class PubController implements Serializable {
     UserRepository userRepository;
 
     @PostMapping("new")
-    public PubDTO createUser(@Valid @RequestBody createPubParam param) {
+    public PubDTO createUser(@Valid @RequestBody CreatePubParam param) {
         return pubService.createPub(param.getPubName());
     }
 
@@ -58,7 +58,7 @@ public class PubController implements Serializable {
         return pubService.getPubs(longitude, latitude);
     }
 
-    @PostMapping("getNearestPubs")
+    @GetMapping("getNearestPubs")
     public List<GetNearestPubDTO> getNearestPubs(@RequestParam("longitude") Double longitude,
                                                  @RequestParam("latitude") Double latitude,
                                                  Principal principal) throws IOException {
@@ -69,7 +69,7 @@ public class PubController implements Serializable {
         return pubService.getNearestPubs(longitude, latitude);
     }
 
-    @PutMapping("getPubsWithConveniences")
+    @GetMapping("getPubsWithConveniences")
     public List<GetNearestPubDTO> getPubsWithConveniences(@RequestParam("longitude") Double longitude,
                                                    @RequestParam("latitude") Double latitude,
                                                    @RequestParam("conveniences") String[] conveniences,
