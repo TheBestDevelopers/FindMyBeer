@@ -24,34 +24,21 @@ import thebestdevelopers.pl.findmybeer.searchController.Sorting.SortingTypeChoos
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
-public class GetNearbyPubsTask extends AsyncTask<Object, String, String> implements ItemClickListener {
+public class GetNearbyPubsTask extends AsyncTask<Object, String, String> {
+
+    public NearbyPubsAsyncResponse delegate = null;
 
     private String apiData ="";
     private String url;
 
     public ArrayList<Pub> pubs;
 
-    WeakReference<Activity> mWeakActivity;
-    private PubListRecyclerViewerAdapter mAdapter;
-    Location location;
-    SortingTypeChooser  sortingTypeChooser = new SortingTypeChooser();
-    ProgressBar spinner;
     Boolean timeout = false;
 
-    public GetNearbyPubsTask(Activity activity, ProgressBar _spinner, Location _location) {
-        mWeakActivity = new WeakReference<Activity>(activity);
-        location = _location;
-        sortingTypeChooser = new SortingTypeChooser();
-        spinner = _spinner;
+    public GetNearbyPubsTask(NearbyPubsAsyncResponse _delegate) {
+        delegate = _delegate;
     }
 
-    @Override
-    public void onClick(View view, int position) {
-        final Pub currentPub = pubs.get(position);
-        Intent i = new Intent(mWeakActivity.get(), PubInfo.class);
-        i.putExtra("placeID", currentPub.getPlaceID());
-        mWeakActivity.get().startActivity(i);
-    }
 
     @Override
     protected String doInBackground(Object... objects) {
@@ -69,57 +56,8 @@ public class GetNearbyPubsTask extends AsyncTask<Object, String, String> impleme
 
     @Override
     protected void onPostExecute(String s){
-        spinner.setVisibility(View.GONE);
-        if (timeout) {
-           showAlert("Cannot connect to database. Try again later.");
-        }
-        else {
-            NearbyPubsParser parser = new NearbyPubsParser();
-            pubs = parser.parse(s);
-            Log.d("placedata", "called parse method");
-            if (pubs != null && pubs.size() != 0) {
-                Activity activity = mWeakActivity.get();
-                if (activity != null) {
-                    setRecyclerView(activity);
-                    managePubsAdapter();
-                }
-            } else {
-                showAlert("There are no places nearby!");
-            }
-        }
-
+        delegate.processFinish(s, timeout);
     }
 
-    public void updateFilters(String newText) {
-        if (mAdapter != null) {
-            mAdapter.getFilter().filter(newText);
-        }
-    }
-
-    private void setRecyclerView(Activity activity) {
-        RecyclerView recyclerView = activity.findViewById(R.id.my_recycler_view);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
-                recyclerView.getContext(), DividerItemDecoration.VERTICAL);
-        recyclerView.addItemDecoration(dividerItemDecoration);
-        recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setHasFixedSize(true);
-        mAdapter = new PubListRecyclerViewerAdapter(pubs);
-        recyclerView.setAdapter(mAdapter);
-    }
-
-    private void managePubsAdapter() {
-        sortingTypeChooser.setListToSort(pubs);
-        mAdapter.setClickListener(this);
-        pubs = sortingTypeChooser.getSortedList("distance ascending");
-        mAdapter.notifyDataSetChanged();
-    }
-
-    private void showAlert(String message) {
-        //temporary solution - should appear a message box or a textview with this info and it should appear once...
-        Toast.makeText(mWeakActivity.get(), message, Toast.LENGTH_LONG).show();
-    }
 
 }

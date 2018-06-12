@@ -12,6 +12,10 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,18 +26,34 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import java.util.ArrayList;
+
 import thebestdevelopers.pl.findmybeer.favController.FavTab;
 import thebestdevelopers.pl.findmybeer.mapsController.MapTab;
 import thebestdevelopers.pl.findmybeer.profileController.ProfileTab;
+import thebestdevelopers.pl.findmybeer.pubInfo.PubInfo;
 import thebestdevelopers.pl.findmybeer.pubListController.GetNearbyPubsTask;
+import thebestdevelopers.pl.findmybeer.pubListController.ItemClickListener;
+import thebestdevelopers.pl.findmybeer.pubListController.NearbyPubsAsyncResponse;
+import thebestdevelopers.pl.findmybeer.pubListController.NearbyPubsParser;
+import thebestdevelopers.pl.findmybeer.pubListController.Pub;
+import thebestdevelopers.pl.findmybeer.pubListController.PubListRecyclerViewerAdapter;
 import thebestdevelopers.pl.findmybeer.searchController.SearchTab;
+import thebestdevelopers.pl.findmybeer.searchController.Sorting.SortingTypeChooser;
 
-public class HomeTab extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener,
+import static com.facebook.FacebookSdk.getApplicationContext;
+
+public class HomeTab extends AppCompatActivity implements ItemClickListener, GoogleApiClient.OnConnectionFailedListener,
         GoogleApiClient.ConnectionCallbacks {
 
     public ProgressBar spinner;
     Double latitude = 0.0;
     Double longitude = 0.0;
+    ArrayList<Pub> pubs;
+    private PubListRecyclerViewerAdapter mAdapter;
+    SortingTypeChooser  sortingTypeChooser;
+    RecyclerView recyclerView;
+    ItemClickListener itemClickListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +61,12 @@ public class HomeTab extends AppCompatActivity implements GoogleApiClient.OnConn
         setContentView(R.layout.activity_hometab);
         overridePendingTransition(0, 0);
         setBottomNavigationView();
-
+        itemClickListener = this;
         spinner = (ProgressBar)findViewById(R.id.mProgressBarHome);
         spinner.setVisibility(View.VISIBLE);
+        sortingTypeChooser = new SortingTypeChooser();
+
+        setRecyclerView();
 
         if (googleServicesAvailable()) {
             manageLocation();
@@ -68,6 +91,13 @@ public class HomeTab extends AppCompatActivity implements GoogleApiClient.OnConn
     public void onConnectionSuspended(int i) {
     }
 
+    @Override
+    public void onClick(View view, int position) {
+        final Pub currentPub = pubs.get(position);
+        Intent i = new Intent(this, PubInfo.class);
+        i.putExtra("placeID", currentPub.getPlaceID());
+        startActivity(i);
+    }
 
     private void setBottomNavigationView() {
         BottomNavigationView tabs = findViewById(R.id.navigationtabs1);
@@ -121,15 +151,27 @@ public class HomeTab extends AppCompatActivity implements GoogleApiClient.OnConn
         return false;
     }
 
+    private void setRecyclerView() {
+        recyclerView = findViewById(R.id.my_recycler_view);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
+                recyclerView.getContext(), DividerItemDecoration.VERTICAL);
+        recyclerView.addItemDecoration(dividerItemDecoration);
+        recyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setHasFixedSize(true);
+
+    }
+
     private void manageLocation() {
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        final Activity activity = this;
         android.location.LocationListener mLocationListener = new android.location.LocationListener() {
             @Override
             public void onLocationChanged(final Location location) {
                 longitude = location.getLongitude();
                 latitude = location.getLatitude();
-                manageHttpConnection(location);
+                manageHttpConnection();
             }
 
             @Override
@@ -147,12 +189,33 @@ public class HomeTab extends AppCompatActivity implements GoogleApiClient.OnConn
 
             }
 
-            private void manageHttpConnection(Location location) {
+            private void manageHttpConnection() {
                 String url = getUrl();
-                GetNearbyPubsTask getMenuData = new GetNearbyPubsTask(activity, spinner, location);
                 Object dataTransfer[] = new Object[1];
                 dataTransfer[0] = url;
-                getMenuData.execute(dataTransfer);
+                GetNearbyPubsTask asyncTask = (GetNearbyPubsTask) new GetNearbyPubsTask(new NearbyPubsAsyncResponse(){
+                    @Override
+                    public void processFinish(String result, Boolean timeout){
+                        if (timeout) {
+                            showAlert("Cannot connect to database. Try again later.");
+                        }
+                        else {
+                            NearbyPubsParser parser = new NearbyPubsParser();
+                            pubs = parser.parse(result);
+                            if (pubs != null && pubs.size() != 0) {
+                                spinner.setVisibility(View.GONE);
+                                setListAdapter();
+                            } else {
+                                showAlert("There are no places nearby!");
+                            }
+                        }
+                    }
+                }).execute(dataTransfer);
+            }
+
+            private void showAlert(String message) {
+                //temporary solution - should appear a message box or a textview with this info and it should appear once...
+                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
             }
 
             private String getUrl() {
@@ -164,11 +227,22 @@ public class HomeTab extends AppCompatActivity implements GoogleApiClient.OnConn
                 return menuUrl.toString();
             }
 
+            private void setListAdapter() {
+                mAdapter = new PubListRecyclerViewerAdapter(pubs);
+                recyclerView.setAdapter(mAdapter);
+                sortingTypeChooser.setListToSort(pubs);
+                mAdapter.setClickListener(itemClickListener);
+                pubs = sortingTypeChooser.getSortedList("distance ascending");
+                mAdapter.notifyDataSetChanged();
+            }
+
         };
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1, 10.0f, mLocationListener);
     }
+
+
 }
 

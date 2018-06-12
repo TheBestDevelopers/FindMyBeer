@@ -13,6 +13,10 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,24 +37,30 @@ import thebestdevelopers.pl.findmybeer.profileController.ProfileTab;
 import thebestdevelopers.pl.findmybeer.R;
 import thebestdevelopers.pl.findmybeer.favController.FavTab;
 import thebestdevelopers.pl.findmybeer.mapsController.MapTab;
+import thebestdevelopers.pl.findmybeer.pubInfo.PubInfo;
 import thebestdevelopers.pl.findmybeer.pubListController.GetNearbyPubsTask;
+import thebestdevelopers.pl.findmybeer.pubListController.ItemClickListener;
+import thebestdevelopers.pl.findmybeer.pubListController.NearbyPubsAsyncResponse;
+import thebestdevelopers.pl.findmybeer.pubListController.NearbyPubsParser;
 import thebestdevelopers.pl.findmybeer.pubListController.PubListRecyclerViewerAdapter;
 import thebestdevelopers.pl.findmybeer.pubListController.Pub;
 import thebestdevelopers.pl.findmybeer.searchController.Sorting.SortingTypeChooser;
 
 public class SearchTab extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener,
-        GoogleApiClient.ConnectionCallbacks  {
+        GoogleApiClient.ConnectionCallbacks, ItemClickListener  {
 
     private final int REQUEST_CODE = 0;
-    private PubListRecyclerViewerAdapter mAdapter;
     public ArrayList<Pub> pubs = new ArrayList<>();
     private String sortingType = "distance ascending";
-    SortingTypeChooser sortingTypeChooser;
+    private PubListRecyclerViewerAdapter mAdapter;
+    SortingTypeChooser  sortingTypeChooser;
+    RecyclerView recyclerView;
     ArrayList<String> conveniences;
     private double longitude, latitude;
     private ProgressBar spinner;
     GetNearbyPubsTask getPubsData = null;
     Boolean newLocationSet = false;
+    ItemClickListener itemClickListener;
 
 
     @Override
@@ -61,11 +71,24 @@ public class SearchTab extends AppCompatActivity implements GoogleApiClient.OnCo
         setBottomNavigationView();
         spinner = (ProgressBar)findViewById(R.id.mProgressBarSearch);
         spinner.setVisibility(View.VISIBLE);
+
+        itemClickListener = this;
+        sortingTypeChooser = new SortingTypeChooser();
+        setRecyclerView();
+
         if (googleServicesAvailable()) {
             manageLocation(null);
         } else {
             Toast.makeText(this, "There's no Google Services installed", Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public void onClick(View view, int position) {
+        final Pub currentPub = pubs.get(position);
+        Intent i = new Intent(this, PubInfo.class);
+        i.putExtra("placeID", currentPub.getPlaceID());
+        startActivity(i);
     }
 
     @Override
@@ -130,12 +153,14 @@ public class SearchTab extends AppCompatActivity implements GoogleApiClient.OnCo
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
-                if (getPubsData != null) {
-                    getPubsData.updateFilters(newText); //if user writes before api is loaded, the filter will not work until he changes it
-                                                        //when pubs are listed
-                }
+            public boolean onQueryTextChange(String newText) {{
+                updateFilters(newText);
                 return true;
+            }}
+            public void updateFilters(String newText) {
+                if (mAdapter != null) {
+                    mAdapter.getFilter().filter(newText);
+                }
             }
         });
     }
@@ -143,6 +168,19 @@ public class SearchTab extends AppCompatActivity implements GoogleApiClient.OnCo
     public void mButtonFiltersOnClick(View v) {
         Intent myIntent = new Intent(getBaseContext(), Filters.class);
         startActivityForResult(myIntent, REQUEST_CODE);
+    }
+
+    private void setRecyclerView() {
+        recyclerView = findViewById(R.id.my_recycler_view);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
+                recyclerView.getContext(), DividerItemDecoration.VERTICAL);
+        recyclerView.addItemDecoration(dividerItemDecoration);
+        recyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setHasFixedSize(true);
+
     }
 
     private void setBottomNavigationView() {
@@ -197,9 +235,9 @@ public class SearchTab extends AppCompatActivity implements GoogleApiClient.OnCo
         return false;
     }
 
+
     private void manageLocation(final Location chosenLocation) {
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        final Activity activity = this;
         android.location.LocationListener mLocationListener = new android.location.LocationListener() {
             @Override
             public void onLocationChanged(final Location location) {
@@ -213,7 +251,7 @@ public class SearchTab extends AppCompatActivity implements GoogleApiClient.OnCo
                 if (setLocation != null) {
                     longitude = setLocation.getLongitude();
                     latitude = setLocation.getLatitude();
-                    manageHttpConnection(setLocation);
+                    manageHttpConnection();
                 }
             }
 
@@ -232,12 +270,35 @@ public class SearchTab extends AppCompatActivity implements GoogleApiClient.OnCo
 
             }
 
-            private void manageHttpConnection(Location location) {
+            private void manageHttpConnection() {
                 String url = getUrl();
-                getPubsData = new GetNearbyPubsTask(activity, spinner, location);
                 Object dataTransfer[] = new Object[1];
                 dataTransfer[0] = url;
-                getPubsData.execute(dataTransfer);
+                spinner.setVisibility(View.VISIBLE);
+                GetNearbyPubsTask asyncTask = (GetNearbyPubsTask) new GetNearbyPubsTask(new NearbyPubsAsyncResponse(){
+
+                    @Override
+                    public void processFinish(String result, Boolean timeout){
+                        if (timeout) {
+                            showAlert("Cannot connect to database. Try again later.");
+                        }
+                        else {
+                            NearbyPubsParser parser = new NearbyPubsParser();
+                            pubs = parser.parse(result);
+                            if (pubs != null && pubs.size() != 0) {
+                                spinner.setVisibility(View.GONE);
+                                setListAdapter();
+                            } else {
+                                showAlert("There are no places nearby!");
+                            }
+                        }
+                    }
+                }).execute(dataTransfer);
+            }
+
+            private void showAlert(String message) {
+                //temporary solution - should appear a message box or a textview with this info and it should appear once...
+                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
             }
 
             private String getUrl() {
@@ -246,8 +307,16 @@ public class SearchTab extends AppCompatActivity implements GoogleApiClient.OnCo
                 menuUrl.append(longitude);
                 menuUrl.append("&latitude=");
                 menuUrl.append(latitude);
-                Log.d("created url", menuUrl.toString());
                 return menuUrl.toString();
+            }
+
+            private void setListAdapter() {
+                mAdapter = new PubListRecyclerViewerAdapter(pubs);
+                recyclerView.setAdapter(mAdapter);
+                sortingTypeChooser.setListToSort(pubs);
+                mAdapter.setClickListener(itemClickListener);
+                pubs = sortingTypeChooser.getSortedList("distance ascending");
+                mAdapter.notifyDataSetChanged();
             }
         };
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {

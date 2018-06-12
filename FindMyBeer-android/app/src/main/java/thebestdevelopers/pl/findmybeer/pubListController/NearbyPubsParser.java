@@ -18,7 +18,10 @@ public class NearbyPubsParser {
                String pubName = singlePubInfo.getString("name");
                Integer freeTables = singlePubInfo.getInt("freeTable");
                Double rating = singlePubInfo.getDouble("rating");
-               String id = singlePubInfo.getString("id");
+               StringBuilder idBuilder = new StringBuilder("!!!");
+               idBuilder.append(singlePubInfo.getString("id"));
+               String id = idBuilder.toString();
+
                Integer distance = singlePubInfo.getInt("distance");
                Pub pub = new Pub(pubName, distance, freeTables, rating, id);
                pubs.add(pub);
