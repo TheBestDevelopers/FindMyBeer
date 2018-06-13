@@ -29,12 +29,12 @@ public class PubDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pub_details);
-/*
+
         ScrollView v = (ScrollView) findViewById(R.id.bView);
         v.setVisibility(View.GONE);
-        */
+
         ProgressBar spinner = (ProgressBar)findViewById(R.id.mProgressBarHome);
-        spinner.setVisibility(View.GONE);
+        spinner.setVisibility(View.VISIBLE);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
@@ -46,13 +46,12 @@ public class PubDetails extends AppCompatActivity {
         tabs.getMenu().findItem(R.id.action_home).setChecked(true);
 
         //pobranie jsona
-        /*
+        id = "13";
         String url = getUrl(id);
         GetJsonResult getNearbyPlacesData = new GetJsonResult(this);
         Object dataTransfer[] = new Object[1];
         dataTransfer[0] = url;
         getNearbyPlacesData.execute(dataTransfer);
-        */
 
         Intent temp;
         tabs.setOnNavigationItemSelectedListener
@@ -68,11 +67,13 @@ public class PubDetails extends AppCompatActivity {
                                 break;
                             case R.id.action_edit:
                                 temp = new Intent(getApplicationContext(), PubEdit.class);
+                                temp.putExtra("placeID", id);
                                 temp.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                 startActivity(temp);
                                 break;
                             case R.id.action_user:
                                 temp = new Intent(getApplicationContext(), ProfileTab.class);
+                                temp.putExtra("placeID", id);
                                 temp.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                 startActivity(temp);
                                 break;
@@ -109,10 +110,12 @@ public class PubDetails extends AppCompatActivity {
         startActivity(myIntent);
     }
 
+    //http://localhost:8080/api/pubs/getPubInfo?userID=2&pubID=3
     private String getUrl(String id) {
-        StringBuilder googlePlaceUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/details/json?placeid=");
-        googlePlaceUrl.append(id);
-        googlePlaceUrl.append("&key="+"AIzaSyB3iQRgruru1jotumbRTuzOYiWSePz41ZQ");
+        StringBuilder googlePlaceUrl = new StringBuilder(getResources().getString(R.string.databaseIP)); //temp
+        //TO DO
+        googlePlaceUrl.append("/api/pubs/getPubInfo?userID="+"8"); //zamiast 2 ma byc user id
+        googlePlaceUrl.append("&pubID="+id);
         Log.d("created url", googlePlaceUrl.toString());
         return googlePlaceUrl.toString();
     }

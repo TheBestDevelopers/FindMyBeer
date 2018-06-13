@@ -16,11 +16,11 @@ import thebestdevelopers.pl.findmybeer.pubView.pubDetailsController.PubDetails;
 import thebestdevelopers.pl.findmybeer.pubView.pubEditController.pubEditConveniences.editConveniences;
 import thebestdevelopers.pl.findmybeer.pubView.pubEditController.pubEditMenu.editMenu;
 import thebestdevelopers.pl.findmybeer.pubView.pubEditController.pubEditTables.editTables;
-import thebestdevelopers.pl.findmybeer.pubView.pubMenuController.Menu;
 import thebestdevelopers.pl.findmybeer.pubView.pubProfileController.ProfileTab;
 
 public class PubEdit extends AppCompatActivity {
 
+    String id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +34,11 @@ public class PubEdit extends AppCompatActivity {
         overridePendingTransition(0, 0);
         tabs.getMenu().findItem(R.id.action_edit).setChecked(true);
 
-        //pobranie jsona
+        Intent i = getIntent();
+        Bundle b = i.getExtras();
+        if (b != null) {
+            id = (String) b.get("placeID");
+        }
 
         Intent temp;
         tabs.setOnNavigationItemSelectedListener
@@ -55,6 +59,7 @@ public class PubEdit extends AppCompatActivity {
                                 break;
                             case R.id.action_user:
                                 temp = new Intent(getApplicationContext(), ProfileTab.class);
+                                temp.putExtra("placeID", id);
                                 temp.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                 startActivity(temp);
                                 break;
@@ -73,13 +78,13 @@ public class PubEdit extends AppCompatActivity {
 
     public void mButtonConvsClick(View v) {
         Intent myIntent = new Intent(getApplicationContext(), editConveniences.class);
-        //myIntent.putExtra("placeID", id);
+        myIntent.putExtra("placeID", id);
         startActivity(myIntent);
     }
 
     public void mButtonTablesClick(View v) {
         Intent myIntent = new Intent(getApplicationContext(), editTables.class);
-        //myIntent.putExtra("placeID", id);
+        myIntent.putExtra("placeID", id);
         startActivity(myIntent);
     }
 }

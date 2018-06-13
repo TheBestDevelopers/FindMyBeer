@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import thebestdevelopers.pl.findmybeer.BottomNavigationViewHelper;
+import thebestdevelopers.pl.findmybeer.HomeTab;
 import thebestdevelopers.pl.findmybeer.Login;
 import thebestdevelopers.pl.findmybeer.R;
 import thebestdevelopers.pl.findmybeer.pubView.pubDetailsController.PubDetails;
@@ -89,13 +90,13 @@ public class ProfileTab extends AppCompatActivity {
 
     public void mButtonChangePswOnClick(View v){
         //obsluga zmiany hasla
-        Intent myIntent = new Intent(getApplicationContext(), ChangePasswordActivity.class);
+        Intent myIntent = new Intent(getApplicationContext(), thebestdevelopers.pl.findmybeer.profileController.ChangePasswordActivity.class);
         startActivity(myIntent);
     }
 
     public void mButtonTemp(View v){
         //obsluga zmiany hasla
-        Intent myIntent = new Intent(getApplicationContext(), thebestdevelopers.pl.findmybeer.HomeTab.class);
+        Intent myIntent = new Intent(getApplicationContext(), HomeTab.class);
         startActivity(myIntent);
     }
 

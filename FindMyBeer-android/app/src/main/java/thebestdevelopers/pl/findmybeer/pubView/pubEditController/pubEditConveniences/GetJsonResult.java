@@ -1,10 +1,11 @@
-package thebestdevelopers.pl.findmybeer.pubView.pubDetailsController;
+package thebestdevelopers.pl.findmybeer.pubView.pubEditController.pubEditConveniences;
 
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -58,47 +59,53 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
         Activity activity = mWeakActivity.get();
         if (activity != null) {
 
-            mName = activity.findViewById(R.id.tName);
-            mName.setText(placeName);
-
-            mAddress = activity.findViewById(R.id.tAddress);
-            mAddress.setText(vicinity);
-
-            mRating = activity.findViewById(R.id.tRating);
-            mRating.setText(rating+"/5");
-
-            tConveniences = activity.findViewById(R.id.tConveniences);
-            tTables = activity.findViewById(R.id.tTables);
-
             spinner = activity.findViewById(R.id.mProgressBarHome);
 
-                String convs = "";
+            CheckBox chbx1 = (CheckBox) activity.findViewById(R.id.checkbox_wifi);
+            CheckBox chbx2 = (CheckBox) activity.findViewById(R.id.checkbox_adapted_disabled);
+            CheckBox chbx3 = (CheckBox) activity.findViewById(R.id.checkbox_boardgames);
+            CheckBox chbx4 = (CheckBox) activity.findViewById(R.id.checkbox_discountsforgroups);
+            CheckBox chbx5 = (CheckBox) activity.findViewById(R.id.checkbox_discountsforstudents);
+            CheckBox chbx6 = (CheckBox) activity.findViewById(R.id.checkbox_roastingroom);
+            CheckBox chbx7 = (CheckBox) activity.findViewById(R.id.checkbox_toilet);
 
                 if (wifi.equals("true"))
-                    convs += "WI-FI\n";
+                    chbx1.setChecked(true);
+                else if (wifi.equals("false")) {
+                    chbx1.setChecked(false);
+                }
+
                 if (adaptedforthedisabled.equals("true"))
-                    convs += "Adapted for the disabled\n";
+                    chbx2.setChecked(true);
+                else if (adaptedforthedisabled.equals("false")) {
+                    chbx2.setChecked(false);
+                }
+
+
                 if (boardgames.equals("true"))
-                    convs += "Board games\n";
+                    chbx3.setChecked(true);
+                else if (boardgames.equals("true")) {
+                    chbx3.setChecked(false);
+                }
                 //if (discountsforgroups.equals("true"))
                 //    convs += "Discounts for groups\n";
+
                 if (discountsforstudents.equals("true"))
-                    convs += "Discounts for students\n";
+                    chbx5.setChecked(true);
+                else if (discountsforstudents.equals("true")) {
+                    chbx5.setChecked(false);
+                }
                 if (roastingroom.equals("true"))
-                    convs += "Roasting room\n";
+                    chbx6.setChecked(true);
+                else if (roastingroom.equals("true")) {
+                    chbx6.setChecked(false);
+                }
                 if (toilet.equals("true"))
-                    convs += "Toilet\n";
+                    chbx7.setChecked(true);
+                else if (toilet.equals("true")) {
+                    chbx7.setChecked(false);
+                }
 
-                if (convs.equals(""))
-                    tConveniences.setText("There are no conveniences");
-                else
-                    tConveniences.setText(convs);
-
-                String chairs = "1 person table: " + chair1 + "\n" + "2 person table: " + chair2 + "\n" +
-                        "4 person table: " + chair4 + "\n" + "6 person table: " + chair6 + "\n" +
-                        "8 person table: " + chair8;
-
-                tTables.setText(chairs);
         }
         spinner.setVisibility(View.GONE);
         ScrollView v = (ScrollView) activity.findViewById(R.id.bView);
@@ -107,10 +114,6 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
 
     private void showNearbyPlaces(HashMap<String, String> googlePlace)
     {
-            placeName = googlePlace.get("place_name");
-            vicinity = googlePlace.get("vicinity");
-            rating = googlePlace.get("rating");
-
                 wifi = googlePlace.get("WI-FI");
                 adaptedforthedisabled = googlePlace.get("adapted for the disabled");
                 boardgames = googlePlace.get("board games");
@@ -118,12 +121,5 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
                 discountsforstudents = googlePlace.get("discounts for students");
                 roastingroom = googlePlace.get("roasting room");
                 toilet = googlePlace.get("toilet");
-
-                chair1 = googlePlace.get("chair1");
-                chair2 = googlePlace.get("chair2");
-                chair4 = googlePlace.get("chair4");
-                chair6 = googlePlace.get("chair6");
-                chair8 = googlePlace.get("chair8");
-
     }
 }

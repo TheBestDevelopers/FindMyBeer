@@ -58,7 +58,7 @@ public class PubController implements Serializable {
         return pubService.getPubs(longitude, latitude);
     }
 
-    @PostMapping("getNearestPubs")
+    @GetMapping("getNearestPubs")
     public List<GetNearestPubDTO> getNearestPubs(@RequestParam("longitude") Double longitude,
                                                  @RequestParam("latitude") Double latitude,
                                                  Principal principal) throws IOException {
@@ -69,7 +69,7 @@ public class PubController implements Serializable {
         return pubService.getNearestPubs(longitude, latitude);
     }
 
-    @PutMapping("getPubsWithConveniences")
+    @GetMapping("getPubsWithConveniences")
     public List<GetNearestPubDTO> getPubsWithConveniences(@RequestParam("longitude") Double longitude,
                                                    @RequestParam("latitude") Double latitude,
                                                    @RequestParam("conveniences") String[] conveniences,
