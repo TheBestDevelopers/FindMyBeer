@@ -19,7 +19,9 @@ public class DownloadUrlWithGetMethod implements IDownloadUrl {
             URL url = new URL(myUrl);
             urlConnection=(HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
+            urlConnection.setDoInput(true);
             urlConnection.setConnectTimeout(10000);
+            urlConnection.setInstanceFollowRedirects(false);
             urlConnection.connect();
 
             try {
@@ -52,7 +54,7 @@ public class DownloadUrlWithGetMethod implements IDownloadUrl {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (java.net.SocketTimeoutException e) {
-                throw e;
+            throw e;
         } catch (IOException e) {
             e.printStackTrace();
         }

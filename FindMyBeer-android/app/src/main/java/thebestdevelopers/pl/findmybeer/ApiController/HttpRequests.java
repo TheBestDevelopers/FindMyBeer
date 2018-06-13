@@ -29,8 +29,13 @@ public class HttpRequests {
         url.append("&latitude=");
         url.append(latitude);
         url.append("&conveniences=");
-        // no i teraz.... udogodnienia
-        return url.toString();
+        for (String conv : conveniences) {
+            url.append(conv.toUpperCase());
+            url.append(",");
+        }
+        url.deleteCharAt(url.length()-1);
+
+        return url.toString().replace(" ", "%20");
     }
 
 

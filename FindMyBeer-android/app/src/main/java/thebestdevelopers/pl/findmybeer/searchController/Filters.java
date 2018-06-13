@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -37,6 +38,7 @@ import thebestdevelopers.pl.findmybeer.ApiController.DownloadUrl.DownloadUrlWith
 import thebestdevelopers.pl.findmybeer.ApiController.AsyncTasks.GetDataAsyncTask;
 import thebestdevelopers.pl.findmybeer.ApiController.AsyncTasks.IAsyncResponse;
 import thebestdevelopers.pl.findmybeer.searchController.Conveniences.ConveniencesParser;
+import thebestdevelopers.pl.findmybeer.searchController.Sorting.SortingTypesStore;
 
 public class Filters extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener,
         GoogleApiClient.ConnectionCallbacks {
@@ -65,6 +67,7 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
     String placeId = "";
     Double latitude, longitude;
     HttpRequests httpRequests;
+    Button buttonSave;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +75,10 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
         setContentView(R.layout.activity_filters);
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
+
+        buttonSave = (Button)findViewById(R.id.mButtonSave);
+        buttonSave.setEnabled(false);
+
         httpRequests = new HttpRequests(this);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.
                 SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -247,6 +254,7 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
                         showAlert("There are no places nearby!");
                     }
                 }
+                buttonSave.setEnabled(true);
             }
         }, new DownloadUrlWithGetMethod()).execute(dataTransfer);
     }

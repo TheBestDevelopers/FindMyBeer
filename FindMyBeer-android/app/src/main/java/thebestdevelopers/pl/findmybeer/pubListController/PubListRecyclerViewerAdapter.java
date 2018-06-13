@@ -51,6 +51,15 @@ public class PubListRecyclerViewerAdapter extends RecyclerView.Adapter<PubListRe
         notifyItemInserted(position);
     }
 
+    public void removeAll() {
+        for (int i=0; i< pubs.size(); ++i) {
+            pubs.remove(pubs.get(i));
+            notifyItemRemoved(i);
+            notifyItemRangeChanged(i, pubs.size());
+        }
+        filteredPubs.clear();
+    }
+
     public PubListRecyclerViewerAdapter(List<Pub> _pubs) {
         userLocation = new Location("userLocation");
         userLocation.setLatitude(0.0);
@@ -100,9 +109,6 @@ public class PubListRecyclerViewerAdapter extends RecyclerView.Adapter<PubListRe
 
     public void setClickListener(ItemClickListener itemClickListener) {
         this.clickListener = itemClickListener;
-    }
-    public void updateLocation(Location _location) {
-        this.userLocation = _location;
     }
 
     @Override

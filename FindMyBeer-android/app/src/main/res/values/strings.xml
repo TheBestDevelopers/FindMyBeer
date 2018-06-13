@@ -4,6 +4,6 @@
     <string name="fb_login_protocol_scheme">fb2121156901452166</string>
     <string name="google_places_key">AIzaSyCrdEwQdt9akFhlwXseaFYrvajhOtECSVg</string>
     <string name="google_maps_key">AIzaSyCvte5rqgP985xJn0a0zSznxO_lxe1pVyQ</string>
-    <string name="databaseIP">http://192.168.0.16:8080</string>
+    <string name="databaseIP">http://192.168.1.14:8080</string>
 
 </resources>

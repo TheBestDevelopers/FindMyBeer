@@ -7,7 +7,7 @@ import thebestdevelopers.pl.findmybeer.ApiController.DownloadUrl.IDownloadUrl;
 
 public class GetDataAsyncTask extends AsyncTask<Object, String, String> {
 
-    public IAsyncResponse asyncsResponseDelegate = null;
+    public IAsyncResponse asyncResponseDelegate = null;
     IDownloadUrl downloadUrlDelegate = null;
 
     private String apiData ="";
@@ -15,8 +15,8 @@ public class GetDataAsyncTask extends AsyncTask<Object, String, String> {
 
     Boolean timeout = false;
 
-    public GetDataAsyncTask(IAsyncResponse _asyncsResponseDelegate, IDownloadUrl _downloadUrlDelegate) {
-        asyncsResponseDelegate = _asyncsResponseDelegate;
+    public GetDataAsyncTask(IAsyncResponse _asyncResponseDelegate, IDownloadUrl _downloadUrlDelegate) {
+        asyncResponseDelegate = _asyncResponseDelegate;
         downloadUrlDelegate = _downloadUrlDelegate;
     }
 
@@ -36,7 +36,7 @@ public class GetDataAsyncTask extends AsyncTask<Object, String, String> {
 
     @Override
     protected void onPostExecute(String s){
-        asyncsResponseDelegate.processFinish(s, timeout);
+        asyncResponseDelegate.processFinish(s, timeout);
     }
 
 
