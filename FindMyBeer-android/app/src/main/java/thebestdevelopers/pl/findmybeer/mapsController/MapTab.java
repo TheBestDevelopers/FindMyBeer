@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -66,6 +67,7 @@ public class MapTab extends AppCompatActivity implements OnMapReadyCallback, Goo
         } else {
             Toast.makeText(this, "There's no Google Services installed", Toast.LENGTH_LONG).show();
         }
+
         overridePendingTransition(0, 0);
         BottomNavigationView tabs = (BottomNavigationView) findViewById(R.id.navigationtabs4);
         BottomNavigationViewHelper.disableShiftMode(tabs);
@@ -213,11 +215,12 @@ public class MapTab extends AppCompatActivity implements OnMapReadyCallback, Goo
 
     public void onClick(View v) {
         mGoogleMap.clear();
-        Object dataTransfer[] = new Object[2];
+        Object dataTransfer[] = new Object[3];
         GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
         String url = getUrl(latitude, longitude, "pub");
         dataTransfer[0] = mGoogleMap;
         dataTransfer[1] = url;
+        dataTransfer[2] = this;
         try {
             getNearbyPlacesData.execute(dataTransfer);
         } catch(Exception e) {
@@ -235,11 +238,12 @@ public class MapTab extends AppCompatActivity implements OnMapReadyCallback, Goo
 
     public void onClick2(View v) {
         mGoogleMap.clear();
-        Object dataTransfer[] = new Object[2];
+        Object dataTransfer[] = new Object[3];
         GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
         String url = getUrl2(latitude, longitude);
         dataTransfer[0] = mGoogleMap;
         dataTransfer[1] = url;
+        dataTransfer[2] = this;
         try {
             getNearbyPlacesData.execute(dataTransfer);
         } catch (Exception e) {

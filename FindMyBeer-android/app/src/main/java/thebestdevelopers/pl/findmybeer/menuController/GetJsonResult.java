@@ -41,34 +41,42 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
         DownloadMenuUrl downloadUrl = new DownloadMenuUrl();
         try {
             googlePlacesData = downloadUrl.readUrl(url);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            return "Exception";
         }
         return googlePlacesData;
     }
 
     @Override
     protected void onPostExecute(String s){
-        HashMap<String, String> menuList;
-        DataMenuParser parser = new DataMenuParser();
-        menuList = parser.parse(s);
-        Log.d("placedata","called parse method");
-        showMenu(menuList);
         Activity activity = mWeakActivity.get();
-        if (activity != null) {
-            RecyclerView recyclerView = (RecyclerView) activity.findViewById(R.id.menu_list);
-            recyclerView.setHasFixedSize(true);
-            recyclerView.setLayoutManager(new LinearLayoutManager(activity));
-            recyclerView.setItemAnimator(new DefaultItemAnimator());
+        if (!s.equals("Exception")) {
+            HashMap<String, String> menuList;
+            DataMenuParser parser = new DataMenuParser();
+            menuList = parser.parse(s);
+            Log.d("placedata", "called parse method");
+            showMenu(menuList);
 
-            recyclerView.setAdapter(new MenuRecyclerViewAdapter(mMenuList, recyclerView));
+            if (activity != null) {
+                RecyclerView recyclerView = (RecyclerView) activity.findViewById(R.id.menu_list);
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+                recyclerView.setAdapter(new MenuRecyclerViewAdapter(mMenuList, recyclerView));
+            }
+            TextView txt = (TextView) activity.findViewById(R.id.tMenu);
+            txt.setVisibility(View.VISIBLE);
+            RelativeLayout v = (RelativeLayout) activity.findViewById(R.id.bView);
+            v.setVisibility(View.VISIBLE);
+            ProgressBar spinner = (ProgressBar) activity.findViewById(R.id.mProgressBarHome);
+            spinner.setVisibility(View.GONE);
+        } else {
+            TextView txt2 = (TextView) activity.findViewById(R.id.tError);
+            txt2.setVisibility(View.VISIBLE);
+            ProgressBar spinner = (ProgressBar) activity.findViewById(R.id.mProgressBarHome);
+            spinner.setVisibility(View.GONE);
         }
-        TextView txt = (TextView) activity.findViewById(R.id.tMenu);
-        txt.setVisibility(View.VISIBLE);
-        RelativeLayout v = (RelativeLayout) activity.findViewById(R.id.bView);
-        v.setVisibility(View.VISIBLE);
-        ProgressBar spinner = (ProgressBar)activity.findViewById(R.id.mProgressBarHome);
-        spinner.setVisibility(View.GONE);
     }
 
     //{"result":{"menu": "beer1:7 beer2:6 beer3:8", "size" : "3"}}

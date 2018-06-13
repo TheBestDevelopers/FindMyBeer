@@ -37,14 +37,14 @@ public class FavTab extends AppCompatActivity {
         actionBar.hide();
         setContentView(R.layout.activity_fav_tab);
 
-        /*
         TextView txt = (TextView) findViewById(R.id.tFavs);
+        TextView txt2 = (TextView) findViewById(R.id.tError);
+        txt.setVisibility(View.VISIBLE);
         txt.setVisibility(View.GONE);
         RelativeLayout v = (RelativeLayout) findViewById(R.id.bView);
         v.setVisibility(View.GONE);
-        */
         ProgressBar spinner = (ProgressBar)findViewById(R.id.mProgressBarHome);
-        spinner.setVisibility(View.GONE);
+        spinner.setVisibility(View.VISIBLE);
 
         BottomNavigationView tabs = (BottomNavigationView) findViewById(R.id.navigationtabs2);
         BottomNavigationViewHelper.disableShiftMode(tabs);
@@ -58,23 +58,20 @@ public class FavTab extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         //przekazane info z pubinfo
-        if (mfavList == null)
-            mfavList = new ArrayList<>();
-/*
+
+        String mId = "9";
+
         String url = getUrl(mId);
         GetJsonResult getFavData = new GetJsonResult(this);
         Object dataTransfer[] = new Object[1];
         dataTransfer[0] = url;
         getFavData.execute(dataTransfer);
-*/
 
         //trzeba przeslac do bazy
         //dodanie elementow do listy - pobranie z bazy
         //tymczasowe rozwiazanie
-        for (int temp = 0; temp<10;temp++)
-            mfavList.add(new PubData("", "Pub Name", "Pub address"));
 
-        recyclerView.setAdapter(new FavRecyclerViewAdapter(mfavList, recyclerView));
+        //recyclerView.setAdapter(new FavRecyclerViewAdapter(mfavList, recyclerView));
 
         Intent i;
         tabs.setOnNavigationItemSelectedListener
@@ -111,10 +108,10 @@ public class FavTab extends AppCompatActivity {
     }
 
     //TO_DO
-    //otrzymuje user id
+    //http://localhost:8080/api/favourites/getFavourites?userID=9
     private String getUrl(String id) {
         StringBuilder menuUrl = new StringBuilder(getResources().getString(R.string.databaseIP));
-        menuUrl.append("/api/pubs/getPubMenu?pubID=");
+        menuUrl.append("/api/favourites/getFavourites?userID=");
         menuUrl.append(id);
         Log.d("created url", menuUrl.toString());
         return menuUrl.toString();

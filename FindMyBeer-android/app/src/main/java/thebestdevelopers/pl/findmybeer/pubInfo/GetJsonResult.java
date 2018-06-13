@@ -42,8 +42,8 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
         DownloadPubUrl downloadUrl = new DownloadPubUrl();
         try {
             googlePlacesData = downloadUrl.readUrl(url);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            return "Exception";
         }
 
         return googlePlacesData;
@@ -51,89 +51,97 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
 
     @Override
     protected void onPostExecute(String s){
-        HashMap<String, String> nearbyPlaceList;
-        DataPubParser parser = new DataPubParser();
-        nearbyPlaceList = parser.parse(s);
-        Log.d("placedata","called parse method");
-        showNearbyPlaces(nearbyPlaceList);
         Activity activity = mWeakActivity.get();
-        if (activity != null) {
+        if(!s.equals("Exception")) {
+            HashMap<String, String> nearbyPlaceList;
+            DataPubParser parser = new DataPubParser();
+            nearbyPlaceList = parser.parse(s);
+            Log.d("placedata", "called parse method");
+            showNearbyPlaces(nearbyPlaceList);
 
-            mName = activity.findViewById(R.id.tName);
-            mName.setText(placeName);
+            if (activity != null) {
 
-            mAddress = activity.findViewById(R.id.tAddress);
-            mAddress.setText(vicinity);
+                mName = activity.findViewById(R.id.tName);
+                mName.setText(placeName);
 
-            mRating = activity.findViewById(R.id.tRating);
-            mRating.setText(rating+"/5");
+                mAddress = activity.findViewById(R.id.tAddress);
+                mAddress.setText(vicinity);
 
-            bFav = activity.findViewById(R.id.bAddFav);
-            bMenu = activity.findViewById(R.id.bMenu);
-            mWebsite = activity.findViewById(R.id.tWebsite);
-            mPhone = activity.findViewById(R.id.tPhone);
-            tConveniences = activity.findViewById(R.id.tConveniences);
-            tTables = activity.findViewById(R.id.tTables);
+                mRating = activity.findViewById(R.id.tRating);
+                mRating.setText(rating + "/5");
 
-            spinner = activity.findViewById(R.id.mProgressBarHome);
+                bFav = activity.findViewById(R.id.bAddFav);
+                bMenu = activity.findViewById(R.id.bMenu);
+                mWebsite = activity.findViewById(R.id.tWebsite);
+                mPhone = activity.findViewById(R.id.tPhone);
+                tConveniences = activity.findViewById(R.id.tConveniences);
+                tTables = activity.findViewById(R.id.tTables);
 
-            if (ourPub.equals("false")) {
+                spinner = activity.findViewById(R.id.mProgressBarHome);
 
-                mWebsite.setText(website);
-                mPhone.setText(phone);
+                if (ourPub.equals("false")) {
 
-                bFav.setText("Cannot add to favourites");
-                bFav.setClickable(false);
+                    mWebsite.setText(website);
+                    mPhone.setText(phone);
 
-                bMenu.setText("There is no menu");
-                bMenu.setClickable(false);
+                    bFav.setText("Cannot add to favourites");
+                    bFav.setClickable(false);
 
-                tConveniences.setText("There is no info");
-                tTables.setText("There is no info");
+                    bMenu.setText("There is no menu");
+                    bMenu.setClickable(false);
+
+                    tConveniences.setText("There is no info");
+                    tTables.setText("There is no info");
+                }
+
+                if (ourPub.equals("true")) {
+                    mWebsite.setText("There is no website");
+                    mPhone.setText("There is no phone");
+
+                    if (favourite.equals("true"))
+                        bFav.setText("Remove from favourites");
+
+                    if (favourite.equals("false"))
+                        bFav.setText("Add to favourites");
+
+                    String convs = "";
+
+                    if (wifi.equals("true"))
+                        convs += "WI-FI\n";
+                    if (adaptedforthedisabled.equals("true"))
+                        convs += "Adapted for the disabled\n";
+                    if (boardgames.equals("true"))
+                        convs += "Board games\n";
+                    //if (discountsforgroups.equals("true"))
+                    //    convs += "Discounts for groups\n";
+                    if (discountsforstudents.equals("true"))
+                        convs += "Discounts for students\n";
+                    if (roastingroom.equals("true"))
+                        convs += "Roasting room\n";
+                    if (toilet.equals("true"))
+                        convs += "Toilet\n";
+
+                    if (convs.equals(""))
+                        tConveniences.setText("There are no conveniences");
+                    else
+                        tConveniences.setText(convs);
+
+                    String chairs = "1 person table: " + chair1 + "\n" + "2 person table: " + chair2 + "\n" +
+                            "4 person table: " + chair4 + "\n" + "6 person table: " + chair6 + "\n" +
+                            "8 person table: " + chair8;
+
+                    tTables.setText(chairs);
+                }
             }
-
-            if (ourPub.equals("true")) {
-                mWebsite.setText("There is no website");
-                mPhone.setText("There is no phone");
-
-                if (favourite.equals("true"))
-                    bFav.setText("Remove from favourites");
-
-                if (favourite.equals("false"))
-                    bFav.setText("Add to favourites");
-
-                String convs = "";
-
-                if (wifi.equals("true"))
-                    convs += "WI-FI\n";
-                if (adaptedforthedisabled.equals("true"))
-                    convs += "Adapted for the disabled\n";
-                if (boardgames.equals("true"))
-                    convs += "Board games\n";
-                //if (discountsforgroups.equals("true"))
-                //    convs += "Discounts for groups\n";
-                if (discountsforstudents.equals("true"))
-                    convs += "Discounts for students\n";
-                if (roastingroom.equals("true"))
-                    convs += "Roasting room\n";
-                if (toilet.equals("true"))
-                    convs += "Toilet\n";
-
-                if (convs.equals(""))
-                    tConveniences.setText("There are no conveniences");
-                else
-                    tConveniences.setText(convs);
-
-                String chairs = "1 person table: " + chair1 + "\n" + "2 person table: " + chair2 + "\n" +
-                        "4 person table: " + chair4 + "\n" + "6 person table: " + chair6 + "\n" +
-                        "8 person table: " + chair8;
-
-                tTables.setText(chairs);
-            }
+            spinner.setVisibility(View.GONE);
+            ScrollView v = (ScrollView) activity.findViewById(R.id.bView);
+            v.setVisibility(View.VISIBLE);
+        } else {
+            TextView txt2 = (TextView) activity.findViewById(R.id.tError);
+            txt2.setVisibility(View.VISIBLE);
+            ProgressBar spinner = (ProgressBar) activity.findViewById(R.id.mProgressBarHome);
+            spinner.setVisibility(View.GONE);
         }
-        spinner.setVisibility(View.GONE);
-        ScrollView v = (ScrollView) activity.findViewById(R.id.bView);
-        v.setVisibility(View.VISIBLE);
     }
 
     private void showNearbyPlaces(HashMap<String, String> googlePlace)

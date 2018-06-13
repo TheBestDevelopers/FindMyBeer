@@ -38,6 +38,10 @@ public class Menu extends AppCompatActivity {
         ProgressBar spinner = (ProgressBar)findViewById(R.id.mProgressBarHome);
         spinner.setVisibility(View.VISIBLE);
 
+
+        TextView txt2 = (TextView) findViewById(R.id.tError);
+        txt2.setVisibility(View.GONE);
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);

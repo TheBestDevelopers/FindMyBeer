@@ -57,6 +57,10 @@ public class PubInfo extends AppCompatActivity {
         spinner = (ProgressBar)findViewById(R.id.mProgressBarHome);
         spinner.setVisibility(View.VISIBLE);
 
+
+        TextView txt2 = (TextView) findViewById(R.id.tError);
+        txt2.setVisibility(View.GONE);
+
         //wczytanie info po wcisnieciu markera na mapie.
         Intent i = getIntent();
         Bundle b = i.getExtras();

@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import thebestdevelopers.pl.findmybeer.R;
 
@@ -23,8 +24,8 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
     private String googlePlacesData;
     private String url;
 
-    private String menu, size;
-    public ArrayList<PubData> mMenuList;
+    private String name, vicinity, placeID;
+    public ArrayList<PubData> mFavList;
 
 
     WeakReference<Activity> mWeakActivity;
@@ -39,58 +40,55 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
         DownloadFavUrl downloadUrl = new DownloadFavUrl();
         try {
             googlePlacesData = downloadUrl.readUrl(url);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            return "Exception";
         }
         return googlePlacesData;
     }
 
     @Override
     protected void onPostExecute(String s){
-        HashMap<String, String> menuList;
-        DataFavParser parser = new DataFavParser();
-        menuList = parser.parse(s);
-        Log.d("placedata","called parse method");
-        showMenu(menuList);
         Activity activity = mWeakActivity.get();
-        if (activity != null) {
-            RecyclerView recyclerView = (RecyclerView) activity.findViewById(R.id.menu_list);
-            recyclerView.setHasFixedSize(true);
-            recyclerView.setLayoutManager(new LinearLayoutManager(activity));
-            recyclerView.setItemAnimator(new DefaultItemAnimator());
+        if (!s.equals("Exception")) {
+            List<HashMap<String, String>> menuList;
+            DataFavParser parser = new DataFavParser();
+            menuList = parser.parse(s);
+            Log.d("placedata", "called parse method");
+            showMenu(menuList);
 
-            recyclerView.setAdapter(new FavRecyclerViewAdapter(mMenuList, recyclerView));
+            if (activity != null) {
+                RecyclerView recyclerView = (RecyclerView) activity.findViewById(R.id.fav_list);
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+                recyclerView.setAdapter(new FavRecyclerViewAdapter(mFavList, recyclerView));
+            }
+            TextView txt = (TextView) activity.findViewById(R.id.tFavs);
+            txt.setVisibility(View.VISIBLE);
+            RelativeLayout v = (RelativeLayout) activity.findViewById(R.id.bView);
+            v.setVisibility(View.VISIBLE);
+            ProgressBar spinner = (ProgressBar) activity.findViewById(R.id.mProgressBarHome);
+            spinner.setVisibility(View.GONE);
+        } else {
+            TextView txt = (TextView) activity.findViewById(R.id.tFavs);
+            txt.setVisibility(View.VISIBLE);
+            TextView txt2 = (TextView) activity.findViewById(R.id.tError);
+            txt2.setVisibility(View.VISIBLE);
+            ProgressBar spinner = (ProgressBar) activity.findViewById(R.id.mProgressBarHome);
+            spinner.setVisibility(View.GONE);
         }
-        TextView txt = (TextView) activity.findViewById(R.id.tFavs);
-        txt.setVisibility(View.VISIBLE);
-        RelativeLayout v = (RelativeLayout) activity.findViewById(R.id.bView);
-        v.setVisibility(View.VISIBLE);
-        ProgressBar spinner = (ProgressBar)activity.findViewById(R.id.mProgressBarHome);
-        spinner.setVisibility(View.GONE);
     }
-    //TO_DO
-    //{"result":{"menu": "beer1:7 beer2:6 beer3:8", "size" : "3"}}
-    private void showMenu(HashMap<String, String> googlePlace)
-    {
-        menu = googlePlace.get("menu");
-        size = googlePlace.get("size");
-        mMenuList = new ArrayList<>();
-        String type, price;
 
-        //wyodrebnienie każdego produktu z otrzymanego menu
-        for (int temp = 0; temp < Integer.parseInt(size) - 1; temp++) {
-            int i = 0;
-            int space = menu.indexOf(' ');
-            String str = menu.substring(0,space);
-            menu = menu.substring(space+1, menu.length());
-            int loc = str.indexOf(':');
-            type = str.substring(0,loc);
-            price = str.substring(loc+1,str.length());
-            //mMenuList.add(new PubData(type, price));
+    private void showMenu(List<HashMap<String, String>> googlePlace) {
+        mFavList = new ArrayList<>();
+        for (int i = 0; i < googlePlace.size(); i++) {
+            name = googlePlace.get(i).get("name");
+            vicinity = googlePlace.get(i).get("vicinity");
+            placeID = googlePlace.get(i).get("place_id");
+            String temp = "!!!"+placeID;
+            placeID = temp;
+            mFavList.add(new PubData(name, vicinity,placeID));
         }
-        int loc = menu.indexOf(':');
-        type = menu.substring(0, loc);
-        price = menu.substring(loc + 1, menu.length());
-        //mMenuList.add(new PubData(type, price));
     }
 }

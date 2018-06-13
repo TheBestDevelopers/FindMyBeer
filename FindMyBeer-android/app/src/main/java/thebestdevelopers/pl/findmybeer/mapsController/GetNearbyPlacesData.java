@@ -1,7 +1,12 @@
 package thebestdevelopers.pl.findmybeer.mapsController;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -13,22 +18,26 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
+import thebestdevelopers.pl.findmybeer.R;
+
 public class GetNearbyPlacesData extends AsyncTask<Object, String, String>{
 
     private String googlePlacesData;
     private GoogleMap mMap;
     String url;
     List<HashMap<String, String>> nearbyPlaceList;
+    Activity act;
 
     @Override
     protected String doInBackground(Object... objects) {
         mMap = (GoogleMap)objects[0];
         url = (String)objects[1];
-
+        act = (Activity)objects[2];
         DownloadUrl downloadUrl = new DownloadUrl();
         try {
             googlePlacesData = downloadUrl.readUrl(url);
-        } catch (IOException e) {
+        } catch (Exception e) {
+            return "Exception";
         }
 
         return googlePlacesData;
@@ -36,11 +45,18 @@ public class GetNearbyPlacesData extends AsyncTask<Object, String, String>{
 
     @Override
     protected void onPostExecute(String s){
-
-        DataParser parser = new DataParser();
-        nearbyPlaceList = parser.parse(s);
-        Log.d("placedata","called parse method");
-        showNearbyPlaces();
+        if (!equals("Exception")) {
+            try {
+                DataParser parser = new DataParser();
+                nearbyPlaceList = parser.parse(s);
+                Log.d("placedata", "called parse method");
+                showNearbyPlaces();
+            } catch (Exception e) {
+                Toast.makeText(act, "There's no server connection", Toast.LENGTH_LONG).show();
+            }
+        } else {
+            Toast.makeText(act, "There's no server connection", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void showNearbyPlaces()

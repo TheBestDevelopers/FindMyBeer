@@ -12,7 +12,7 @@ import java.util.List;
 
 public class DataParser {
 
-    private HashMap<String, String> getPlace(JSONObject googlePlaceJson)
+    private HashMap<String, String> getPlace(JSONObject googlePlaceJson) throws Exception
     {
         HashMap<String, String> googlePlaceMap = new HashMap<>();
         String placeName = "-";
@@ -60,7 +60,7 @@ public class DataParser {
         return googlePlaceMap;
 
     }
-    private List<HashMap<String, String>>getPlaces(JSONArray jsonArray)
+    private List<HashMap<String, String>>getPlaces(JSONArray jsonArray) throws Exception
     {
         int count = jsonArray.length();
         List<HashMap<String, String>> placelist = new ArrayList<>();
@@ -78,7 +78,7 @@ public class DataParser {
         return placelist;
     }
 
-    public List<HashMap<String, String>> parse(String jsonData)
+    public List<HashMap<String, String>> parse(String jsonData) throws Exception
     {
         JSONArray jsonArray = null;
         JSONObject jsonObject;

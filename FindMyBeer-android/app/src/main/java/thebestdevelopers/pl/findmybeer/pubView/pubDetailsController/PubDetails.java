@@ -110,12 +110,12 @@ public class PubDetails extends AppCompatActivity {
         startActivity(myIntent);
     }
 
-    //http://localhost:8080/api/pubs/getPubInfo?userID=2&pubID=3
+    //http://localhost:8080/api/pubs/getPubView?pubID=13
     private String getUrl(String id) {
         StringBuilder googlePlaceUrl = new StringBuilder(getResources().getString(R.string.databaseIP)); //temp
         //TO DO
-        googlePlaceUrl.append("/api/pubs/getPubInfo?userID="+"8"); //zamiast 2 ma byc user id
-        googlePlaceUrl.append("&pubID="+id);
+        googlePlaceUrl.append("/api/pubs/getPubView?pubID=");
+        googlePlaceUrl.append(id);
         Log.d("created url", googlePlaceUrl.toString());
         return googlePlaceUrl.toString();
     }

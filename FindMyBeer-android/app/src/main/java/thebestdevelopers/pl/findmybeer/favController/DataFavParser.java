@@ -6,30 +6,34 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class DataFavParser {
-    private HashMap<String, String> getMenu(JSONObject googlePlaceJson)
+    private HashMap<String, String> getFav(JSONObject googlePlaceJson)
     {
         HashMap<String, String> menuList = new HashMap<>();
-        String menu = "", size="";
+        String name = "", vicinity="", placeID="";
 
         Log.d("DataParser","jsonobject ="+googlePlaceJson.toString());
 
-
-        //{"result":{"menu": "beer1:7 beer2:6 beer3:8", "size" : "3"}}
         //TO_DO
-
         try {
-            if (!googlePlaceJson.isNull("menu")) {
-                menu = googlePlaceJson.getString("menu");
+            if (!googlePlaceJson.isNull("name")) {
+                name = googlePlaceJson.getString("name");
             }
-            if (!googlePlaceJson.isNull("size")) {
-                size = googlePlaceJson.getString("size");
+            if (!googlePlaceJson.isNull("vicinity")) {
+                vicinity = googlePlaceJson.getString("vicinity");
             }
 
-            menuList.put("menu", menu);
-            menuList.put("size", size);
+            if (!googlePlaceJson.isNull("place_id")) {
+                placeID = googlePlaceJson.getString("place_id");
+            }
+
+            menuList.put("name", name);
+            menuList.put("vicinity", vicinity);
+            menuList.put("place_id", placeID);
         }
         catch (JSONException e) {
             e.printStackTrace();
@@ -38,8 +42,30 @@ public class DataFavParser {
 
     }
 
-    public HashMap<String, String> parse(String jsonData)
+    private List<HashMap<String, String>> getFavs(JSONArray jsonArray)
     {
+        int count = jsonArray.length();
+        List<HashMap<String, String>> placelist = new ArrayList<>();
+        HashMap<String, String> placeMap = null;
+
+        for(int i = 0; i<count;i++)
+        {
+            try {
+                placeMap = getFav((JSONObject) jsonArray.get(i));
+                placelist.add(placeMap);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return placelist;
+    }
+
+    public List<HashMap<String, String>> parse(String jsonData)
+    {
+        String temp = "{\"results\":";
+        String nowy = temp + jsonData + "}";
+        jsonData = nowy;
+
         JSONArray jsonArray = null;
         JSONObject jsonObject = null;
         JSONObject jObjectResult = null;
@@ -48,9 +74,10 @@ public class DataFavParser {
 
         try {
             jsonObject = new JSONObject(jsonData);
+            jsonArray = jsonObject.getJSONArray("results");
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return getMenu(jsonObject);
+        return getFavs(jsonArray);
     }
 }
