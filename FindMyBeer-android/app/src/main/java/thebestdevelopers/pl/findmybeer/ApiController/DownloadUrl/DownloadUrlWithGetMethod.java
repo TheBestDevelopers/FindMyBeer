@@ -1,5 +1,4 @@
-package thebestdevelopers.pl.findmybeer.searchController.Conveniences;
-
+package thebestdevelopers.pl.findmybeer.ApiController.DownloadUrl;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,7 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class DownloadUrlWithGetMethod {
+public class DownloadUrlWithGetMethod implements IDownloadUrl {
     public String readUrl(String myUrl) throws IOException
     {
         String data = "";
@@ -53,7 +52,7 @@ public class DownloadUrlWithGetMethod {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (java.net.SocketTimeoutException e) {
-            throw e;
+                throw e;
         } catch (IOException e) {
             e.printStackTrace();
         }
