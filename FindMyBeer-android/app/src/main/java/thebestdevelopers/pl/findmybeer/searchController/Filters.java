@@ -249,6 +249,8 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
                     conveniences = parser.parse(result);
                     if (conveniences != null && conveniences.size() != 0) {
                        // spinner.setVisibility(View.GONE);
+                        for (String s : conveniences)
+                            s.replace("_", " ");
                         setConveniencesChooser();
                     } else {
                         showAlert("There are no places nearby!");
