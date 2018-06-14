@@ -100,4 +100,15 @@ public class PubController implements Serializable {
 
         return pubService.setConveniences(pubId, convToAdd, convToDelete);
     }
+
+    @PutMapping("setTables")
+    public BooleanDTO setTables(@RequestParam("pubID") int pubId,
+                                @RequestParam("chair1") int chair1,
+                                @RequestParam("chair2") int chair2,
+                                @RequestParam("chair4") int chair4,
+                                @RequestParam("chair6") int chair6,
+                                @RequestParam("chair8") int chair8,
+                                Principal principal){
+        return pubService.setTables(pubId, chair1, chair2, chair4, chair6, chair8);
+    }
 }

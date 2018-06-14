@@ -1,9 +1,8 @@
 package com.thebestdevelopers.find_my_beer.service;
 
 import com.thebestdevelopers.find_my_beer.DAO.FavouritesDao;
+import com.thebestdevelopers.find_my_beer.DTO.BooleanDTO;
 import com.thebestdevelopers.find_my_beer.DTO.Favourities.FavResult;
-import com.thebestdevelopers.find_my_beer.DTO.Favourities.GetFavouritesDTO;
-import com.thebestdevelopers.find_my_beer.DTO.Favourities.FavouritiesDTO;
 import com.thebestdevelopers.find_my_beer.model.FavouritiesEntity;
 import com.thebestdevelopers.find_my_beer.repository.FavouritesRepository;
 import org.modelmapper.ModelMapper;
@@ -21,22 +20,11 @@ public class FavouritesServiceImpl implements FavouritesService {
     @Autowired
     FavouritesRepository favsRepository;
 
-//    @Autowired
-//    FavouritesDao favsDao;
-
-//    @Override
-//    public List<FavouritiesDTO> getFavourites(int clientId) {
-//        List<FavouritiesEntity> favouritesEntityList = favsRepository.findFavouritesEntityByClientId(clientId);
-//        List<FavouritiesDTO> favsList = new ArrayList<>();
-//        for(FavouritiesEntity favouritiesEntity : favouritesEntityList) {
-//            favsList.add(new FavouritiesDTO(favouritiesEntity.getPubId(), favouritiesEntity.getPubByPubId().getPubName()));
-//        }
-//        return favsList;
-//    }
+    @Autowired
+    FavouritesDao favsDao; //niby błąd ale działa XD
 
     @Override
     public List<FavResult> getPubs(int userId) throws IOException {
-
         List<FavouritiesEntity> favsEntitiesList = favsRepository.findFavouritesEntityByClientId(userId);
         List<FavResult> favResults = new ArrayList<>();
         String vicinity;
@@ -49,13 +37,26 @@ public class FavouritesServiceImpl implements FavouritesService {
                 favResults.add(favRes);
         }
         return favResults;
-
     }
 
     @Override
-    public FavouritiesDTO addFavourite(int clientId, int pubId) {
+    public BooleanDTO addFavourite(int userId, int pubId) {
         ModelMapper mapper = new ModelMapper();
-        return null;
-//        return mapper.map(favsDao.addFavourite(clientId, pubId), FavouritiesDTO.class);
+        try {
+            List<FavouritiesEntity> favsEntitiesList = favsRepository.findFavouritesEntityByClientId(userId);
+            for(FavouritiesEntity favList : favsEntitiesList){
+                if(favList.getPubId() == pubId)
+                    return new BooleanDTO(false);
+            }
+            return favsDao.addFavourite(userId, pubId);
+
+        } catch (Exception e) {
+            return new BooleanDTO(false);
+        }
+    }
+
+    @Override
+    public BooleanDTO deleteFavourite(int userId, int pubId) {
+       return favsDao.deleteFavourite(userId,pubId);
     }
 }

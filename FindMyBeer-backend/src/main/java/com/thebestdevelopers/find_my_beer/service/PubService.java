@@ -28,4 +28,6 @@ public interface PubService {
     List<GetNearestPubDTO> getPubsWithConveniences(Double longitude, Double latitude, String[] conveniences) throws IOException;
     //@PreAuthorize("hasAnyAuthority('admin','client', 'pub')")
     Boolean setConveniences (int pubId, String[] convToAdd, String[] convToDelete);
+
+    BooleanDTO setTables(int pubId, int chair1, int chair2, int chair4, int chair6, int chair8);
 }

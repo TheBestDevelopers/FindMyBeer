@@ -1,5 +1,6 @@
 package com.thebestdevelopers.find_my_beer.DAO;
 
+import com.thebestdevelopers.find_my_beer.DTO.GetUsernameDTO;
 import com.thebestdevelopers.find_my_beer.model.RoleEntity;
 import com.thebestdevelopers.find_my_beer.model.UserEntity;
 import com.thebestdevelopers.find_my_beer.repository.RoleRepository;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
  * Modyfikacje: Jakub Pisula
  *              Grzegorz Nowak - naprawiono usuwanie uzytkownika - 22.05.2018
  *              Grzegorz Nowak - naprawiono modyfikacje hasla - 22.05.2018
+ *              Jakub Pisula - dodanie getUsername
  */
 @Service
 public class UserDaoImpl implements UserDao{
@@ -71,5 +73,10 @@ public class UserDaoImpl implements UserDao{
         }
         else
             return false;
+    }
+
+    @Override
+    public GetUsernameDTO getUsername(int id) {
+        return new GetUsernameDTO(userRepository.findByUserId(id).getUsername());
     }
 }

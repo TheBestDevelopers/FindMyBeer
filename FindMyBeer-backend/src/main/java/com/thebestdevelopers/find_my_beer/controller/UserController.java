@@ -1,6 +1,7 @@
 package com.thebestdevelopers.find_my_beer.controller;
 
 import com.sun.deploy.security.UserDeclinedException;
+import com.thebestdevelopers.find_my_beer.DTO.GetUsernameDTO;
 import com.thebestdevelopers.find_my_beer.DTO.UserDTO;
 import com.thebestdevelopers.find_my_beer.controller.userControllerParam.CreateUserParam;
 import com.thebestdevelopers.find_my_beer.controller.userControllerParam.EditUserParam;
@@ -13,6 +14,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 
@@ -56,6 +58,11 @@ public class UserController {
         //if(!user.getUsername().equals(param.getUsername()))
             //throw new UserDeclinedException("You don't have permission");
         return userService.deleteUser(param.getUsername(), param.getPassword());
+    }
+
+    @GetMapping("getUsername")
+    public GetUsernameDTO getUsername(@RequestParam("ID") int id, Principal principal) {
+        return userService.getUsername(id);
     }
 
 }

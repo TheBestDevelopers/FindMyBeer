@@ -1,5 +1,6 @@
 package com.thebestdevelopers.find_my_beer.service;
 
+import com.thebestdevelopers.find_my_beer.DTO.GetUsernameDTO;
 import com.thebestdevelopers.find_my_beer.DTO.UserDTO;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,4 +21,6 @@ public interface UserService {
     Boolean changeUserPassword(String username, String password, String newPassword);
     //@PreAuthorize("hasAnyAuthority('admin','client', 'pub')")
     Boolean deleteUser(String username, String password);
+    //@PreAuthorize("hasAnyAuthority('admin','client', 'pub')")
+    GetUsernameDTO getUsername(int id);
 }

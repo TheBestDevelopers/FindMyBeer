@@ -10,8 +10,10 @@ import java.util.List;
  * @author Dominik Florencki
  *
  * Modyfikacje: Grzegorz Nowak - dodano findByUsername - 22.05.2018
+ *              Jakub Pisula - dodano findByUserId
  */
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
     List<UserEntity> findByUsernameAndPassword(String username, String password);
     List<UserEntity> findByUsername(String username);
+    UserEntity findByUserId(long id);
 }

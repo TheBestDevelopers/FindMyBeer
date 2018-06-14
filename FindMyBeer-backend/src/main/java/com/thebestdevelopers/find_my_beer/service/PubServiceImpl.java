@@ -280,4 +280,54 @@ public class PubServiceImpl implements PubService {
 
         return true;
     }
+
+    @Override
+    public BooleanDTO setTables(int pubId, int chair1, int chair2, int chair4, int chair6, int chair8) {
+        for(TablesEntity tablesEntity : tableRepository.findByPubId(pubId)){
+            tableDetailsRepository.delete(tableDetailsRepository.findByTableId(tablesEntity.getTableId()));
+            tableRepository.delete(tablesEntity);
+        }
+        //chair 1
+        for(int i = 0; i < chair1; i++){
+            addTable(1, pubId);
+        }
+        //chair 2
+        for(int i = 0; i < chair2; i++){
+            addTable(2, pubId);
+        }
+        //chair4
+        for(int i = 0; i < chair4; i++){
+            addTable(4, pubId);
+        }
+        //chair 6
+        for(int i = 0; i < chair6; i++){
+            addTable(6, pubId);
+        }
+        //chair 8
+        for(int i = 0; i < chair8; i++){
+            addTable(8, pubId);
+        }
+
+        return new BooleanDTO(true);
+    }
+
+    private void addTable(int place, int pubId) {
+
+        TablesEntity tablesEntity = new TablesEntity();
+        tablesEntity.setPubId(pubId);
+        //tablesEntity.setTableId(tableDetailsEntity.getTableId());
+        tableRepository.save(tablesEntity);
+
+        TableDetailsEntity tableDetailsEntity = new TableDetailsEntity();
+        tableDetailsEntity.setOccupied(false);
+        tableDetailsEntity.setPlaces(place);
+        tableDetailsEntity.setTableId(tablesEntity.getTableId());
+        tableDetailsRepository.save(tableDetailsEntity);
+
+
+
+
+
+
+    }
 }

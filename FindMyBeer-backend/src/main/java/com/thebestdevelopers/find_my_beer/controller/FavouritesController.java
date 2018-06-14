@@ -1,14 +1,11 @@
 package com.thebestdevelopers.find_my_beer.controller;
 
+import com.thebestdevelopers.find_my_beer.DTO.BooleanDTO;
 import com.thebestdevelopers.find_my_beer.DTO.Favourities.FavResult;
-import com.thebestdevelopers.find_my_beer.DTO.Favourities.GetFavouritesDTO;
-import com.thebestdevelopers.find_my_beer.DTO.Favourities.FavouritiesDTO;
-import com.thebestdevelopers.find_my_beer.controller.favouritiesControllerParam.AddFavouritesParam;
 import com.thebestdevelopers.find_my_beer.service.FavouritesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
@@ -31,8 +28,13 @@ public class FavouritesController {
         return favService.getPubs(userId);
     }
 
-    @PostMapping("add")
-    public FavouritiesDTO addFavourite(@Valid @RequestBody AddFavouritesParam param) {
-        return favService.addFavourite(param.getClientId(),param.getPubId());
+    @GetMapping("addFavourite")
+    public BooleanDTO addFavourite(@RequestParam("userID") int userId, @RequestParam("pubID") int pubId, Principal principal){
+        return favService.addFavourite(userId, pubId);
+    }
+
+    @GetMapping("deleteFavourite")
+    public BooleanDTO deleteFavourite(@RequestParam("userID") int userId, @RequestParam("pubID") int pubId, Principal principal){
+        return favService.deleteFavourite(userId, pubId);
     }
 }

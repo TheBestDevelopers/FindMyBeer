@@ -1,8 +1,7 @@
 package com.thebestdevelopers.find_my_beer.service;
 
+import com.thebestdevelopers.find_my_beer.DTO.BooleanDTO;
 import com.thebestdevelopers.find_my_beer.DTO.Favourities.FavResult;
-import com.thebestdevelopers.find_my_beer.DTO.Favourities.GetFavouritesDTO;
-import com.thebestdevelopers.find_my_beer.DTO.Favourities.FavouritiesDTO;
 
 import java.io.IOException;
 import java.util.List;
@@ -13,5 +12,6 @@ import java.util.List;
 public interface FavouritesService {
     //@PreAuthorize("hasAnyAuthority('admin','client', 'pub')")
     List<FavResult> getPubs(int userId) throws IOException;
-    FavouritiesDTO addFavourite(int clientId, int pubId);
+    BooleanDTO addFavourite(int userId, int pubId);
+    BooleanDTO deleteFavourite(int userId, int pubId);
 }

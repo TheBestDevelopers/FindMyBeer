@@ -1,6 +1,7 @@
 package com.thebestdevelopers.find_my_beer.service;
 
 import com.thebestdevelopers.find_my_beer.DAO.UserDao;
+import com.thebestdevelopers.find_my_beer.DTO.GetUsernameDTO;
 import com.thebestdevelopers.find_my_beer.DTO.UserDTO;
 import com.thebestdevelopers.find_my_beer.model.UserEntity;
 import com.thebestdevelopers.find_my_beer.repository.UserRepository;
@@ -56,5 +57,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public Boolean deleteUser(String username, String password) {
         return userDao.deleteUser(username,password);
+    }
+
+    @Override
+    public GetUsernameDTO getUsername(int id) {
+        return userDao.getUsername(id);
     }
 }
