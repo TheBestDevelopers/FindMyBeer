@@ -23,6 +23,7 @@ import android.view.View;
 import android.support.v7.widget.SearchView;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -69,6 +70,7 @@ public class SearchTab
     ItemClickListener itemClickListener;
     HttpRequests httpRequests;
     Button buttonChooseFilters;
+    private TextView mErrorTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +83,7 @@ public class SearchTab
 
         buttonChooseFilters = (Button)findViewById(R.id.mButtonFilters);
         buttonChooseFilters.setEnabled(false);
+        mErrorTextView = findViewById(R.id.mErrorTextView);
 
         itemClickListener = this;
         sortingTypeChooser = new SortingTypeChooser();
@@ -165,6 +168,7 @@ public class SearchTab
                         if (pubs.size() == 0)
                             showAlert("No places found.");
                         setListAdapter();
+                        mErrorTextView.setEnabled(false);
                     } else {
                         showAlert("No places found.");
                     }
@@ -176,8 +180,8 @@ public class SearchTab
     }
 
     private void showAlert(String message) {
-        //temporary solution - should appear a message box or a textview with this info and it should appear once...
-        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+        mErrorTextView.setEnabled(true);
+        mErrorTextView.setText(message);
     }
 
     private void setListAdapter() {

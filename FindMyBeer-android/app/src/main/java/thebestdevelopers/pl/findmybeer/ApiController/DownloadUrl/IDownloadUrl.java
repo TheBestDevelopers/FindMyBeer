@@ -1,6 +1,5 @@
 package thebestdevelopers.pl.findmybeer.ApiController.DownloadUrl;
 
-
 import java.io.IOException;
 
 public interface IDownloadUrl {
