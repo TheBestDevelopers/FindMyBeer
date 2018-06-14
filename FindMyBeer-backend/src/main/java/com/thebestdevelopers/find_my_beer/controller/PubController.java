@@ -89,7 +89,7 @@ public class PubController implements Serializable {
         return pubService.getPubsWithConveniences(longitude, latitude, conveniences);
     }
 
-    @PutMapping("setConveniences")
+    @GetMapping("setConveniences")
     public Boolean setConveniences(@RequestParam("pubID") int pubId,
                                    @RequestParam("true") String[] convToAdd,
                                    @RequestParam("false") String[] convToDelete,
@@ -101,7 +101,7 @@ public class PubController implements Serializable {
         return pubService.setConveniences(pubId, convToAdd, convToDelete);
     }
 
-    @PutMapping("setTables")
+    @GetMapping("setTables")
     public BooleanDTO setTables(@RequestParam("pubID") int pubId,
                                 @RequestParam("chair1") int chair1,
                                 @RequestParam("chair2") int chair2,
