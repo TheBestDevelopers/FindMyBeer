@@ -109,15 +109,31 @@ public class editTables extends AppCompatActivity {
     }
 
     public void mButtonChangeClick(View v) {
-        //obsluga
+
+        String url = getUrl2(id);
+        GetJsonResult getNearbyPlacesData = new GetJsonResult(this);
+        Object dataTransfer[] = new Object[2];
+        dataTransfer[0] = url;
+        dataTransfer[1] = "change";
+        getNearbyPlacesData.execute(dataTransfer);
     }
 
     //http://localhost:8080/api/pubs/getPubInfo?userID=2&pubID=3
     private String getUrl(String id) {
         StringBuilder googlePlaceUrl = new StringBuilder(getResources().getString(R.string.databaseIP)); //temp
         //TO DO
-        googlePlaceUrl.append("/api/pubs/getPubInfo?userID="+"8"); //zamiast 2 ma byc user id
-        googlePlaceUrl.append("&pubID="+id);
+        googlePlaceUrl.append("/api/pubs/getPubView?pubID=");
+        googlePlaceUrl.append(id);
+        Log.d("created url", googlePlaceUrl.toString());
+        return googlePlaceUrl.toString();
+    }
+
+    //setConveniences http://localhost:8080/api/pubs/setConveniences?pubID=1234&true=boardgames,wifi&false=toilet
+    private String getUrl2(String id) {
+        StringBuilder googlePlaceUrl = new StringBuilder(getResources().getString(R.string.databaseIP)); //temp
+        //TO DO
+        googlePlaceUrl.append("/api/pubs/setConveniences?pubID=");
+        googlePlaceUrl.append(id);
         Log.d("created url", googlePlaceUrl.toString());
         return googlePlaceUrl.toString();
     }

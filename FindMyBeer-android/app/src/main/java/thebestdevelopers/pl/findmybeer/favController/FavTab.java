@@ -40,7 +40,7 @@ public class FavTab extends AppCompatActivity {
         TextView txt = (TextView) findViewById(R.id.tFavs);
         TextView txt2 = (TextView) findViewById(R.id.tError);
         txt.setVisibility(View.VISIBLE);
-        txt.setVisibility(View.GONE);
+        txt2.setVisibility(View.GONE);
         RelativeLayout v = (RelativeLayout) findViewById(R.id.bView);
         v.setVisibility(View.GONE);
         ProgressBar spinner = (ProgressBar)findViewById(R.id.mProgressBarHome);

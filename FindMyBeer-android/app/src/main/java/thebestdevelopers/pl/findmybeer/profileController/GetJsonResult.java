@@ -12,12 +12,13 @@ import android.widget.TextView;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.util.HashMap;
 
 import thebestdevelopers.pl.findmybeer.R;
 
 public class GetJsonResult extends AsyncTask<Object, String, String> {
     private String googlePlacesData;
-    private String url;
+    private String url, userName;
     WeakReference<Activity> mWeakActivity;
 
     public GetJsonResult(Activity activity) {
@@ -31,40 +32,44 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
         try {
             googlePlacesData = downloadUrl.readUrl(url);
         } catch (Exception e) {
-            e.printStackTrace();
+            return "Exception";
         }
 
         return googlePlacesData;
     }
 
     @Override
-    protected void onPostExecute(String s){
-        Log.d("placedata","called parse method");
+    protected void onPostExecute(String s) {
+        Log.d("placedata", "called parse method");
         Activity activity = mWeakActivity.get();
-        if (activity != null) {
-            if (s.equals("")) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-                builder.setMessage("Cannot connect to the server!")
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
+        if (!s.equals("Exception")) {
+            if (activity != null) {
+                TextView mName = activity.findViewById(R.id.tLogin);
+                mName.setText(userName);
             }
+            TextView txt = (TextView) activity.findViewById(R.id.tLogin);
+            txt.setVisibility(View.VISIBLE);
+            Button btn = (Button) activity.findViewById(R.id.bLogOut);
+            btn.setVisibility(View.VISIBLE);
+            Button btn2 = (Button) activity.findViewById(R.id.bChange);
+            btn2.setVisibility(View.VISIBLE);
+            Button btn3 = (Button) activity.findViewById(R.id.bDelete);
+            btn3.setVisibility(View.VISIBLE);
+            Button btn4 = (Button) activity.findViewById(R.id.bTemp);
+            btn4.setVisibility(View.VISIBLE);
+            ProgressBar spinner = (ProgressBar) activity.findViewById(R.id.mProgressBarHome);
+            spinner.setVisibility(View.GONE);
         }
-        TextView txt = (TextView) activity.findViewById(R.id.tLogin);
-        txt.setVisibility(View.VISIBLE);
-        Button btn = (Button) activity.findViewById(R.id.bLogOut);
-        btn.setVisibility(View.VISIBLE);
-        Button btn2 = (Button) activity.findViewById(R.id.bChange);
-        btn2.setVisibility(View.VISIBLE);
-        Button btn3 = (Button) activity.findViewById(R.id.bDelete);
-        btn3.setVisibility(View.VISIBLE);
-        Button btn4 = (Button) activity.findViewById(R.id.bTemp);
-        btn4.setVisibility(View.VISIBLE);
-        ProgressBar spinner = (ProgressBar)activity.findViewById(R.id.mProgressBarHome);
-        spinner.setVisibility(View.GONE);
+        else {
+            TextView txt2 = (TextView) activity.findViewById(R.id.tError);
+            txt2.setVisibility(View.VISIBLE);
+            ProgressBar spinner = (ProgressBar) activity.findViewById(R.id.mProgressBarHome);
+            spinner.setVisibility(View.GONE);
+        }
+    }
+
+    private void showNearbyPlaces(HashMap<String, String> googlePlace)
+    {
+        userName = googlePlace.get("user_name");
     }
 }

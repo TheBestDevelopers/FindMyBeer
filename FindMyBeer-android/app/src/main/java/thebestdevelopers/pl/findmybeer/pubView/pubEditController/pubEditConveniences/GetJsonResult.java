@@ -20,7 +20,7 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
 
     private String googlePlacesData;
     private String placeName, vicinity, phone, rating, website;
-    private String url;
+    private String url, change;
     public TextView mName, mRating, mAddress, mPhone, mWebsite, tConveniences, tTables;
     public ProgressBar spinner;
     public Button bFav, bMenu;
@@ -39,11 +39,12 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
     @Override
     protected String doInBackground(Object... objects) {
         url = (String)objects[0];
+        change = (String) objects[1];
         DownloadPubUrl downloadUrl = new DownloadPubUrl();
         try {
             googlePlacesData = downloadUrl.readUrl(url);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            return "Exception";
         }
 
         return googlePlacesData;
@@ -51,12 +52,15 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
 
     @Override
     protected void onPostExecute(String s){
+        Activity activity = mWeakActivity.get();
         HashMap<String, String> nearbyPlaceList;
+        if (change.equals("change")) {
+            return;
+        }
         DataPubParser parser = new DataPubParser();
         nearbyPlaceList = parser.parse(s);
         Log.d("placedata","called parse method");
         showNearbyPlaces(nearbyPlaceList);
-        Activity activity = mWeakActivity.get();
         if (activity != null) {
 
             spinner = activity.findViewById(R.id.mProgressBarHome);

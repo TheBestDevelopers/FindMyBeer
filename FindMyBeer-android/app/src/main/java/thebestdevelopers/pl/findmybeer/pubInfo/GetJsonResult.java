@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -19,7 +20,7 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
 
     private String googlePlacesData;
     private String placeName, vicinity, phone, rating, website;
-    private String url;
+    private String url, favs="";
     public TextView mName, mRating, mAddress, mPhone, mWebsite, tConveniences, tTables;
     public ProgressBar spinner;
     public Button bFav, bMenu;
@@ -39,13 +40,13 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
     @Override
     protected String doInBackground(Object... objects) {
         url = (String)objects[0];
+        favs = (String)objects[1];
         DownloadPubUrl downloadUrl = new DownloadPubUrl();
         try {
             googlePlacesData = downloadUrl.readUrl(url);
         } catch (Exception e) {
             return "Exception";
         }
-
         return googlePlacesData;
     }
 
@@ -53,6 +54,29 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
     protected void onPostExecute(String s){
         Activity activity = mWeakActivity.get();
         if(!s.equals("Exception")) {
+            if (favs.equals("add")) {
+                if (s.equals("{\"result\":false}")) {
+                    Toast.makeText(activity, "No server connection!", Toast.LENGTH_LONG).show();
+                    spinner.setVisibility(View.GONE);
+                    return;
+                } else if (s.equals("{\"result\":true}")) {
+                    Button btn = (Button) activity.findViewById(R.id.bAddFav);
+                    btn.setText("Remove from favourites");
+                    spinner.setVisibility(View.GONE);
+                    return;
+                }
+            } else if (favs.equals("remove")) {
+                    if (s.equals("{\"result\":false}")) {
+                        Toast.makeText(activity, "No server connection!", Toast.LENGTH_LONG).show();
+                        spinner.setVisibility(View.GONE);
+                        return;
+                    } else if (s.equals("{\"result\":true}")) {
+                        Button btn = (Button) activity.findViewById(R.id.bAddFav);
+                        btn.setText("Add to favourites");
+                        spinner.setVisibility(View.GONE);
+                        return;
+                    }
+            }
             HashMap<String, String> nearbyPlaceList;
             DataPubParser parser = new DataPubParser();
             nearbyPlaceList = parser.parse(s);
