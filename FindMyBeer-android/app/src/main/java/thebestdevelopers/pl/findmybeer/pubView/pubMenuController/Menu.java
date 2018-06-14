@@ -55,19 +55,21 @@ public class Menu extends AppCompatActivity {
                                 i = new Intent(getApplicationContext(), PubDetails.class);
                                 i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                 startActivity(i);
+                                finish();
                                 break;
                             case R.id.action_edit:
                                 i = new Intent(getApplicationContext(), PubEdit.class);
                                 i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                 startActivity(i);
+                                finish();
                                 break;
                             case R.id.action_user:
                                 i = new Intent(getApplicationContext(), ProfileTab.class);
                                 i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                 startActivity(i);
+                                finish();
                                 break;
                         }
-                        finish();
                         return true;
                     }
                 });

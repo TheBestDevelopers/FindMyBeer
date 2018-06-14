@@ -84,24 +84,27 @@ public class FavTab extends AppCompatActivity {
                                 i = new Intent(getApplicationContext(), HomeTab.class);
                                 i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                 startActivity(i);
+                                finish();
                                 break;
                             case R.id.action_search:
                                 i = new Intent(getApplicationContext(), SearchTab.class);
                                 i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                 startActivity(i);
+                                finish();
                                 break;
                             case R.id.action_map:
                                 i = new Intent(getApplicationContext(), MapTab.class);
                                 i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                 startActivity(i);
+                                finish();
                                 break;
                             case R.id.action_user:
                                 i = new Intent(getApplicationContext(), ProfileTab.class);
                                 i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                 startActivity(i);
+                                finish();
                                 break;
                         }
-                        finish();
                         return true;
                     }
                 });

@@ -27,6 +27,7 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
+
             setContentView(R.layout.activity_login);
             facebookLoginButton = (LoginButton) findViewById(R.id.mButtonLogInFacebook);
             facebookLoginButton.setBackgroundResource(R.drawable.roundedfacebookbutton);

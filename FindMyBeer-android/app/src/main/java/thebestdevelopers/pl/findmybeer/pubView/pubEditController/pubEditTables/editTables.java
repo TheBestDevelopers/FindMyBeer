@@ -88,21 +88,24 @@ public class editTables extends AppCompatActivity {
                                 temp.putExtra("placeID", id);
                                 temp.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                 startActivity(temp);
+                                finish();
                                 break;
                             case R.id.action_edit:
                                 temp = new Intent(getApplicationContext(), PubEdit.class);
                                 temp.putExtra("placeID", id);
                                 temp.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                 startActivity(temp);
+                                finish();
                                 break;
                             case R.id.action_user:
                                 temp = new Intent(getApplicationContext(), ProfileTab.class);
                                 temp.putExtra("placeID", id);
                                 temp.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                 startActivity(temp);
+                                finish();
                                 break;
                         }
-                        finish();
+
                         return true;
                     }
                 });
