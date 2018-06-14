@@ -9,6 +9,7 @@ import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -33,7 +34,10 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
     @Override
     protected String doInBackground(Object... objects) {
         url = (String)objects[0];
-        change = (String)objects[1];
+        if (objects.length > 1)
+            change = (String) objects[1];
+        else
+            change = "";
         DownloadPubUrl downloadUrl = new DownloadPubUrl();
         try {
             googlePlacesData = downloadUrl.readUrl(url);
@@ -48,7 +52,16 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
     protected void onPostExecute(String s){
         Activity activity = mWeakActivity.get();
         if (change.equals("change")) {
-            return;
+            if (s.equals("true")) {
+                ProgressBar spinner = (ProgressBar)activity.findViewById(R.id.mProgressBarHome);
+                spinner.setVisibility(View.GONE);
+                return;
+            } else {
+                ProgressBar spinner = (ProgressBar)activity.findViewById(R.id.mProgressBarHome);
+                spinner.setVisibility(View.GONE);
+                Toast.makeText(activity, "Sth went wrong", Toast.LENGTH_LONG).show();
+                return;
+            }
         }
         HashMap<String, String> nearbyPlaceList;
         DataPubParser parser = new DataPubParser();

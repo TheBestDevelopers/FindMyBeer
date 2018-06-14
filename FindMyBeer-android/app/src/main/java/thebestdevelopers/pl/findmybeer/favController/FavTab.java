@@ -59,7 +59,7 @@ public class FavTab extends AppCompatActivity {
 
         //przekazane info z pubinfo
 
-        String mId = "9";
+        String mId = "8";
 
         String url = getUrl(mId);
         GetJsonResult getFavData = new GetJsonResult(this);

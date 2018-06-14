@@ -34,7 +34,6 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
         } catch (Exception e) {
             return "Exception";
         }
-
         return googlePlacesData;
     }
 
@@ -44,6 +43,10 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
         Activity activity = mWeakActivity.get();
         if (!s.equals("Exception")) {
             if (activity != null) {
+                HashMap<String, String> nearbyPlaceList;
+                DataProfileParser parser = new DataProfileParser();
+                nearbyPlaceList = parser.parse(s);
+                showNearbyPlaces(nearbyPlaceList);
                 TextView mName = activity.findViewById(R.id.tLogin);
                 mName.setText(userName);
             }
@@ -59,8 +62,13 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
             btn4.setVisibility(View.VISIBLE);
             ProgressBar spinner = (ProgressBar) activity.findViewById(R.id.mProgressBarHome);
             spinner.setVisibility(View.GONE);
+            TextView txt2 = (TextView) activity.findViewById(R.id.tError);
+            txt2.setVisibility(View.GONE);
         }
         else {
+            TextView mName = activity.findViewById(R.id.tLogin);
+            mName.setText("No data");
+            mName.setVisibility(View.VISIBLE);
             TextView txt2 = (TextView) activity.findViewById(R.id.tError);
             txt2.setVisibility(View.VISIBLE);
             ProgressBar spinner = (ProgressBar) activity.findViewById(R.id.mProgressBarHome);

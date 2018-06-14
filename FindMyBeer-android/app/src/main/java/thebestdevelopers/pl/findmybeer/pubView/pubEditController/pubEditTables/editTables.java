@@ -112,13 +112,20 @@ public class editTables extends AppCompatActivity {
     }
 
     public void mButtonChangeClick(View v) {
-
+        ProgressBar spinner = (ProgressBar)findViewById(R.id.mProgressBarHome);
+        spinner.setVisibility(View.VISIBLE);
         String url = getUrl2(id);
         GetJsonResult getNearbyPlacesData = new GetJsonResult(this);
         Object dataTransfer[] = new Object[2];
         dataTransfer[0] = url;
         dataTransfer[1] = "change";
         getNearbyPlacesData.execute(dataTransfer);
+
+        Intent temp = new Intent(getApplicationContext(), PubEdit.class);
+        temp.putExtra("placeID", id);
+        temp.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(temp);
+        finish();
     }
 
     //http://localhost:8080/api/pubs/getPubInfo?userID=2&pubID=3
@@ -131,12 +138,17 @@ public class editTables extends AppCompatActivity {
         return googlePlaceUrl.toString();
     }
 
-    //setConveniences http://localhost:8080/api/pubs/setConveniences?pubID=1234&true=boardgames,wifi&false=toilet
+    //http://localhost:8080/api/pubs/setTables?pubID=13&chair1=3&chair2=0&chair4=7&chair6=2&chair8=0
     private String getUrl2(String id) {
         StringBuilder googlePlaceUrl = new StringBuilder(getResources().getString(R.string.databaseIP)); //temp
         //TO DO
-        googlePlaceUrl.append("/api/pubs/setConveniences?pubID=");
+        googlePlaceUrl.append("/api/pubs/setTables?pubID=");
         googlePlaceUrl.append(id);
+        googlePlaceUrl.append("&chair1="+ np1.getValue());
+        googlePlaceUrl.append("&chair2="+ np2.getValue());
+        googlePlaceUrl.append("&chair4="+ np4.getValue());
+        googlePlaceUrl.append("&chair6="+ np6.getValue());
+        googlePlaceUrl.append("&chair8="+ np8.getValue());
         Log.d("created url", googlePlaceUrl.toString());
         return googlePlaceUrl.toString();
     }

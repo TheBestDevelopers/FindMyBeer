@@ -71,6 +71,8 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
             v.setVisibility(View.VISIBLE);
             ProgressBar spinner = (ProgressBar) activity.findViewById(R.id.mProgressBarHome);
             spinner.setVisibility(View.GONE);
+            TextView txt2 = (TextView) activity.findViewById(R.id.tError);
+            txt2.setVisibility(View.GONE);
         } else {
             TextView txt2 = (TextView) activity.findViewById(R.id.tError);
             txt2.setVisibility(View.VISIBLE);

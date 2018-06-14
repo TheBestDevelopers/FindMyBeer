@@ -39,7 +39,10 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
     @Override
     protected String doInBackground(Object... objects) {
         url = (String)objects[0];
-        change = (String) objects[1];
+        if (objects.length > 1)
+            change = (String) objects[1];
+        else
+            change = "";
         DownloadPubUrl downloadUrl = new DownloadPubUrl();
         try {
             googlePlacesData = downloadUrl.readUrl(url);
@@ -55,7 +58,8 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
         Activity activity = mWeakActivity.get();
         HashMap<String, String> nearbyPlaceList;
         if (change.equals("change")) {
-            return;
+            if (s.equals("true"))
+                return;
         }
         DataPubParser parser = new DataPubParser();
         nearbyPlaceList = parser.parse(s);
