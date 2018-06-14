@@ -27,6 +27,15 @@
         android:layout_centerHorizontal="true"
         android:layout_gravity="center" />
 
+    <TextView
+        android:id="@+id/mErrorTextView"
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textAlignment="center"
+        android:textSize="15sp"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
