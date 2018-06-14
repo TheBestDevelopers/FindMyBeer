@@ -16,7 +16,7 @@ import java.util.Objects;
 public class ConveniencesEntity {
     private int pubId;
     private int convenienceTypesId;
-    private int convenienceId;
+    private long convenienceId;
     private PubEntity pubByPubId;
     private ConvenienceTypesEntity convenienceTypesByConvenienceTypesId;
 
@@ -43,11 +43,11 @@ public class ConveniencesEntity {
     @Id
     @GeneratedValue(generator = "seq1")
     @Column(name = "convenience_id", nullable = false)
-    public int getConvenienceId() {
+    public long getConvenienceId() {
         return convenienceId;
     }
 
-    public void setConvenienceId(int convenienceId) {
+    public void setConvenienceId(long convenienceId) {
         this.convenienceId = convenienceId;
     }
 

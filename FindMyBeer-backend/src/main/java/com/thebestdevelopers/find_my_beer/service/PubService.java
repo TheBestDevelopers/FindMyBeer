@@ -26,4 +26,6 @@ public interface PubService {
     List<GetNearestPubDTO> getNearestPubs(Double longitude, Double latitude) throws IOException;
     //@PreAuthorize("hasAnyAuthority('admin','client', 'pub')")
     List<GetNearestPubDTO> getPubsWithConveniences(Double longitude, Double latitude, String[] conveniences) throws IOException;
+    //@PreAuthorize("hasAnyAuthority('admin','client', 'pub')")
+    Boolean setConveniences (int pubId, String[] convToAdd, String[] convToDelete);
 }

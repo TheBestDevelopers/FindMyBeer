@@ -42,6 +42,14 @@ public class PubController implements Serializable {
         return pubService.getPubInfo(userId, pubId);
     }
 
+    @GetMapping("getPubView")
+    public PubInfoDTO getPubView(@RequestParam("pubID") int pubId, Principal principal){
+        //User user = (User) ((Authentication) principal).getPrincipal();
+        //UserEntity userEntity = userRepository.findByUsername(user.getUsername()).get(0);
+
+        return pubService.getPubInfo(-1, pubId);
+    }
+
     @GetMapping("getPubMenu")
     public PubMenuDTO getPubMenu(@RequestParam("pubID") int pubId, Principal principal){
         //User user = (User) ((Authentication) principal).getPrincipal();
@@ -71,13 +79,25 @@ public class PubController implements Serializable {
 
     @GetMapping("getPubsWithConveniences")
     public List<GetNearestPubDTO> getPubsWithConveniences(@RequestParam("longitude") Double longitude,
-                                                   @RequestParam("latitude") Double latitude,
-                                                   @RequestParam("conveniences") String[] conveniences,
-                                                   Principal principal) throws IOException {
+                                                          @RequestParam("latitude") Double latitude,
+                                                          @RequestParam("conveniences") String[] conveniences,
+                                                          Principal principal) throws IOException {
         //User user = (User) ((Authentication) principal).getPrincipal();
         //if(!user.getUsername().equals(param.getUsername()))
         //throw new UserDeclinedException("You don't have permission");
 
         return pubService.getPubsWithConveniences(longitude, latitude, conveniences);
+    }
+
+    @PutMapping("setConveniences")
+    public Boolean setConveniences(@RequestParam("pubID") int pubId,
+                                   @RequestParam("true") String[] convToAdd,
+                                   @RequestParam("false") String[] convToDelete,
+                                   Principal principal) throws IOException {
+        //User user = (User) ((Authentication) principal).getPrincipal();
+        //if(!user.getUsername().equals(param.getUsername()))
+        //throw new UserDeclinedException("You don't have permission");
+
+        return pubService.setConveniences(pubId, convToAdd, convToDelete);
     }
 }

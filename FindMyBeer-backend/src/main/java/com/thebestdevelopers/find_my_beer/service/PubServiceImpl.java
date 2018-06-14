@@ -154,7 +154,9 @@ public class PubServiceImpl implements PubService {
 
         List<RatingsEntity> ratingsEntityList = ratingRepository.findByPubId(pubId);
         List<FavouritiesEntity> favouritiesEntityList = favouritesRepository.findByPubId(pubId);
-        boolean isFavouriteFlag = this.isFavourite(favouritiesEntityList, userId);
+        boolean isFavouriteFlag = false;
+        if (userId==-1)
+            isFavouriteFlag = this.isFavourite(favouritiesEntityList, userId);
 
         //parsing number of tables witch 1, 2, 4, 6, 8 chairs
         TablesDTO tablesDTO = new TablesDTO(numberOfTables[1],numberOfTables[2], numberOfTables[4], numberOfTables[6], numberOfTables[8]);
@@ -257,5 +259,25 @@ public class PubServiceImpl implements PubService {
         }
 
         return getNearestPubWithConveniencesDTOList;
+    }
+
+    @Override
+    public Boolean setConveniences(int pubId, String[] convToAdd, String[] convToDelete) {
+
+        for(String conv : convToAdd){
+            ConvenienceTypesEntity convenienceTypesEntity = convenienceTypeRepository.findByDescription(conv).get(0);
+            ConveniencesEntity conveniencesEntity = new ConveniencesEntity();
+            conveniencesEntity.setConvenienceTypesId(convenienceTypesEntity.getConvenienceTypesId());
+            conveniencesEntity.setPubId(pubId);
+            convenienceRepository.save(conveniencesEntity);
+        }
+
+        for (String conv : convToDelete){
+            ConvenienceTypesEntity convenienceTypesEntity = convenienceTypeRepository.findByDescription(conv).get(0);
+            ConveniencesEntity conveniencesEntity = convenienceRepository.findByConvenienceTypesIdAndPubId(convenienceTypesEntity.getConvenienceTypesId(), pubId).get(0);
+            convenienceRepository.deleteById(conveniencesEntity.getConvenienceId());
+        }
+
+        return true;
     }
 }

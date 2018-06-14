@@ -11,5 +11,8 @@ import java.util.List;
  */
 public interface ConvenienceRepository extends JpaRepository<ConveniencesEntity, Long> {
     List<ConveniencesEntity> findByPubId(int pubId);
+    List<ConveniencesEntity> findByConvenienceTypesIdAndPubId(int convenienceTypesId, int pubId);
+    void deleteByConvenienceId(int convenienceId);
+
 
 }
