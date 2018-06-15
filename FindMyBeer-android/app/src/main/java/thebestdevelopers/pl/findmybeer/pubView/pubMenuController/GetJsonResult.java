@@ -50,7 +50,7 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
         showMenu(menuList);
         Activity activity = mWeakActivity.get();
         if (activity != null) {
-            RecyclerView recyclerView = (RecyclerView) activity.findViewById(R.id.menu_list);
+            RecyclerView recyclerView = activity.findViewById(R.id.menu_list);
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(new LinearLayoutManager(activity));
             recyclerView.setItemAnimator(new DefaultItemAnimator());

@@ -62,7 +62,7 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
                         spinner.setVisibility(View.GONE);
                         return;
                     } else if (s.equals("{\"result\":true}")) {
-                        Button btn = (Button) activity.findViewById(R.id.bAddFav);
+                        Button btn = activity.findViewById(R.id.bAddFav);
                         btn.setText("Remove from favourites");
                         spinner.setVisibility(View.GONE);
                         return;
@@ -73,7 +73,7 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
                         spinner.setVisibility(View.GONE);
                         return;
                     } else if (s.equals("{\"result\":true}")) {
-                        Button btn = (Button) activity.findViewById(R.id.bAddFav);
+                        Button btn = activity.findViewById(R.id.bAddFav);
                         btn.setText("Add to favourites");
                         spinner.setVisibility(View.GONE);
                         return;
@@ -158,12 +158,12 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
                 }
             }
             spinner.setVisibility(View.GONE);
-            ScrollView v = (ScrollView) activity.findViewById(R.id.bView);
+            ScrollView v = activity.findViewById(R.id.bView);
             v.setVisibility(View.VISIBLE);
         } else {
-            TextView txt2 = (TextView) activity.findViewById(R.id.tError);
+            TextView txt2 = activity.findViewById(R.id.tError);
             txt2.setVisibility(View.VISIBLE);
-            ProgressBar spinner = (ProgressBar) activity.findViewById(R.id.mProgressBarHome);
+            ProgressBar spinner = activity.findViewById(R.id.mProgressBarHome);
             spinner.setVisibility(View.GONE);
         }
     }

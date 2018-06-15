@@ -101,7 +101,7 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
                 tTables.setText(chairs);
         }
         spinner.setVisibility(View.GONE);
-        ScrollView v = (ScrollView) activity.findViewById(R.id.bView);
+        ScrollView v = activity.findViewById(R.id.bView);
         v.setVisibility(View.VISIBLE);
     }
 

@@ -76,7 +76,7 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-        buttonSave = (Button)findViewById(R.id.mButtonSave);
+        buttonSave = findViewById(R.id.mButtonSave);
         buttonSave.setEnabled(false);
 
         httpRequests = new HttpRequests(this);
@@ -181,11 +181,11 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
                 .enableAutoManage(this, GOOGLE_API_CLIENT_ID, this)
                 .addConnectionCallbacks(this)
                 .build();
-        mAutocompleteTextView = (AutoCompleteTextView) findViewById(R.id
+        mAutocompleteTextView = findViewById(R.id
                 .autoCompleteTextView);
         mAutocompleteTextView.setThreshold(3);
-        mNameTextView = (TextView) findViewById(R.id.name);
-        mAddressTextView = (TextView) findViewById(R.id.address);
+        mNameTextView = findViewById(R.id.name);
+        mAddressTextView = findViewById(R.id.address);
         mAutocompleteTextView.setOnItemClickListener(mAutocompleteClickListener);
         mPlaceArrayAdapter = new PlaceArrayAdapter(this, android.R.layout.simple_list_item_1,
                 BOUNDS_MOUNTAIN_VIEW, null);

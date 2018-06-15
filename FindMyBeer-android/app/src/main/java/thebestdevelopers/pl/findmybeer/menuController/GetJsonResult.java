@@ -58,25 +58,25 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
             showMenu(menuList);
 
             if (activity != null) {
-                RecyclerView recyclerView = (RecyclerView) activity.findViewById(R.id.menu_list);
+                RecyclerView recyclerView = activity.findViewById(R.id.menu_list);
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setLayoutManager(new LinearLayoutManager(activity));
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
 
                 recyclerView.setAdapter(new MenuRecyclerViewAdapter(mMenuList, recyclerView));
             }
-            TextView txt = (TextView) activity.findViewById(R.id.tMenu);
+            TextView txt = activity.findViewById(R.id.tMenu);
             txt.setVisibility(View.VISIBLE);
-            RelativeLayout v = (RelativeLayout) activity.findViewById(R.id.bView);
+            RelativeLayout v = activity.findViewById(R.id.bView);
             v.setVisibility(View.VISIBLE);
-            ProgressBar spinner = (ProgressBar) activity.findViewById(R.id.mProgressBarHome);
+            ProgressBar spinner = activity.findViewById(R.id.mProgressBarHome);
             spinner.setVisibility(View.GONE);
-            TextView txt2 = (TextView) activity.findViewById(R.id.tError);
+            TextView txt2 = activity.findViewById(R.id.tError);
             txt2.setVisibility(View.GONE);
         } else {
-            TextView txt2 = (TextView) activity.findViewById(R.id.tError);
+            TextView txt2 = activity.findViewById(R.id.tError);
             txt2.setVisibility(View.VISIBLE);
-            ProgressBar spinner = (ProgressBar) activity.findViewById(R.id.mProgressBarHome);
+            ProgressBar spinner = activity.findViewById(R.id.mProgressBarHome);
             spinner.setVisibility(View.GONE);
         }
     }

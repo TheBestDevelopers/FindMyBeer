@@ -78,10 +78,10 @@ public class SearchTab
         setContentView(R.layout.activity_search_tab);
         overridePendingTransition(0, 0);
         setBottomNavigationView();
-        spinner = (ProgressBar)findViewById(R.id.mProgressBarSearch);
+        spinner = findViewById(R.id.mProgressBarSearch);
         spinner.setVisibility(View.VISIBLE);
 
-        buttonChooseFilters = (Button)findViewById(R.id.mButtonFilters);
+        buttonChooseFilters = findViewById(R.id.mButtonFilters);
         buttonChooseFilters.setEnabled(false);
         mErrorTextView = findViewById(R.id.mErrorTextView);
 

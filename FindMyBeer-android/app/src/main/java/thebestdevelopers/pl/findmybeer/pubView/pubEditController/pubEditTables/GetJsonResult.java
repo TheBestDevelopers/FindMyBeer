@@ -53,13 +53,13 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
         Activity activity = mWeakActivity.get();
         if (change.equals("change")) {
             if (s.equals("true")) {
-                ProgressBar spinner = (ProgressBar)activity.findViewById(R.id.mProgressBarHome);
+                ProgressBar spinner = activity.findViewById(R.id.mProgressBarHome);
                 spinner.setVisibility(View.GONE);
                 return;
             } else {
-                ProgressBar spinner = (ProgressBar)activity.findViewById(R.id.mProgressBarHome);
+                ProgressBar spinner = activity.findViewById(R.id.mProgressBarHome);
                 spinner.setVisibility(View.GONE);
-                Toast.makeText(activity, "Sth went wrong", Toast.LENGTH_LONG).show();
+                Toast.makeText(activity, "Processing request", Toast.LENGTH_LONG).show();
                 return;
             }
         }
@@ -88,7 +88,7 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
             spinner = activity.findViewById(R.id.mProgressBarHome);
         }
         spinner.setVisibility(View.GONE);
-        ScrollView v = (ScrollView) activity.findViewById(R.id.bView);
+        ScrollView v = activity.findViewById(R.id.bView);
         v.setVisibility(View.VISIBLE);
     }
 

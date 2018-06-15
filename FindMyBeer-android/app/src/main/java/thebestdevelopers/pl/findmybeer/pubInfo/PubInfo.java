@@ -40,25 +40,25 @@ public class PubInfo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pub_info);
-        v = (ScrollView) findViewById(R.id.bView);
+        v = findViewById(R.id.bView);
         v.setVisibility(View.GONE);
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         overridePendingTransition(0, 0);
-        BottomNavigationView tabs = (BottomNavigationView) findViewById(R.id.navigationtabs7);
+        BottomNavigationView tabs = findViewById(R.id.navigationtabs7);
         BottomNavigationViewHelper.disableShiftMode(tabs);
         overridePendingTransition(0, 0);
         tabs.getMenu().findItem(R.id.action_map).setChecked(true);
 
-        mName = (TextView)findViewById(R.id.tName);
-        mAddress = (TextView)findViewById(R.id.tAddress);
+        mName = findViewById(R.id.tName);
+        mAddress = findViewById(R.id.tAddress);
 
-        spinner = (ProgressBar)findViewById(R.id.mProgressBarHome);
+        spinner = findViewById(R.id.mProgressBarHome);
         spinner.setVisibility(View.VISIBLE);
 
 
-        TextView txt2 = (TextView) findViewById(R.id.tError);
+        TextView txt2 = findViewById(R.id.tError);
         txt2.setVisibility(View.GONE);
 
         //wczytanie info po wcisnieciu markera na mapie.
@@ -123,8 +123,8 @@ public class PubInfo extends AppCompatActivity {
      * @param v
      */
     public void mButtonGetDirectionsClick(View v){
-        mName = (TextView)findViewById(R.id.tName);
-        mAddress = (TextView)findViewById(R.id.tAddress);
+        mName = findViewById(R.id.tName);
+        mAddress = findViewById(R.id.tAddress);
         String name =  mName.getText().toString();
         String address = mAddress.getText().toString();
         if ((name!= null || !name.equals("")) && (address!= null || !address.equals("") )) {
@@ -147,7 +147,7 @@ public class PubInfo extends AppCompatActivity {
         //przekazanie id miejsca
         //id
         //przeslanie do bazy
-        Button btn = (Button) findViewById(R.id.bAddFav);
+        Button btn = findViewById(R.id.bAddFav);
         String text = btn.getText().toString();
         spinner.setVisibility(View.VISIBLE);
         if (text.equals("Remove from favourites")) {

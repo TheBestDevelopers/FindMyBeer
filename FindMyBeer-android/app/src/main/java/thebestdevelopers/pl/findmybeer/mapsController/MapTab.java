@@ -69,7 +69,7 @@ public class MapTab extends AppCompatActivity implements OnMapReadyCallback, Goo
         }
 
         overridePendingTransition(0, 0);
-        BottomNavigationView tabs = (BottomNavigationView) findViewById(R.id.navigationtabs4);
+        BottomNavigationView tabs = findViewById(R.id.navigationtabs4);
         BottomNavigationViewHelper.disableShiftMode(tabs);
         tabs.getMenu().findItem(R.id.action_map).setChecked(true);
 

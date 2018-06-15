@@ -29,17 +29,17 @@ public class editTables extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_tables);
 
-        ScrollView v = (ScrollView) findViewById(R.id.bView);
+        ScrollView v = findViewById(R.id.bView);
         v.setVisibility(View.GONE);
 
-        ProgressBar spinner = (ProgressBar)findViewById(R.id.mProgressBarHome);
+        ProgressBar spinner = findViewById(R.id.mProgressBarHome);
         spinner.setVisibility(View.VISIBLE);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         overridePendingTransition(0, 0);
-        BottomNavigationView tabs = (BottomNavigationView) findViewById(R.id.navigationtabs);
+        BottomNavigationView tabs = findViewById(R.id.navigationtabs);
         BottomNavigationViewHelper.disableShiftMode(tabs);
         overridePendingTransition(0, 0);
         tabs.getMenu().findItem(R.id.action_edit).setChecked(true);
@@ -112,7 +112,7 @@ public class editTables extends AppCompatActivity {
     }
 
     public void mButtonChangeClick(View v) {
-        ProgressBar spinner = (ProgressBar)findViewById(R.id.mProgressBarHome);
+        ProgressBar spinner = findViewById(R.id.mProgressBarHome);
         spinner.setVisibility(View.VISIBLE);
         String url = getUrl2(id);
         GetJsonResult getNearbyPlacesData = new GetJsonResult(this);

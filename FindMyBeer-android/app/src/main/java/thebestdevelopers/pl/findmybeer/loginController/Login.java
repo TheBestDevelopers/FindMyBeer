@@ -49,7 +49,7 @@ public class Login extends AppCompatActivity {
         actionBar.hide();
 
         setContentView(R.layout.activity_login);
-        spinner = (ProgressBar)findViewById(R.id.mProgressBarLogin);
+        spinner = findViewById(R.id.mProgressBarLogin);
         spinner.setVisibility(View.GONE);
 
         mEditTextUsername = findViewById(R.id.mEditTextLogin);
@@ -57,7 +57,7 @@ public class Login extends AppCompatActivity {
 
         httpRequests = new HttpRequests(this);
 
-        facebookLoginButton = (LoginButton) findViewById(R.id.mButtonLogInFacebook);
+        facebookLoginButton = findViewById(R.id.mButtonLogInFacebook);
         facebookLoginButton.setBackgroundResource(R.drawable.roundedfacebookbutton);
         facebookLoginButton.setReadPermissions(Arrays.asList("public_profile", EMAIL));
         callbackManager = CallbackManager.Factory.create();

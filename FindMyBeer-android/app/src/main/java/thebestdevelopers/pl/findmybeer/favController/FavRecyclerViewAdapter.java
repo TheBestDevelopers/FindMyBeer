@@ -24,8 +24,8 @@ public class FavRecyclerViewAdapter extends RecyclerView.Adapter {
 
         public MyViewHolder(View v) {
             super(v);
-            mName = (TextView) v.findViewById(R.id.fav_name);
-            mAddress = (TextView) v.findViewById(R.id.fav_address);
+            mName = v.findViewById(R.id.fav_name);
+            mAddress = v.findViewById(R.id.fav_address);
         }
     }
 

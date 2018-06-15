@@ -31,10 +31,10 @@ public class PubListRecyclerViewerAdapter extends RecyclerView.Adapter<PubListRe
 
         public ViewHolder(View v) {
             super(v);
-            textViewStars = (TextView) v.findViewById(R.id.mTextViewStars);
-            textViewPubName = (TextView) v.findViewById(R.id.mTextViewPubName);
-            textViewFreeTables = (TextView) v.findViewById(R.id.mTextViewFreeTables);
-            textViewDistance = (TextView) v.findViewById(R.id.mTextViewDistance);
+            textViewStars = v.findViewById(R.id.mTextViewStars);
+            textViewPubName = v.findViewById(R.id.mTextViewPubName);
+            textViewFreeTables = v.findViewById(R.id.mTextViewFreeTables);
+            textViewDistance = v.findViewById(R.id.mTextViewDistance);
             itemView.setOnClickListener(this);
 
         }

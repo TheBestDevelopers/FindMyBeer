@@ -12,7 +12,7 @@ import java.net.URL;
 
 public class DownloadFavUrl {
 
-    public String readUrl(String myUrl) throws IOException, MalformedURLException, Exception
+    public String readUrl(String myUrl) throws Exception
     {
         String data = "";
         InputStream inputStream = null;

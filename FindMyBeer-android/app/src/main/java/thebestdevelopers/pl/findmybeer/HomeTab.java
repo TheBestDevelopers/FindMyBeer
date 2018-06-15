@@ -63,7 +63,7 @@ public class HomeTab extends AppCompatActivity implements ItemClickListener, Goo
         overridePendingTransition(0, 0);
         setBottomNavigationView();
         itemClickListener = this;
-        spinner = (ProgressBar)findViewById(R.id.mProgressBarHome);
+        spinner = findViewById(R.id.mProgressBarHome);
         spinner.setVisibility(View.VISIBLE);
         sortingTypeChooser = new SortingTypeChooser();
         httpRequests = new HttpRequests(this);

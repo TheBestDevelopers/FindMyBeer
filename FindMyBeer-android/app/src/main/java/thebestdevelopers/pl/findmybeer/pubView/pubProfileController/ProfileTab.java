@@ -32,12 +32,12 @@ public class ProfileTab extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_profile_pub);
         overridePendingTransition(0, 0);
-        BottomNavigationView tabs = (BottomNavigationView) findViewById(R.id.navigationtabs5);
+        BottomNavigationView tabs = findViewById(R.id.navigationtabs5);
         BottomNavigationViewHelper.disableShiftMode(tabs);
         tabs.getMenu().findItem(R.id.action_user).setChecked(true);
         Intent i;
 
-        mLoginText = (TextView)findViewById(R.id.tLogin);
+        mLoginText = findViewById(R.id.tLogin);
         mLoginText.setText("User name");
         Intent temp;
         tabs.setOnNavigationItemSelectedListener

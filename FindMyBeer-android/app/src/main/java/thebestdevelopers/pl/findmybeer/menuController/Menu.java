@@ -31,22 +31,22 @@ public class Menu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        TextView txt = (TextView) findViewById(R.id.tMenu);
+        TextView txt = findViewById(R.id.tMenu);
         txt.setVisibility(View.GONE);
-        RelativeLayout v = (RelativeLayout) findViewById(R.id.bView);
+        RelativeLayout v = findViewById(R.id.bView);
         v.setVisibility(View.GONE);
-        ProgressBar spinner = (ProgressBar)findViewById(R.id.mProgressBarHome);
+        ProgressBar spinner = findViewById(R.id.mProgressBarHome);
         spinner.setVisibility(View.VISIBLE);
 
 
-        TextView txt2 = (TextView) findViewById(R.id.tError);
+        TextView txt2 = findViewById(R.id.tError);
         txt2.setVisibility(View.GONE);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_menu);
-        BottomNavigationView tabs = (BottomNavigationView) findViewById(R.id.navigationtabs);
+        BottomNavigationView tabs = findViewById(R.id.navigationtabs);
         BottomNavigationViewHelper.disableShiftMode(tabs);
         overridePendingTransition(0, 0);
         tabs.getMenu().findItem(R.id.action_map).setChecked(true);

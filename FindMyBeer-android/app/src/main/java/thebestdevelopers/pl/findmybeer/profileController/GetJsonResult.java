@@ -50,28 +50,28 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
                 TextView mName = activity.findViewById(R.id.tLogin);
                 mName.setText(userName);
             }
-            TextView txt = (TextView) activity.findViewById(R.id.tLogin);
+            TextView txt = activity.findViewById(R.id.tLogin);
             txt.setVisibility(View.VISIBLE);
-            Button btn = (Button) activity.findViewById(R.id.bLogOut);
+            Button btn = activity.findViewById(R.id.bLogOut);
             btn.setVisibility(View.VISIBLE);
-            Button btn2 = (Button) activity.findViewById(R.id.bChange);
+            Button btn2 = activity.findViewById(R.id.bChange);
             btn2.setVisibility(View.VISIBLE);
-            Button btn3 = (Button) activity.findViewById(R.id.bDelete);
+            Button btn3 = activity.findViewById(R.id.bDelete);
             btn3.setVisibility(View.VISIBLE);
-            Button btn4 = (Button) activity.findViewById(R.id.bTemp);
+            Button btn4 = activity.findViewById(R.id.bTemp);
             btn4.setVisibility(View.VISIBLE);
-            ProgressBar spinner = (ProgressBar) activity.findViewById(R.id.mProgressBarHome);
+            ProgressBar spinner = activity.findViewById(R.id.mProgressBarHome);
             spinner.setVisibility(View.GONE);
-            TextView txt2 = (TextView) activity.findViewById(R.id.tError);
+            TextView txt2 = activity.findViewById(R.id.tError);
             txt2.setVisibility(View.GONE);
         }
         else {
             TextView mName = activity.findViewById(R.id.tLogin);
             mName.setText("No data");
             mName.setVisibility(View.VISIBLE);
-            TextView txt2 = (TextView) activity.findViewById(R.id.tError);
+            TextView txt2 = activity.findViewById(R.id.tError);
             txt2.setVisibility(View.VISIBLE);
-            ProgressBar spinner = (ProgressBar) activity.findViewById(R.id.mProgressBarHome);
+            ProgressBar spinner = activity.findViewById(R.id.mProgressBarHome);
             spinner.setVisibility(View.GONE);
         }
     }
