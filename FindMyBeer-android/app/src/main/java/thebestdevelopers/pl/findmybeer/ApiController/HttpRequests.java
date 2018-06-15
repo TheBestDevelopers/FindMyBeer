@@ -45,4 +45,10 @@ public class HttpRequests {
         return url.toString();
     }
 
+    public String authUser() {
+        StringBuilder url = new StringBuilder(apiUrl);
+        url.append("/api/users/");
+        return url.toString();
+    }
+
 }

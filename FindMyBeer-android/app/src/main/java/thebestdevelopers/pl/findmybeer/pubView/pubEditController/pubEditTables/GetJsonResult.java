@@ -9,6 +9,7 @@ import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -19,7 +20,7 @@ import thebestdevelopers.pl.findmybeer.R;
 public class GetJsonResult extends AsyncTask<Object, String, String> {
 
     private String googlePlacesData;
-    private String url;
+    private String url,change;
     public ProgressBar spinner;
     private String chair1, chair2, chair4, chair6, chair8;
     private NumberPicker np1, np2, np4, np6, np8;
@@ -33,11 +34,15 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
     @Override
     protected String doInBackground(Object... objects) {
         url = (String)objects[0];
+        if (objects.length > 1)
+            change = (String) objects[1];
+        else
+            change = "";
         DownloadPubUrl downloadUrl = new DownloadPubUrl();
         try {
             googlePlacesData = downloadUrl.readUrl(url);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            return "Exception";
         }
 
         return googlePlacesData;
@@ -45,12 +50,25 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
 
     @Override
     protected void onPostExecute(String s){
+        Activity activity = mWeakActivity.get();
+        if (change.equals("change")) {
+            if (s.equals("true")) {
+                ProgressBar spinner = (ProgressBar)activity.findViewById(R.id.mProgressBarHome);
+                spinner.setVisibility(View.GONE);
+                return;
+            } else {
+                ProgressBar spinner = (ProgressBar)activity.findViewById(R.id.mProgressBarHome);
+                spinner.setVisibility(View.GONE);
+                Toast.makeText(activity, "Sth went wrong", Toast.LENGTH_LONG).show();
+                return;
+            }
+        }
         HashMap<String, String> nearbyPlaceList;
         DataPubParser parser = new DataPubParser();
         nearbyPlaceList = parser.parse(s);
         Log.d("placedata","called parse method");
         showNearbyPlaces(nearbyPlaceList);
-        Activity activity = mWeakActivity.get();
+
         if (activity != null) {
 
             np1 = activity.findViewById(R.id.numberPicker1);

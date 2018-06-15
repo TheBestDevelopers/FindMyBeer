@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -19,15 +20,14 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
 
     private String googlePlacesData;
     private String placeName, vicinity, phone, rating, website;
-    private String url;
+    private String url, favs = "";
     public TextView mName, mRating, mAddress, mPhone, mWebsite, tConveniences, tTables;
     public ProgressBar spinner;
     public Button bFav, bMenu;
     private String wifi, adaptedforthedisabled, boardgames, discountsforgroups;
     private String discountsforstudents, roastingroom, toilet;
     private String chair1, chair2, chair4, chair6, chair8;
-    private String favourite="", ourPub="false";
-
+    private String favourite = "", ourPub = "false";
 
 
     WeakReference<Activity> mWeakActivity;
@@ -38,28 +38,53 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
 
     @Override
     protected String doInBackground(Object... objects) {
-        url = (String)objects[0];
+        url = (String) objects[0];
+        if (objects.length > 1)
+            favs = (String) objects[1];
         DownloadPubUrl downloadUrl = new DownloadPubUrl();
         try {
             googlePlacesData = downloadUrl.readUrl(url);
         } catch (Exception e) {
             return "Exception";
         }
-
         return googlePlacesData;
     }
 
     @Override
-    protected void onPostExecute(String s){
+    protected void onPostExecute(String s) {
         Activity activity = mWeakActivity.get();
-        if(!s.equals("Exception")) {
-            HashMap<String, String> nearbyPlaceList;
-            DataPubParser parser = new DataPubParser();
-            nearbyPlaceList = parser.parse(s);
-            Log.d("placedata", "called parse method");
-            showNearbyPlaces(nearbyPlaceList);
+        if (activity != null) {
+            spinner = activity.findViewById(R.id.mProgressBarHome);
+            if (!s.equals("Exception")) {
+                if (favs.equals("add")) {
+                    if (s.equals("{\"result\":false}")) {
+                        Toast.makeText(activity, "Sth went wrong - already added!", Toast.LENGTH_LONG).show();
+                        spinner.setVisibility(View.GONE);
+                        return;
+                    } else if (s.equals("{\"result\":true}")) {
+                        Button btn = (Button) activity.findViewById(R.id.bAddFav);
+                        btn.setText("Remove from favourites");
+                        spinner.setVisibility(View.GONE);
+                        return;
+                    }
+                } else if (favs.equals("remove")) {
+                    if (s.equals("{\"result\":false}")) {
+                        Toast.makeText(activity, "Sth went wrong - already removed!", Toast.LENGTH_LONG).show();
+                        spinner.setVisibility(View.GONE);
+                        return;
+                    } else if (s.equals("{\"result\":true}")) {
+                        Button btn = (Button) activity.findViewById(R.id.bAddFav);
+                        btn.setText("Add to favourites");
+                        spinner.setVisibility(View.GONE);
+                        return;
+                    }
+                }
+                HashMap<String, String> nearbyPlaceList;
+                DataPubParser parser = new DataPubParser();
+                nearbyPlaceList = parser.parse(s);
+                Log.d("placedata", "called parse method");
+                showNearbyPlaces(nearbyPlaceList);
 
-            if (activity != null) {
 
                 mName = activity.findViewById(R.id.tName);
                 mName.setText(placeName);
@@ -77,7 +102,6 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
                 tConveniences = activity.findViewById(R.id.tConveniences);
                 tTables = activity.findViewById(R.id.tTables);
 
-                spinner = activity.findViewById(R.id.mProgressBarHome);
 
                 if (ourPub.equals("false")) {
 
@@ -144,37 +168,36 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
         }
     }
 
-    private void showNearbyPlaces(HashMap<String, String> googlePlace)
-    {
-            placeName = googlePlace.get("place_name");
-            vicinity = googlePlace.get("vicinity");
-            rating = googlePlace.get("rating");
-            if (googlePlace.get("ourPub").isEmpty()) {
-                website = googlePlace.get("web");
-                phone = googlePlace.get("phone");
-                if (website.equals(""))
-                    website = "There's no website";
-                if (phone.equals(""))
-                    phone = "There's no phone";
+    private void showNearbyPlaces(HashMap<String, String> googlePlace) {
+        placeName = googlePlace.get("place_name");
+        vicinity = googlePlace.get("vicinity");
+        rating = googlePlace.get("rating");
+        if (googlePlace.get("ourPub").isEmpty()) {
+            website = googlePlace.get("web");
+            phone = googlePlace.get("phone");
+            if (website.equals(""))
+                website = "There's no website";
+            if (phone.equals(""))
+                phone = "There's no phone";
 
-            }
-            if (googlePlace.get("ourPub").equals("true")) {
-                ourPub = "true";
-                wifi = googlePlace.get("WI-FI");
-                adaptedforthedisabled = googlePlace.get("adapted for the disabled");
-                boardgames = googlePlace.get("board games");
-                discountsforgroups = googlePlace.get("discounts for groups");
-                discountsforstudents = googlePlace.get("discounts for students");
-                roastingroom = googlePlace.get("roasting room");
-                toilet = googlePlace.get("toilet");
+        }
+        if (googlePlace.get("ourPub").equals("true")) {
+            ourPub = "true";
+            wifi = googlePlace.get("WI-FI");
+            adaptedforthedisabled = googlePlace.get("adapted for the disabled");
+            boardgames = googlePlace.get("board games");
+            discountsforgroups = googlePlace.get("discounts for groups");
+            discountsforstudents = googlePlace.get("discounts for students");
+            roastingroom = googlePlace.get("roasting room");
+            toilet = googlePlace.get("toilet");
 
-                chair1 = googlePlace.get("chair1");
-                chair2 = googlePlace.get("chair2");
-                chair4 = googlePlace.get("chair4");
-                chair6 = googlePlace.get("chair6");
-                chair8 = googlePlace.get("chair8");
+            chair1 = googlePlace.get("chair1");
+            chair2 = googlePlace.get("chair2");
+            chair4 = googlePlace.get("chair4");
+            chair6 = googlePlace.get("chair6");
+            chair8 = googlePlace.get("chair8");
 
-                favourite = googlePlace.get("favourite");
-            }
+            favourite = googlePlace.get("favourite");
+        }
     }
 }

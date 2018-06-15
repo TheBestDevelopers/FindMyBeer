@@ -12,7 +12,7 @@ import java.net.URL;
 
 public class DownloadPubUrl {
 
-    public String readUrl(String myUrl) throws IOException
+    public String readUrl(String myUrl) throws Exception
     {
         String data = "";
         InputStream inputStream = null;
@@ -37,9 +37,11 @@ public class DownloadPubUrl {
             br.close();
 
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            throw e;
         } catch (IOException e) {
-            e.printStackTrace();
+            throw e;
+        } catch (Exception e) {
+            throw e;
         }
         finally {
             inputStream.close();

@@ -141,6 +141,7 @@ public class PubInfo extends AppCompatActivity {
     /**
      * Methode that adds place to favourites.
      * @param v
+     *
      */
     public void mButtonAddFavClick(View v) {
         //przekazanie id miejsca
@@ -148,24 +149,22 @@ public class PubInfo extends AppCompatActivity {
         //przeslanie do bazy
         Button btn = (Button) findViewById(R.id.bAddFav);
         String text = btn.getText().toString();
-
+        spinner.setVisibility(View.VISIBLE);
         if (text.equals("Remove from favourites")) {
-            //wyslanie linku do bazy
-            btn.setText("Add to favourites");
+            GetJsonResult getNearbyPlacesData = new GetJsonResult(this);
+            Object dataTransfer[] = new Object[2];
+            String url = getUrl4(id2);
+            dataTransfer[0] = url;
+            dataTransfer[1] = "remove";
+            getNearbyPlacesData.execute(dataTransfer);
+        } else if (text.equals("Add to favourites")) {
+            GetJsonResult getNearbyPlacesData = new GetJsonResult(this);
+            Object dataTransfer[] = new Object[2];
+            String url = getUrl3(id2);
+            dataTransfer[0] = url;
+            dataTransfer[1] = "add";
+            getNearbyPlacesData.execute(dataTransfer);
         }
-
-        if (text.equals("Add to favourites")) {
-            //wyslanie linku do bazy
-            btn.setText("Remove from favourites");
-        }
-        //wyslanie linku do bazy
-        /*
-        Intent myIntent = new Intent(getApplicationContext(), FavTab.class);
-        myIntent.putExtra("placeID", id);
-        myIntent.putExtra("placeName", mName.getText().toString());
-        myIntent.putExtra("placeAddress", mAddress.getText().toString());
-        startActivity(myIntent);
-        */
     }
 
     public void mButtonMenuClick(View v) {
@@ -188,6 +187,25 @@ public class PubInfo extends AppCompatActivity {
         //TO DO
         googlePlaceUrl.append("/api/pubs/getPubInfo?userID="+"8"); //zamiast 2 ma byc user id
         googlePlaceUrl.append("&pubID="+id);
+        Log.d("created url", googlePlaceUrl.toString());
+        return googlePlaceUrl.toString();
+    }
+
+    //http://localhost:8080/api/favourites/addFavourite?userID=9&pubID=13
+    private String getUrl3(String id) {
+        StringBuilder googlePlaceUrl = new StringBuilder(getResources().getString(R.string.databaseIP)); //temp
+        //TO DO
+        googlePlaceUrl.append("/api/favourites/addFavourite?userID="+"8"); //zamiast 2 ma byc user id
+        googlePlaceUrl.append("&pubID="+id);
+        Log.d("created url", googlePlaceUrl.toString());
+        return googlePlaceUrl.toString();
+    }
+    //http://localhost:8080/api/favourites/deleteFavourite?pubID=00000&userID=12344
+    private String getUrl4(String id) {
+        StringBuilder googlePlaceUrl = new StringBuilder(getResources().getString(R.string.databaseIP)); //temp
+        //TO DO
+        googlePlaceUrl.append("/api/favourites/deleteFavourite?pubID="+id); //zamiast 2 ma byc user id
+        googlePlaceUrl.append("&userID="+"8");
         Log.d("created url", googlePlaceUrl.toString());
         return googlePlaceUrl.toString();
     }

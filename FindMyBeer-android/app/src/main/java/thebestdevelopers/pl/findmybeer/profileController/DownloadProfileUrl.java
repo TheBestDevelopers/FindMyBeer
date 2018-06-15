@@ -11,7 +11,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class DownloadProfileUrl {
-    public String readUrl(String myUrl) throws IOException
+    public String readUrl(String myUrl) throws Exception
     {
         String data = "";
         InputStream inputStream = null;
@@ -36,11 +36,11 @@ public class DownloadProfileUrl {
             br.close();
 
         } catch (MalformedURLException e) {
-            return "";
+            throw e;
         } catch (IOException e) {
-            return "";
+            throw e;
         } catch (Exception e) {
-            return "";
+            throw e;
         }
         finally {
             inputStream.close();

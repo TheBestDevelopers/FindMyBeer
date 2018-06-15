@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import thebestdevelopers.pl.findmybeer.BottomNavigationViewHelper;
 import thebestdevelopers.pl.findmybeer.HomeTab;
-import thebestdevelopers.pl.findmybeer.Login;
+import thebestdevelopers.pl.findmybeer.loginController.Login;
 import thebestdevelopers.pl.findmybeer.R;
 import thebestdevelopers.pl.findmybeer.pubView.pubDetailsController.PubDetails;
 import thebestdevelopers.pl.findmybeer.pubView.pubEditController.PubEdit;
@@ -50,19 +50,22 @@ public class ProfileTab extends AppCompatActivity {
                                 temp = new Intent(getApplicationContext(), PubDetails.class);
                                 temp.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                 startActivity(temp);
+                                finish();
                                 break;
                             case R.id.action_edit:
                                 temp = new Intent(getApplicationContext(), PubEdit.class);
                                 temp.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                 startActivity(temp);
+                                finish();
                                 break;
                             case R.id.action_user:
                                 //temp = new Intent(getApplicationContext(), ProfileTab.class);
                                 //temp.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                 //startActivity(temp);
+                                //finish();
                                 break;
                         }
-                        finish();
+
                         return true;
                     }
                 });

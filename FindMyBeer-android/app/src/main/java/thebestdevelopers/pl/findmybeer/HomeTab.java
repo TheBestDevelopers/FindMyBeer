@@ -18,6 +18,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -53,6 +54,7 @@ public class HomeTab extends AppCompatActivity implements ItemClickListener, Goo
     RecyclerView recyclerView;
     ItemClickListener itemClickListener;
     HttpRequests httpRequests;
+    private TextView mErrorTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,8 @@ public class HomeTab extends AppCompatActivity implements ItemClickListener, Goo
         spinner.setVisibility(View.VISIBLE);
         sortingTypeChooser = new SortingTypeChooser();
         httpRequests = new HttpRequests(this);
+        mErrorTextView = findViewById(R.id.mErrorTextView);
+
         setRecyclerView();
 
         if (googleServicesAvailable()) {
@@ -112,24 +116,28 @@ public class HomeTab extends AppCompatActivity implements ItemClickListener, Goo
                                 i = new Intent(getApplicationContext(), FavTab.class);
                                 i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                 startActivity(i);
+                                finish();
                                 break;
                             case R.id.action_search:
                                 i = new Intent(getApplicationContext(), SearchTab.class);
                                 i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                 startActivity(i);
+                                finish();
                                 break;
                             case R.id.action_map:
                                 i = new Intent(getApplicationContext(), MapTab.class);
                                 i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                 startActivity(i);
+                                finish();
                                 break;
                             case R.id.action_user:
                                 i = new Intent(getApplicationContext(), ProfileTab.class);
                                 i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                 startActivity(i);
+                                finish();
                                 break;
                         }
-                        finish();
+
                         return true;
                     }
                 });
@@ -201,20 +209,22 @@ public class HomeTab extends AppCompatActivity implements ItemClickListener, Goo
                         else {
                             NearbyPubsParser parser = new NearbyPubsParser();
                             pubs = parser.parse(result);
-                            if (pubs != null && pubs.size() != 0) {
-                                spinner.setVisibility(View.GONE);
+                            if (pubs != null) {
+                                if (pubs.size() == 0)
+                                    showAlert("No places found.");
                                 setListAdapter();
+                                showAlert("");
                             } else {
-                                showAlert("There are no places nearby!");
+                                showAlert("No places found.");
                             }
                         }
+                        spinner.setVisibility(View.GONE);
                     }
                 }, new DownloadUrlWithGetMethod()).execute(dataTransfer);
             }
 
             private void showAlert(String message) {
-                //temporary solution - should appear a message box or a textview with this info and it should appear once...
-                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                mErrorTextView.setText(message);
             }
 
 

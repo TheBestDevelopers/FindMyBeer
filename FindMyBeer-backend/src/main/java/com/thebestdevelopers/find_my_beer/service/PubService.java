@@ -5,6 +5,7 @@ import com.thebestdevelopers.find_my_beer.DTO.getPubsDTOs.GetPubsDTO;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Dominik Florencki
@@ -27,7 +28,7 @@ public interface PubService {
     //@PreAuthorize("hasAnyAuthority('admin','client', 'pub')")
     List<GetNearestPubDTO> getPubsWithConveniences(Double longitude, Double latitude, String[] conveniences) throws IOException;
     //@PreAuthorize("hasAnyAuthority('admin','client', 'pub')")
-    Boolean setConveniences (int pubId, String[] convToAdd, String[] convToDelete);
-
+    Boolean setConveniences (int pubId, String[] convenienceNames, Map<String, Boolean> convenienceNamesAndValues);
+    //@PreAuthorize("hasAnyAuthority('admin','client', 'pub')")
     BooleanDTO setTables(int pubId, int chair1, int chair2, int chair4, int chair6, int chair8);
 }

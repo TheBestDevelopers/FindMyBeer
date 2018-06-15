@@ -12,15 +12,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import thebestdevelopers.pl.findmybeer.BottomNavigationViewHelper;
 import thebestdevelopers.pl.findmybeer.HomeTab;
-import thebestdevelopers.pl.findmybeer.Login;
+import thebestdevelopers.pl.findmybeer.loginController.Login;
 import thebestdevelopers.pl.findmybeer.R;
 import thebestdevelopers.pl.findmybeer.favController.FavTab;
 import thebestdevelopers.pl.findmybeer.mapsController.MapTab;
@@ -37,33 +34,24 @@ public class ProfileTab extends AppCompatActivity {
         actionBar.hide();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_profile_tab);
-        //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
-        /*
-        TextView txt = (TextView) findViewById(R.id.tLogin);
-        txt.setVisibility(View.GONE);
-        Button btn = (Button) findViewById(R.id.bLogOut);
-        btn.setVisibility(View.GONE);
-        Button btn2 = (Button) findViewById(R.id.bChange);
-        btn2.setVisibility(View.GONE);
-        Button btn3 = (Button) findViewById(R.id.bDelete);
-        btn3.setVisibility(View.GONE);
-        Button btn4 = (Button) findViewById(R.id.bTemp);
-        btn4.setVisibility(View.GONE);
-        */
         ProgressBar spinner = (ProgressBar)findViewById(R.id.mProgressBarHome);
-        spinner.setVisibility(View.GONE);
-
+        spinner.setVisibility(View.VISIBLE);
+        TextView mName = findViewById(R.id.tLogin);
+        mName.setVisibility(View.GONE);
 
         overridePendingTransition(0, 0);
         BottomNavigationView tabs = (BottomNavigationView) findViewById(R.id.navigationtabs5);
         BottomNavigationViewHelper.disableShiftMode(tabs);
         tabs.getMenu().findItem(R.id.action_user).setChecked(true);
+        String id = "8";
+        String url = getUrl3(id);
+        GetJsonResult getNearbyPlacesData = new GetJsonResult(this);
+        Object dataTransfer[] = new Object[1];
+        dataTransfer[0] = url;
+        getNearbyPlacesData.execute(dataTransfer);
+
         Intent i;
-
-        mLoginText = (TextView)findViewById(R.id.tLogin);
-        mLoginText.setText("User name");
-
         tabs.setOnNavigationItemSelectedListener
                 (new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -74,24 +62,28 @@ public class ProfileTab extends AppCompatActivity {
                                 i = new Intent(getApplicationContext(), HomeTab.class);
                                 i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                 startActivity(i);
+                                finish();
                                 break;
                             case R.id.action_fav:
                                 i = new Intent(getApplicationContext(), FavTab.class);
                                 i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                 startActivity(i);
+                                finish();
                                 break;
                             case R.id.action_search:
                                 i = new Intent(getApplicationContext(), SearchTab.class);
                                 i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                 startActivity(i);
+                                finish();
                                 break;
                             case R.id.action_map:
                                 i = new Intent(getApplicationContext(), MapTab.class);
                                 i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                 startActivity(i);
+                                finish();
                                 break;
                         }
-                        finish();
+
                         return true;
                     }
                 });
@@ -161,6 +153,15 @@ public class ProfileTab extends AppCompatActivity {
         StringBuilder googlePlaceUrl = new StringBuilder(getResources().getString(R.string.databaseIP));
         googlePlaceUrl.append(id);
         googlePlaceUrl.append("&key="+"AIzaSyB3iQRgruru1jotumbRTuzOYiWSePz41ZQ");
+        Log.d("created url", googlePlaceUrl.toString());
+        return googlePlaceUrl.toString();
+    }
+
+    //http://localhost:8080/api/users/getUsername?ID=8
+    private String getUrl3(String id) {
+        StringBuilder googlePlaceUrl = new StringBuilder(getResources().getString(R.string.databaseIP));
+        googlePlaceUrl.append("/api/users/getUsername?ID=");
+        googlePlaceUrl.append(id);
         Log.d("created url", googlePlaceUrl.toString());
         return googlePlaceUrl.toString();
     }
