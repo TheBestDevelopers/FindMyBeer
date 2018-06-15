@@ -260,7 +260,7 @@ public class PubServiceImpl implements PubService {
 
         return getNearestPubWithConveniencesDTOList;
     }
-
+/*
     @Override
     public Boolean setConveniences(int pubId, String[] convToAdd, String[] convToDelete) {
 
@@ -278,6 +278,28 @@ public class PubServiceImpl implements PubService {
             convenienceRepository.deleteById(conveniencesEntity.getConvenienceId());
         }
 
+        return true;
+    }
+*/
+
+    @Override
+    public Boolean setConveniences(int pubId, String[] convenienceNames, Map<String, Boolean> convenienceNamesAndValues) {
+
+        List<ConveniencesEntity> conveniencesEntityList =  convenienceRepository.findByPubId(pubId);
+
+        convenienceRepository.deleteAll(conveniencesEntityList);
+
+        for(String convenienceName : convenienceNames){
+            if(convenienceNamesAndValues.get(convenienceName)){
+                ConveniencesEntity conveniencesEntity = new ConveniencesEntity();
+                ConvenienceTypesEntity convenienceTypesEntity = convenienceTypeRepository.findByDescription(convenienceName).get(0);
+                conveniencesEntity.setConvenienceTypesId(convenienceTypesEntity.getConvenienceTypesId());
+                conveniencesEntity.setPubId(pubId);
+                convenienceRepository.save(conveniencesEntity);
+                conveniencesEntity.setConvenienceTypesByConvenienceTypesId(convenienceTypesEntity);
+                conveniencesEntity.setPubByPubId(pubRepository.findByPubId(pubId).get(0));
+            }
+        }
         return true;
     }
 
@@ -323,11 +345,5 @@ public class PubServiceImpl implements PubService {
         tableDetailsEntity.setPlaces(place);
         tableDetailsEntity.setTableId(tablesEntity.getTableId());
         tableDetailsRepository.save(tableDetailsEntity);
-
-
-
-
-
-
     }
 }
