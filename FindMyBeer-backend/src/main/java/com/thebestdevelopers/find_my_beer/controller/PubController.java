@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * @author Jakub Pisula
@@ -91,14 +93,28 @@ public class PubController implements Serializable {
 
     @GetMapping("setConveniences")
     public Boolean setConveniences(@RequestParam("pubID") int pubId,
-                                   @RequestParam("true") String[] convToAdd,
-                                   @RequestParam("false") String[] convToDelete,
+                                   @RequestParam("WI-FI") Boolean wifi,
+                                   @RequestParam("TOILET") Boolean toilet,
+                                   @RequestParam("ROASTING_ROOM") Boolean roastingRoom,
+                                   @RequestParam("DISCOUNTS_FOR_STUDENTS") Boolean discountsForStudents,
+                                   @RequestParam("FACILITIES_FOR_THE_DISABLED") Boolean facilitiesForTheDisabled,
+                                   @RequestParam("BOARD_GAMES") Boolean boardGames,
                                    Principal principal) throws IOException {
+
+		String[] convenienceNames = {"WI-FI", "TOILET", "ROASTING_ROOM", "DISCOUNTS_FOR_STUDENTS", "FACILITIES_FOR_THE_DISABLED", "BOARD_GAMES"};
+        Map<String, Boolean> convenienceNamesAndValues = new TreeMap<>();
+        convenienceNamesAndValues.put(convenienceNames[0], wifi);
+        convenienceNamesAndValues.put(convenienceNames[1], toilet);
+        convenienceNamesAndValues.put(convenienceNames[2], roastingRoom);
+        convenienceNamesAndValues.put(convenienceNames[3], discountsForStudents);
+        convenienceNamesAndValues.put(convenienceNames[4], facilitiesForTheDisabled);
+        convenienceNamesAndValues.put(convenienceNames[5], boardGames);
+
         //User user = (User) ((Authentication) principal).getPrincipal();
         //if(!user.getUsername().equals(param.getUsername()))
         //throw new UserDeclinedException("You don't have permission");
 
-        return pubService.setConveniences(pubId, convToAdd, convToDelete);
+        return pubService.setConveniences(pubId, convenienceNames, convenienceNamesAndValues);
     }
 
     @GetMapping("setTables")

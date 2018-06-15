@@ -260,7 +260,7 @@ public class PubServiceImpl implements PubService {
 
         return getNearestPubWithConveniencesDTOList;
     }
-
+/*
     @Override
     public Boolean setConveniences(int pubId, String[] convToAdd, String[] convToDelete) {
 
@@ -278,6 +278,28 @@ public class PubServiceImpl implements PubService {
             convenienceRepository.deleteById(conveniencesEntity.getConvenienceId());
         }
 
+        return true;
+    }
+*/
+
+    @Override
+    public Boolean setConveniences(int pubId, String[] convenienceNames, Map<String, Boolean> convenienceNamesAndValues) {
+
+        List<ConveniencesEntity> conveniencesEntityList =  convenienceRepository.findByPubId(pubId);
+
+        convenienceRepository.deleteAll(conveniencesEntityList);
+
+        for(String convenienceName : convenienceNames){
+            if(convenienceNamesAndValues.get(convenienceName)){
+                ConveniencesEntity conveniencesEntity = new ConveniencesEntity();
+                ConvenienceTypesEntity convenienceTypesEntity = convenienceTypeRepository.findByDescription(convenienceName).get(0);
+                conveniencesEntity.setConvenienceTypesId(convenienceTypesEntity.getConvenienceTypesId());
+                conveniencesEntity.setPubId(pubId);
+                convenienceRepository.save(conveniencesEntity);
+                conveniencesEntity.setConvenienceTypesByConvenienceTypesId(convenienceTypesEntity);
+                conveniencesEntity.setPubByPubId(pubRepository.findByPubId(pubId).get(0));
+            }
+        }
         return true;
     }
 
@@ -323,11 +345,14 @@ public class PubServiceImpl implements PubService {
         tableDetailsEntity.setTableId(tablesEntity.getTableId());
         tableDetailsEntity.setTablesByTableId(tablesEntity);
         tableDetailsRepository.save(tableDetailsEntity);
+<<<<<<< HEAD
         tablesEntity.setTableDetailsByTableId(tableDetailsEntity);
         tableRepository.save(tablesEntity);
         PubEntity pubEntity = pubRepository.findPubEntityByPubId(pubId);
         pubEntity.setTablesByPubId(tableRepository.findByPubId(pubId));
         pubRepository.save(pubEntity);
 
+=======
+>>>>>>> c7a79636e0c524ee1d5498703ddea1a328b4d07a
     }
 }
