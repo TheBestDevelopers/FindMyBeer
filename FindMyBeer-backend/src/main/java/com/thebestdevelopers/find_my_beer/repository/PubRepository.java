@@ -10,4 +10,5 @@ import java.util.List;
  */
 public interface PubRepository extends JpaRepository<PubEntity, Long> {
     List<PubEntity> findByPubId(int pubId);
+    PubEntity findPubEntityByPubId(int pubId);
 }

@@ -24,7 +24,7 @@ public class FavouritesServiceImpl implements FavouritesService {
     FavouritesDao favsDao; //niby błąd ale działa XD
 
     @Override
-    public List<FavResult> getPubs(int userId) throws IOException {
+    public List<FavResult> getFavouritePubs(int userId) throws IOException {
         List<FavouritiesEntity> favsEntitiesList = favsRepository.findFavouritesEntityByClientId(userId);
         List<FavResult> favResults = new ArrayList<>();
         String vicinity;
@@ -41,7 +41,6 @@ public class FavouritesServiceImpl implements FavouritesService {
 
     @Override
     public BooleanDTO addFavourite(int userId, int pubId) {
-        ModelMapper mapper = new ModelMapper();
         try {
             List<FavouritiesEntity> favsEntitiesList = favsRepository.findFavouritesEntityByClientId(userId);
             for(FavouritiesEntity favList : favsEntitiesList){

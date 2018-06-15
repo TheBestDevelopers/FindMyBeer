@@ -21,11 +21,11 @@ public class FavouritesController {
     FavouritesService favService;
 
     @GetMapping("getFavourites")
-    public List<FavResult> getPubs(@RequestParam("userID") int userId, Principal principal) throws IOException {
+    public List<FavResult> getFavouritePubs(@RequestParam("userID") int userId, Principal principal) throws IOException {
         //User user = (User) ((Authentication) principal).getPrincipal();
         //UserEntity userEntity = userRepository.findByUsername(user.getUsername()).get(0);
 
-        return favService.getPubs(userId);
+        return favService.getFavouritePubs(userId);
     }
 
     @GetMapping("addFavourite")

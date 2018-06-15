@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface FavouritesService {
     //@PreAuthorize("hasAnyAuthority('admin','client', 'pub')")
-    List<FavResult> getPubs(int userId) throws IOException;
+    List<FavResult> getFavouritePubs(int userId) throws IOException;
     BooleanDTO addFavourite(int userId, int pubId);
     BooleanDTO deleteFavourite(int userId, int pubId);
 }

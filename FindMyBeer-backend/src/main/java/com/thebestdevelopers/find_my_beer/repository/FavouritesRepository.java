@@ -10,5 +10,5 @@ import java.util.List;
  */
 public interface FavouritesRepository extends JpaRepository<FavouritiesEntity, Integer> {
     List<FavouritiesEntity> findFavouritesEntityByClientId(int clientId);
-    List<FavouritiesEntity> findByPubId(int clientId);
+    List<FavouritiesEntity> findByPubId(int pubId);
 }

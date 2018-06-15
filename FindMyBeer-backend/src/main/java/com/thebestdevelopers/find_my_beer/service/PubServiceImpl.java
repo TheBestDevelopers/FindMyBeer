@@ -317,17 +317,17 @@ public class PubServiceImpl implements PubService {
         tablesEntity.setPubId(pubId);
         //tablesEntity.setTableId(tableDetailsEntity.getTableId());
         tableRepository.save(tablesEntity);
-
         TableDetailsEntity tableDetailsEntity = new TableDetailsEntity();
         tableDetailsEntity.setOccupied(false);
         tableDetailsEntity.setPlaces(place);
         tableDetailsEntity.setTableId(tablesEntity.getTableId());
+        tableDetailsEntity.setTablesByTableId(tablesEntity);
         tableDetailsRepository.save(tableDetailsEntity);
-
-
-
-
-
+        tablesEntity.setTableDetailsByTableId(tableDetailsEntity);
+        tableRepository.save(tablesEntity);
+        PubEntity pubEntity = pubRepository.findPubEntityByPubId(pubId);
+        pubEntity.setTablesByPubId(tableRepository.findByPubId(pubId));
+        pubRepository.save(pubEntity);
 
     }
 }
