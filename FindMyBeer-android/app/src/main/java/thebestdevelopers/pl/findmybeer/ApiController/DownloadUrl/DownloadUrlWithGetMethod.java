@@ -1,5 +1,7 @@
 package thebestdevelopers.pl.findmybeer.ApiController.DownloadUrl;
 
+import android.content.Context;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,7 +10,18 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import thebestdevelopers.pl.findmybeer.SessionController;
+
 public class DownloadUrlWithGetMethod implements IDownloadUrl {
+
+    private Context applicationContext;
+    private SessionController sessionController;
+
+    public DownloadUrlWithGetMethod(Context _applicationContext) {
+        applicationContext = _applicationContext;
+        sessionController = new SessionController(applicationContext);
+    }
+
     public String readUrl(String myUrl) throws IOException
     {
         String data = "";
@@ -22,6 +35,7 @@ public class DownloadUrlWithGetMethod implements IDownloadUrl {
             urlConnection.setDoInput(true);
             urlConnection.setConnectTimeout(10000);
             urlConnection.setInstanceFollowRedirects(false);
+            urlConnection.setRequestProperty(sessionController.KEY_SESSION_TOKEN, sessionController.getUserDetails().get(sessionController.KEY_SESSION_TOKEN));
             urlConnection.connect();
 
             try {

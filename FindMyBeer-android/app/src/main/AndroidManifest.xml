@@ -50,28 +50,25 @@
         <activity
             android:name=".loginController.Login"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
-            android:name=".Register"
+            android:name=".registerController.Register"
             android:screenOrientation="portrait" />
-        <activity android:name=".HomeTab" />
-        <!-- android:screenOrientation="portrait" /> -->
+        <activity android:name=".HomeTab">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
         <activity android:name=".favController.FavTab" />
-        <!-- android:screenOrientation="portrait" /> -->
+
         <activity
             android:name=".searchController.SearchTab"
             android:windowSoftInputMode="adjustPan" />
-        <!-- android:screenOrientation="portrait" -->
 
         <activity android:name=".mapsController.MapTab" />
-        <!-- android:screenOrientation="portrait" /> -->
         <activity android:name=".profileController.ProfileTab" />
-        <!-- android:screenOrientation="portrait" /> -->
         <meta-data
             android:name="vom.google.android.geo.API_KEY"
             android:value="@string/google_places_key" />

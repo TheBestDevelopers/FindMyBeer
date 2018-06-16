@@ -176,7 +176,7 @@ public class SearchTab
                 spinner.setVisibility(View.GONE);
                 buttonChooseFilters.setEnabled(true);
             }
-        }, new DownloadUrlWithGetMethod()).execute(dataTransfer);
+        }, new DownloadUrlWithGetMethod(getApplicationContext())).execute(dataTransfer);
     }
 
     private void showAlert(String message) {

@@ -29,6 +29,7 @@ import java.util.ArrayList;
 
 import thebestdevelopers.pl.findmybeer.ApiController.HttpRequests;
 import thebestdevelopers.pl.findmybeer.favController.FavTab;
+import thebestdevelopers.pl.findmybeer.loginController.Login;
 import thebestdevelopers.pl.findmybeer.mapsController.MapTab;
 import thebestdevelopers.pl.findmybeer.profileController.ProfileTab;
 import thebestdevelopers.pl.findmybeer.pubInfo.PubInfo;
@@ -55,12 +56,17 @@ public class HomeTab extends AppCompatActivity implements ItemClickListener, Goo
     ItemClickListener itemClickListener;
     HttpRequests httpRequests;
     private TextView mErrorTextView;
+    private SessionController sessionController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hometab);
         overridePendingTransition(0, 0);
+
+        sessionController = new SessionController(getApplicationContext());
+        sessionController.checkLogin();
+
         setBottomNavigationView();
         itemClickListener = this;
         spinner = findViewById(R.id.mProgressBarHome);
@@ -220,7 +226,7 @@ public class HomeTab extends AppCompatActivity implements ItemClickListener, Goo
                         }
                         spinner.setVisibility(View.GONE);
                     }
-                }, new DownloadUrlWithGetMethod()).execute(dataTransfer);
+                }, new DownloadUrlWithGetMethod(getApplicationContext())).execute(dataTransfer);
             }
 
             private void showAlert(String message) {

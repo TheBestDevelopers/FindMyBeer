@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import thebestdevelopers.pl.findmybeer.BottomNavigationViewHelper;
 import thebestdevelopers.pl.findmybeer.HomeTab;
+import thebestdevelopers.pl.findmybeer.SessionController;
 import thebestdevelopers.pl.findmybeer.loginController.Login;
 import thebestdevelopers.pl.findmybeer.R;
 import thebestdevelopers.pl.findmybeer.favController.FavTab;
@@ -27,6 +28,7 @@ import thebestdevelopers.pl.findmybeer.searchController.SearchTab;
 public class ProfileTab extends AppCompatActivity {
 
     TextView mLoginText;
+    private SessionController sessionController;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +36,8 @@ public class ProfileTab extends AppCompatActivity {
         actionBar.hide();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_profile_tab);
+
+        sessionController = new SessionController(getApplicationContext());
 
         ProgressBar spinner = findViewById(R.id.mProgressBarHome);
         spinner.setVisibility(View.VISIBLE);
@@ -97,9 +101,7 @@ public class ProfileTab extends AppCompatActivity {
         builder.setMessage("Are you sure you want to log out?")
                 .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        //temp - potem wylogowanie
-                        Intent myIntent = new Intent(getApplicationContext(), Login.class);
-                        startActivity(myIntent);
+                        sessionController.logoutUser();
                     }
                 })
                 .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -109,6 +111,7 @@ public class ProfileTab extends AppCompatActivity {
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
+
     }
 
     public void mButtonChangePswOnClick(View v){

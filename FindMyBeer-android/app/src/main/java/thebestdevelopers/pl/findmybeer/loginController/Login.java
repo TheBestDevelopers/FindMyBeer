@@ -25,11 +25,7 @@ import thebestdevelopers.pl.findmybeer.ApiController.DownloadUrl.DownloadUrlForA
 import thebestdevelopers.pl.findmybeer.ApiController.HttpRequests;
 import thebestdevelopers.pl.findmybeer.HomeTab;
 import thebestdevelopers.pl.findmybeer.R;
-import thebestdevelopers.pl.findmybeer.Register;
-import thebestdevelopers.pl.findmybeer.favController.PubData;
-import thebestdevelopers.pl.findmybeer.loginController.LoginParser;
-import thebestdevelopers.pl.findmybeer.loginController.Role;
-import thebestdevelopers.pl.findmybeer.loginController.User;
+import thebestdevelopers.pl.findmybeer.registerController.Register;
 import thebestdevelopers.pl.findmybeer.pubView.pubDetailsController.PubDetails;
 
 public class Login extends AppCompatActivity {
@@ -52,6 +48,7 @@ public class Login extends AppCompatActivity {
         spinner = findViewById(R.id.mProgressBarLogin);
         spinner.setVisibility(View.GONE);
 
+
         mEditTextUsername = findViewById(R.id.mEditTextLogin);
         mEditTextPassword = findViewById(R.id.mEditTextPassword);
 
@@ -64,7 +61,6 @@ public class Login extends AppCompatActivity {
         facebookLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Log.d("LOGIN_SUCCESS", "Success");
                 facebookLoginButton.setVisibility(View.INVISIBLE); //<- IMPORTANT
                 Intent intent = new Intent(getBaseContext(), HomeTab.class);
                 startActivity(intent);
@@ -73,12 +69,10 @@ public class Login extends AppCompatActivity {
 
             @Override
             public void onCancel() {
-                Log.d("LOGIN_CANCEL", "Cancelled");
             }
 
             @Override
             public void onError(FacebookException exception) {
-                Log.d("LOGIN_ERROR", "Error");
             }
         });
     }
@@ -106,7 +100,6 @@ public class Login extends AppCompatActivity {
         String url = httpRequests.authUser();
         Object dataTransfer[] = new Object[1];
         dataTransfer[0] = url;
-        ArrayList<String> cookies = new ArrayList<>();
         GetDataAsyncTask asyncTask = (GetDataAsyncTask) new GetDataAsyncTask(new IAsyncResponse(){
             @Override
             public void processFinish(String result, Boolean timeout){
@@ -117,26 +110,26 @@ public class Login extends AppCompatActivity {
                     if (result != null && result.length() != 0) {
                         LoginParser parser = new LoginParser();
                         User user = parser.parse(result);
-                        if (user != null)
-                        showAlert("Yuhuu. logged in!");
-                        if (user.getRole() == Role.CLIENT) {
-                            Intent myIntent = new Intent(getBaseContext(), HomeTab.class);
-                            startActivity(myIntent);
-                            finish();
-                        }
-                        else if (user.getRole() == Role.PUB) {
-                            Intent myIntent = new Intent(getBaseContext(), PubDetails.class);
-                            startActivity(myIntent);
-                            finish();
+                        if (user != null) {
+
+                            if (user.getRole() == Role.CLIENT) {
+                                Intent myIntent = new Intent(getBaseContext(), HomeTab.class);
+                                startActivity(myIntent);
+                                finish();
+                            } else if (user.getRole() == Role.PUB) {
+                                Intent myIntent = new Intent(getBaseContext(), PubDetails.class);
+                                startActivity(myIntent);
+                                finish();
+                            }
                         }
                     } else {
-                        showAlert("Such user doesn't exist!");
+                        showAlert("Improper username or password.");
                     }
                 }
                 spinner.setVisibility(View.GONE);
 
             }
-        }, new DownloadUrlForAuthentication(mEditTextUsername.getText().toString(), mEditTextPassword.getText().toString())).execute(dataTransfer);
+        }, new DownloadUrlForAuthentication(mEditTextUsername.getText().toString(), mEditTextPassword.getText().toString(), getApplicationContext())).execute(dataTransfer);
     }
 
     private void showAlert(String message) {

@@ -258,7 +258,7 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
                 }
                 buttonSave.setEnabled(true);
             }
-        }, new DownloadUrlWithGetMethod()).execute(dataTransfer);
+        }, new DownloadUrlWithGetMethod(getApplicationContext())).execute(dataTransfer);
     }
     private void showAlert(String message) {
         //temporary solution - should appear a message box or a textview with this info and it should appear once...
