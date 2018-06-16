@@ -39,6 +39,8 @@ public class ProfileTab extends AppCompatActivity {
         spinner.setVisibility(View.VISIBLE);
         TextView mName = findViewById(R.id.tLogin);
         mName.setVisibility(View.GONE);
+        TextView mError= findViewById(R.id.tError);
+        mName.setVisibility(View.GONE);
 
         overridePendingTransition(0, 0);
         BottomNavigationView tabs = findViewById(R.id.navigationtabs5);

@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import thebestdevelopers.pl.findmybeer.BottomNavigationViewHelper;
 import thebestdevelopers.pl.findmybeer.R;
@@ -31,7 +32,8 @@ public class editMenu extends AppCompatActivity {
         overridePendingTransition(0, 0);
         tabs.getMenu().findItem(R.id.action_edit).setChecked(true);
 
-        //pobranie jsona
+        Button btn = findViewById(R.id.bChange);
+        btn.setClickable(false);
 
         Intent temp;
         tabs.setOnNavigationItemSelectedListener
