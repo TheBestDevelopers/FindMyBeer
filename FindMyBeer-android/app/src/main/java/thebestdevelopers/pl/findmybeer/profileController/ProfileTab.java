@@ -15,6 +15,8 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.facebook.login.LoginManager;
+
 import thebestdevelopers.pl.findmybeer.BottomNavigationViewHelper;
 import thebestdevelopers.pl.findmybeer.HomeTab;
 import thebestdevelopers.pl.findmybeer.SessionController;
@@ -101,6 +103,7 @@ public class ProfileTab extends AppCompatActivity {
         builder.setMessage("Are you sure you want to log out?")
                 .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        LoginManager.getInstance().logOut();
                         sessionController.logoutUser();
                         finish();
                     }
