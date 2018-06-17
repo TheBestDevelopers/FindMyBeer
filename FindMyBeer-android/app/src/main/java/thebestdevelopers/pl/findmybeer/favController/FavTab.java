@@ -62,7 +62,7 @@ public class FavTab extends AppCompatActivity {
         String mId = "8";
 
         String url = getUrl(mId);
-        GetJsonResult getFavData = new GetJsonResult(this);
+        GetJsonResult getFavData = new GetJsonResult(this, getApplicationContext());
         Object dataTransfer[] = new Object[1];
         dataTransfer[0] = url;
         getFavData.execute(dataTransfer);

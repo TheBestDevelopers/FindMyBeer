@@ -44,7 +44,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
     public void onClick(View v) {
 
         Object dataTransfer[] = new Object[1];
-        GetJsonResult getNearbyPlacesData = new GetJsonResult(this);
+        GetJsonResult getNearbyPlacesData = new GetJsonResult(this, getApplicationContext());
         String url = getUrl();
         dataTransfer[0] = url;
         try {

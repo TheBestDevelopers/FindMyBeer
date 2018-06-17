@@ -48,7 +48,7 @@ public class PubDetails extends AppCompatActivity {
         //pobranie jsona
         id = "13";
         String url = getUrl(id);
-        GetJsonResult getNearbyPlacesData = new GetJsonResult(this);
+        GetJsonResult getNearbyPlacesData = new GetJsonResult(this, getApplicationContext());
         Object dataTransfer[] = new Object[1];
         dataTransfer[0] = url;
         getNearbyPlacesData.execute(dataTransfer);

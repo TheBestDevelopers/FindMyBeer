@@ -1,6 +1,7 @@
 package thebestdevelopers.pl.findmybeer.menuController;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,15 +31,17 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
 
 
     WeakReference<Activity> mWeakActivity;
+    Context context;
 
-    public GetJsonResult(Activity activity) {
+    public GetJsonResult(Activity activity, Context _context) {
         mWeakActivity = new WeakReference<Activity>(activity);
+        context = _context;
     }
 
     @Override
     protected String doInBackground(Object... objects) {
         url = (String)objects[0];
-        DownloadMenuUrl downloadUrl = new DownloadMenuUrl();
+        DownloadMenuUrl downloadUrl = new DownloadMenuUrl(context);
         try {
             googlePlacesData = downloadUrl.readUrl(url);
         } catch (Exception e) {

@@ -31,11 +31,12 @@ public class DownloadUrlWithGetMethod implements IDownloadUrl {
         try {
             URL url = new URL(myUrl);
             urlConnection=(HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod("GET");
-            urlConnection.setDoInput(true);
+           // urlConnection.setRequestMethod("GET");
+          //  urlConnection.setDoInput(true);
             urlConnection.setConnectTimeout(10000);
-            urlConnection.setInstanceFollowRedirects(false);
-            urlConnection.setRequestProperty(sessionController.KEY_COOKIE, sessionController.getUserDetails().get(sessionController.KEY_COOKIE));
+            //urlConnection.setInstanceFollowRedirects(false);
+            // Set cookie as a request property to authorize
+            urlConnection.setRequestProperty(sessionController.KEY_COOKIE, sessionController.getCookie());
             urlConnection.connect();
 
             try {

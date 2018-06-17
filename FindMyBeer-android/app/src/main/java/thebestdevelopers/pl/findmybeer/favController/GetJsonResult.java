@@ -1,6 +1,7 @@
 package thebestdevelopers.pl.findmybeer.favController;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,18 +27,19 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
 
     private String name, vicinity, placeID;
     public ArrayList<PubData> mFavList;
-
+    private Context context;
 
     WeakReference<Activity> mWeakActivity;
 
-    public GetJsonResult(Activity activity) {
+    public GetJsonResult(Activity activity, Context _context) {
         mWeakActivity = new WeakReference<Activity>(activity);
+        context = _context;
     }
 
     @Override
     protected String doInBackground(Object... objects) {
         url = (String)objects[0];
-        DownloadFavUrl downloadUrl = new DownloadFavUrl();
+        DownloadFavUrl downloadUrl = new DownloadFavUrl(context);
         try {
             googlePlacesData = downloadUrl.readUrl(url);
         } catch (Exception e) {

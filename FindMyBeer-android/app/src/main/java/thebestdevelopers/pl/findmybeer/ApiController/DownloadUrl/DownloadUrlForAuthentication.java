@@ -2,6 +2,7 @@ package thebestdevelopers.pl.findmybeer.ApiController.DownloadUrl;
 
 import android.content.Context;
 import android.util.Base64;
+import android.util.Log;
 
 
 import com.google.zxing.common.StringUtils;
@@ -15,8 +16,10 @@ import java.net.HttpCookie;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.List;
 
+import thebestdevelopers.pl.findmybeer.R;
 import thebestdevelopers.pl.findmybeer.SessionController;
 
 
@@ -41,7 +44,6 @@ public class DownloadUrlForAuthentication implements IDownloadUrl {
         InputStream inputStream = null;
         HttpURLConnection urlConnection = null;
 
-
         try {
             URL url = new URL(myUrl);
             final String basicAuth = "Basic " + Base64.encodeToString((username + ":" + password).getBytes(), Base64.NO_WRAP);
@@ -56,21 +58,20 @@ public class DownloadUrlForAuthentication implements IDownloadUrl {
                 List<HttpCookie> cookies = HttpCookie.parse(cookiesHeader);
                 for (HttpCookie cookie : cookies) {
                     msCookieManager.getCookieStore().add(null, cookie);
-
                 }
                 String sessionToken = cookies.get(0).toString();
                 sessionController.createLoginSession(sessionToken);
+
                 try {
                     BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
-
                     StringBuffer sb = new StringBuffer();
                     String line = "";
                     while ((line = br.readLine()) != null) {
                         sb.append(line);
                     }
-
                     data = sb.toString();
                     br.close();
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -83,7 +84,6 @@ public class DownloadUrlForAuthentication implements IDownloadUrl {
             }
             finally {
                 urlConnection.disconnect();
-
             }
 
         } catch (MalformedURLException e) {
@@ -95,5 +95,6 @@ public class DownloadUrlForAuthentication implements IDownloadUrl {
         }
         return data;
     }
+
 
 }

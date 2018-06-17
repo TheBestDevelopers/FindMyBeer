@@ -219,7 +219,7 @@ public class MapTab extends AppCompatActivity implements OnMapReadyCallback, Goo
     public void onClick(View v) {
         mGoogleMap.clear();
         Object dataTransfer[] = new Object[3];
-        GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
+        GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData(getApplicationContext());
         String url = getUrl(latitude, longitude, "pub");
         dataTransfer[0] = mGoogleMap;
         dataTransfer[1] = url;
@@ -242,7 +242,7 @@ public class MapTab extends AppCompatActivity implements OnMapReadyCallback, Goo
     public void onClick2(View v) {
         mGoogleMap.clear();
         Object dataTransfer[] = new Object[3];
-        GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
+        GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData(getApplicationContext());
         String url = getUrl2(latitude, longitude);
         dataTransfer[0] = mGoogleMap;
         dataTransfer[1] = url;

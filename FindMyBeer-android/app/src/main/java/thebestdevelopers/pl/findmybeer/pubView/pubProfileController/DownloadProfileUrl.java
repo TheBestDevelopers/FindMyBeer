@@ -1,5 +1,6 @@
 package thebestdevelopers.pl.findmybeer.pubView.pubProfileController;
 
+import android.content.Context;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -10,7 +11,17 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import thebestdevelopers.pl.findmybeer.SessionController;
+
 public class DownloadProfileUrl {
+    private SessionController sessionController;
+    private Context context;
+
+    // Application context needed to manage session and get cookies for authorization
+    public DownloadProfileUrl(Context _context) {
+        context = _context;
+        sessionController = new SessionController(context);
+    }
     public String readUrl(String myUrl) throws IOException
     {
         String data = "";
@@ -20,6 +31,8 @@ public class DownloadProfileUrl {
         try {
             URL url = new URL(myUrl);
             urlConnection=(HttpURLConnection) url.openConnection();
+            // Set cookie as a request property to authorize
+            urlConnection.setRequestProperty(sessionController.KEY_COOKIE, sessionController.getCookie());
             urlConnection.connect();
 
             inputStream = urlConnection.getInputStream();

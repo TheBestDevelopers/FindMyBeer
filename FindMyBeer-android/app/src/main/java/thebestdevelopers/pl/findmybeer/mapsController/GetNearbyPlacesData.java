@@ -1,6 +1,7 @@
 package thebestdevelopers.pl.findmybeer.mapsController;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
@@ -27,13 +28,19 @@ public class GetNearbyPlacesData extends AsyncTask<Object, String, String>{
     String url;
     List<HashMap<String, String>> nearbyPlaceList;
     Activity act;
+    private Context context;
+
+
+    public GetNearbyPlacesData(Context _context) {
+        context = _context;
+    }
 
     @Override
     protected String doInBackground(Object... objects) {
         mMap = (GoogleMap)objects[0];
         url = (String)objects[1];
         act = (Activity)objects[2];
-        DownloadUrl downloadUrl = new DownloadUrl();
+        DownloadUrl downloadUrl = new DownloadUrl(context);
         try {
             googlePlacesData = downloadUrl.readUrl(url);
         } catch (Exception e) {

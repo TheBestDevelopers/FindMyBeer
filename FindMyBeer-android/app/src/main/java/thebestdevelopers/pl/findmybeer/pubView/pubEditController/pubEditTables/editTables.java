@@ -71,7 +71,7 @@ public class editTables extends AppCompatActivity {
         }
 
         String url = getUrl(id);
-        GetJsonResult getNearbyPlacesData = new GetJsonResult(this);
+        GetJsonResult getNearbyPlacesData = new GetJsonResult(this, getApplicationContext());
         Object dataTransfer[] = new Object[1];
         dataTransfer[0] = url;
         getNearbyPlacesData.execute(dataTransfer);
@@ -115,7 +115,7 @@ public class editTables extends AppCompatActivity {
         ProgressBar spinner = findViewById(R.id.mProgressBarHome);
         spinner.setVisibility(View.VISIBLE);
         String url = getUrl2(id);
-        GetJsonResult getNearbyPlacesData = new GetJsonResult(this);
+        GetJsonResult getNearbyPlacesData = new GetJsonResult(this, getApplicationContext());
         Object dataTransfer[] = new Object[2];
         dataTransfer[0] = url;
         dataTransfer[1] = "change";

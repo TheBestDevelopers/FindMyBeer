@@ -58,7 +58,7 @@ public class Menu extends AppCompatActivity {
         }
 
         String url = getUrl(mId);
-        GetJsonResult getMenuData = new GetJsonResult(this);
+        GetJsonResult getMenuData = new GetJsonResult(this, getApplicationContext());
         Object dataTransfer[] = new Object[1];
         dataTransfer[0] = url;
         getMenuData.execute(dataTransfer);

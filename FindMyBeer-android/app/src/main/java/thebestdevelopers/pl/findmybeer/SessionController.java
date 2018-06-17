@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
-import java.util.HashMap;
 
 import thebestdevelopers.pl.findmybeer.loginController.Login;
 
@@ -25,6 +24,7 @@ public class SessionController {
         private static final String IS_LOGIN = "IsLoggedIn";
 
         public static final String KEY_COOKIE = "Cookie";
+        private static final String PUB_LOGIN = "IsPubLoggedIn";
 
         // Constructor
         @SuppressLint("CommitPrefEdits")
@@ -66,10 +66,8 @@ public class SessionController {
 
         }
 
-        public HashMap<String, String> getUserDetails() {
-            HashMap<String, String> user = new HashMap<>();
-            user.put(KEY_COOKIE, pref.getString(KEY_COOKIE, null));
-            return user;
+        public String getCookie() {
+            return pref.getString(KEY_COOKIE, null);
         }
 
         public void logoutUser() {
@@ -91,6 +89,13 @@ public class SessionController {
         // Get Login State
         public boolean isLoggedIn() {
             return pref.getBoolean(IS_LOGIN, false);
+        }
+
+        public boolean isPubLoggedIn() { return pref.getBoolean(PUB_LOGIN, false); }
+
+        public void setPubLogin() {
+            editor.putBoolean(PUB_LOGIN, true);
+            editor.commit();
         }
 
 }

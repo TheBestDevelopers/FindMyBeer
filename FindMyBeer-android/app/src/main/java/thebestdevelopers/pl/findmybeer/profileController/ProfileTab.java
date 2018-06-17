@@ -54,7 +54,7 @@ public class ProfileTab extends AppCompatActivity {
         tabs.getMenu().findItem(R.id.action_user).setChecked(true);
         String id = "8";
         String url = getUrl3(id);
-        GetJsonResult getNearbyPlacesData = new GetJsonResult(this);
+        GetJsonResult getNearbyPlacesData = new GetJsonResult(this, getApplicationContext());
         Object dataTransfer[] = new Object[1];
         dataTransfer[0] = url;
         getNearbyPlacesData.execute(dataTransfer);

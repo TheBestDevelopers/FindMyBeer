@@ -1,6 +1,7 @@
 package thebestdevelopers.pl.findmybeer.pubView.pubEditController.pubEditTables;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
@@ -26,9 +27,11 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
     private NumberPicker np1, np2, np4, np6, np8;
 
     WeakReference<Activity> mWeakActivity;
+    private Context context;
 
-    public GetJsonResult(Activity activity) {
+    public GetJsonResult(Activity activity, Context _context) {
         mWeakActivity = new WeakReference<Activity>(activity);
+        context = _context;
     }
 
     @Override
@@ -38,7 +41,7 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
             change = (String) objects[1];
         else
             change = "";
-        DownloadPubUrl downloadUrl = new DownloadPubUrl();
+        DownloadPubUrl downloadUrl = new DownloadPubUrl(context);
         try {
             googlePlacesData = downloadUrl.readUrl(url);
         } catch (Exception e) {

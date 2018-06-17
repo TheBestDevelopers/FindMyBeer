@@ -74,7 +74,7 @@ public class PubInfo extends AppCompatActivity {
             else
                 url = getUrl(id);
 
-            GetJsonResult getNearbyPlacesData = new GetJsonResult(this);
+            GetJsonResult getNearbyPlacesData = new GetJsonResult(this, getApplicationContext());
             Object dataTransfer[] = new Object[1];
             dataTransfer[0] = url;
             getNearbyPlacesData.execute(dataTransfer);
@@ -151,14 +151,14 @@ public class PubInfo extends AppCompatActivity {
         String text = btn.getText().toString();
         spinner.setVisibility(View.VISIBLE);
         if (text.equals("Remove from favourites")) {
-            GetJsonResult getNearbyPlacesData = new GetJsonResult(this);
+            GetJsonResult getNearbyPlacesData = new GetJsonResult(this, getApplicationContext());
             Object dataTransfer[] = new Object[2];
             String url = getUrl4(id2);
             dataTransfer[0] = url;
             dataTransfer[1] = "remove";
             getNearbyPlacesData.execute(dataTransfer);
         } else if (text.equals("Add to favourites")) {
-            GetJsonResult getNearbyPlacesData = new GetJsonResult(this);
+            GetJsonResult getNearbyPlacesData = new GetJsonResult(this, getApplicationContext());
             Object dataTransfer[] = new Object[2];
             String url = getUrl3(id2);
             dataTransfer[0] = url;

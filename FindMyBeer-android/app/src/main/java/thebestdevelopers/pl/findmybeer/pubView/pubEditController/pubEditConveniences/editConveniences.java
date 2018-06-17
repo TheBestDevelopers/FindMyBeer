@@ -51,7 +51,7 @@ public class editConveniences extends AppCompatActivity {
         }
 
         String url = getUrl(id);
-        GetJsonResult getNearbyPlacesData = new GetJsonResult(this);
+        GetJsonResult getNearbyPlacesData = new GetJsonResult(this, getApplicationContext());
         Object dataTransfer[] = new Object[1];
         dataTransfer[0] = url;
         getNearbyPlacesData.execute(dataTransfer);
@@ -94,7 +94,7 @@ public class editConveniences extends AppCompatActivity {
     public void mButtonChangeClick(View v) {
         //pobranie checkboxów i wysłanie zapytania na serwer
         String url = getUrl2(id);
-        GetJsonResult getNearbyPlacesData = new GetJsonResult(this);
+        GetJsonResult getNearbyPlacesData = new GetJsonResult(this, getApplicationContext());
         Object dataTransfer[] = new Object[2];
         dataTransfer[0] = url;
         dataTransfer[1] = "change";

@@ -1,6 +1,7 @@
 package thebestdevelopers.pl.findmybeer.pubView.pubDetailsController;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
@@ -30,15 +31,17 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
 
 
     WeakReference<Activity> mWeakActivity;
+    private Context context;
 
-    public GetJsonResult(Activity activity) {
+    public GetJsonResult(Activity activity, Context _context) {
         mWeakActivity = new WeakReference<Activity>(activity);
+        context = _context;
     }
 
     @Override
     protected String doInBackground(Object... objects) {
         url = (String)objects[0];
-        DownloadPubUrl downloadUrl = new DownloadPubUrl();
+        DownloadPubUrl downloadUrl = new DownloadPubUrl(context);
         try {
             googlePlacesData = downloadUrl.readUrl(url);
         } catch (IOException e) {

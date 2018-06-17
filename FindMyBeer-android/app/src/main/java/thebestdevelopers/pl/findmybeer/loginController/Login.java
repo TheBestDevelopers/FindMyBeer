@@ -59,44 +59,60 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
-
-        setContentView(R.layout.activity_login);
-        spinner = findViewById(R.id.mProgressBarLogin);
-        spinner.setVisibility(View.GONE);
-        mLoginButton = findViewById(R.id.mButtonLogIn);
-        mSignUpButton = findViewById(R.id.mButtonRegister);
-        mFacebookLoginButton = findViewById(R.id.mButtonLogInFacebook);
-
-        mEditTextUsername = findViewById(R.id.mEditTextLogin);
-        mEditTextPassword = findViewById(R.id.mEditTextPassword);
 
         sessionController = new SessionController(getApplicationContext());
-        httpRequests = new HttpRequests(this);
-        facebookLoginButton = findViewById(R.id.mButtonLogInFacebook);
-        facebookLoginButton.setBackgroundResource(R.drawable.roundedfacebookbutton);
-        facebookLoginButton.setReadPermissions(Arrays.asList("public_profile", EMAIL));
-        callbackManager = CallbackManager.Factory.create();
-
-        facebookLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                facebookLoginButton.setVisibility(View.INVISIBLE); //<- IMPORTANT
-                sessionController.createLoginSession(""); //
-                Intent intent = new Intent(getBaseContext(), HomeTab.class);
-                startActivity(intent);
-                finish();//<- IMPORTANT
+        if (sessionController.isLoggedIn()) {
+            if (sessionController.isPubLoggedIn()) {
+                Intent i = new Intent(getApplicationContext(), PubDetails.class);
+                startActivity(i);
+                finish();
+            }
+            else {
+                Intent i = new Intent(getApplicationContext(), HomeTab.class);
+                startActivity(i);
+                finish();
             }
 
-            @Override
-            public void onCancel() {
-            }
+        }
+        else {
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.hide();
 
-            @Override
-            public void onError(FacebookException exception) {
-            }
-        });
+            setContentView(R.layout.activity_login);
+            spinner = findViewById(R.id.mProgressBarLogin);
+            spinner.setVisibility(View.GONE);
+            mLoginButton = findViewById(R.id.mButtonLogIn);
+            mSignUpButton = findViewById(R.id.mButtonRegister);
+            mFacebookLoginButton = findViewById(R.id.mButtonLogInFacebook);
+
+            mEditTextUsername = findViewById(R.id.mEditTextLogin);
+            mEditTextPassword = findViewById(R.id.mEditTextPassword);
+
+            httpRequests = new HttpRequests(this);
+            facebookLoginButton = findViewById(R.id.mButtonLogInFacebook);
+            facebookLoginButton.setBackgroundResource(R.drawable.roundedfacebookbutton);
+            facebookLoginButton.setReadPermissions(Arrays.asList("public_profile", EMAIL));
+            callbackManager = CallbackManager.Factory.create();
+
+            facebookLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+                @Override
+                public void onSuccess(LoginResult loginResult) {
+                    facebookLoginButton.setVisibility(View.INVISIBLE); //<- IMPORTANT
+                    sessionController.createLoginSession(""); //
+                    Intent intent = new Intent(getBaseContext(), HomeTab.class);
+                    startActivity(intent);
+                    finish();//<- IMPORTANT
+                }
+
+                @Override
+                public void onCancel() {
+                }
+
+                @Override
+                public void onError(FacebookException exception) {
+                }
+            });
+        }
     }
 
     public void mButtonLogInOnClick(View v){
@@ -144,6 +160,7 @@ public class Login extends AppCompatActivity {
                                 finish();
                             } else if (user.getRole() == Role.PUB) {
                                 Intent myIntent = new Intent(getBaseContext(), PubDetails.class);
+                                sessionController.setPubLogin();
                                 startActivity(myIntent);
                                 finish();
                             }
