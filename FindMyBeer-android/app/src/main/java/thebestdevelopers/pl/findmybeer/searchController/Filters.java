@@ -15,6 +15,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,6 +55,7 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
     ArrayList<Integer> checkedConveniencesPositions = new ArrayList<>();
     int checkedSortingTypePosition = 0;
     CheckBox mUseMyLocationCheckBox;
+    private ProgressBar spinner;
 
     private static final int GOOGLE_API_CLIENT_ID = 0;
     private AutoCompleteTextView mAutocompleteTextView;
@@ -76,19 +78,21 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-        buttonSave = (Button)findViewById(R.id.mButtonSave);
+        buttonSave = findViewById(R.id.mButtonSave);
         buttonSave.setEnabled(false);
+        spinner = findViewById(R.id.mProgressBarFilters);
+        spinner.setVisibility(View.VISIBLE);
 
         httpRequests = new HttpRequests(this);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.
                 SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         mUseMyLocationCheckBox = findViewById(R.id.mUseMyLocationCheckBox);
         mUseMyLocationCheckBox.setChecked(true);
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        checkedSortingTypePosition = preferences.getInt("checkedSortingType", 0);
-        for (int i = 0; i < preferences.getInt("checkedConveniencesSize", 0); ++i) {
-            checkedConveniencesPositions.add(preferences.getInt("checkedConveniences" + i, 0));
-        }
+//        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+//        checkedSortingTypePosition = preferences.getInt("checkedSortingType", 0);
+//        for (int i = 0; i < preferences.getInt("checkedConveniencesSize", 0); ++i) {
+//            checkedConveniencesPositions.add(preferences.getInt("checkedConveniences" + i, 0));
+//        }
         setAAutoCompleteAdapter();
         setSortingTypeChooser();
         getConveniencesListFromApi();
@@ -144,13 +148,13 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
     @Override
     public void onPause() {
         super.onPause();
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putInt("checkedSortingType", checkedSortingTypePosition);
-        editor.putInt("checkedConveniencesSize", checkedConveniencesPositions.size());
-        for (Integer position : checkedConveniencesPositions)
-            editor.putInt("checkedConveniences" + position, position);
-        editor.apply();
+//        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+//        SharedPreferences.Editor editor = preferences.edit();
+//        editor.putInt("checkedSortingType", checkedSortingTypePosition);
+//        editor.putInt("checkedConveniencesSize", checkedConveniencesPositions.size());
+//        for (Integer position : checkedConveniencesPositions)
+//            editor.putInt("checkedConveniences" + position, position);
+//        editor.apply();
 
     }
 
@@ -181,11 +185,11 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
                 .enableAutoManage(this, GOOGLE_API_CLIENT_ID, this)
                 .addConnectionCallbacks(this)
                 .build();
-        mAutocompleteTextView = (AutoCompleteTextView) findViewById(R.id
+        mAutocompleteTextView = findViewById(R.id
                 .autoCompleteTextView);
         mAutocompleteTextView.setThreshold(3);
-        mNameTextView = (TextView) findViewById(R.id.name);
-        mAddressTextView = (TextView) findViewById(R.id.address);
+        mNameTextView = findViewById(R.id.name);
+        mAddressTextView = findViewById(R.id.address);
         mAutocompleteTextView.setOnItemClickListener(mAutocompleteClickListener);
         mPlaceArrayAdapter = new PlaceArrayAdapter(this, android.R.layout.simple_list_item_1,
                 BOUNDS_MOUNTAIN_VIEW, null);
@@ -201,8 +205,8 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
         mListViewSorting.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         mListViewSorting.setAdapter(arrayAdapterSortingTypes);
         mListViewSorting.setItemChecked(0, true);
-        mListViewSorting.setItemChecked(checkedSortingTypePosition, true);
-        checkedSortingTypePosition = 0;
+       // mListViewSorting.setItemChecked(checkedSortingTypePosition, true);
+       // checkedSortingTypePosition = 0;
     }
 
     private void setConveniencesChooser() {
@@ -210,10 +214,10 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
         mListViewConveniences = findViewById(R.id.mListViewConveniences);
         mListViewConveniences.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         mListViewConveniences.setAdapter(arrayAdapterConveniences);
-        for (Integer position : checkedConveniencesPositions) {
-            mListViewConveniences.setItemChecked(position, true);
-        }
-        checkedConveniencesPositions.clear();
+//        for (Integer position : checkedConveniencesPositions) {
+//            mListViewConveniences.setItemChecked(position, true);
+//        }
+//        checkedConveniencesPositions.clear();
     }
 
     private void getCheckedSortingType() {
@@ -256,9 +260,10 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
                         showAlert("There are no places nearby!");
                     }
                 }
+                spinner.setVisibility(View.GONE);
                 buttonSave.setEnabled(true);
             }
-        }, new DownloadUrlWithGetMethod()).execute(dataTransfer);
+        }, new DownloadUrlWithGetMethod(getApplicationContext())).execute(dataTransfer);
     }
     private void showAlert(String message) {
         //temporary solution - should appear a message box or a textview with this info and it should appear once...

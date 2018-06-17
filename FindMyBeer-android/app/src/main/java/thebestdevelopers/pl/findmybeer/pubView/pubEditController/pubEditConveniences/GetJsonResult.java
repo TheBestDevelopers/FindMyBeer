@@ -9,6 +9,7 @@ import android.widget.CheckBox;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -58,8 +59,16 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
         Activity activity = mWeakActivity.get();
         HashMap<String, String> nearbyPlaceList;
         if (change.equals("change")) {
-            if (s.equals("true"))
+            if (s.equals("true")) {
+                ProgressBar spinner = activity.findViewById(R.id.mProgressBarHome);
+                spinner.setVisibility(View.GONE);
                 return;
+            } else {
+                ProgressBar spinner = activity.findViewById(R.id.mProgressBarHome);
+                spinner.setVisibility(View.GONE);
+                Toast.makeText(activity, "Processing request", Toast.LENGTH_LONG).show();
+                return;
+            }
         }
         DataPubParser parser = new DataPubParser();
         nearbyPlaceList = parser.parse(s);
@@ -69,13 +78,13 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
 
             spinner = activity.findViewById(R.id.mProgressBarHome);
 
-            CheckBox chbx1 = (CheckBox) activity.findViewById(R.id.checkbox_wifi);
-            CheckBox chbx2 = (CheckBox) activity.findViewById(R.id.checkbox_adapted_disabled);
-            CheckBox chbx3 = (CheckBox) activity.findViewById(R.id.checkbox_boardgames);
-            CheckBox chbx4 = (CheckBox) activity.findViewById(R.id.checkbox_discountsforgroups);
-            CheckBox chbx5 = (CheckBox) activity.findViewById(R.id.checkbox_discountsforstudents);
-            CheckBox chbx6 = (CheckBox) activity.findViewById(R.id.checkbox_roastingroom);
-            CheckBox chbx7 = (CheckBox) activity.findViewById(R.id.checkbox_toilet);
+            CheckBox chbx1 = activity.findViewById(R.id.checkbox_wifi);
+            CheckBox chbx2 = activity.findViewById(R.id.checkbox_adapted_disabled);
+            CheckBox chbx3 = activity.findViewById(R.id.checkbox_boardgames);
+            CheckBox chbx4 = activity.findViewById(R.id.checkbox_discountsforgroups);
+            CheckBox chbx5 = activity.findViewById(R.id.checkbox_discountsforstudents);
+            CheckBox chbx6 = activity.findViewById(R.id.checkbox_roastingroom);
+            CheckBox chbx7 = activity.findViewById(R.id.checkbox_toilet);
 
                 if (wifi.equals("true"))
                     chbx1.setChecked(true);
@@ -116,7 +125,7 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
 
         }
         spinner.setVisibility(View.GONE);
-        ScrollView v = (ScrollView) activity.findViewById(R.id.bView);
+        ScrollView v = activity.findViewById(R.id.bView);
         v.setVisibility(View.VISIBLE);
     }
 

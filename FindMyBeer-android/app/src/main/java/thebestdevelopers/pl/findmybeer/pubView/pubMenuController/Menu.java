@@ -27,7 +27,7 @@ public class Menu extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        BottomNavigationView tabs = (BottomNavigationView) findViewById(R.id.navigationtabs);
+        BottomNavigationView tabs = findViewById(R.id.navigationtabs);
         BottomNavigationViewHelper.disableShiftMode(tabs);
         overridePendingTransition(0, 0);
         tabs.getMenu().findItem(R.id.action_home).setChecked(true);

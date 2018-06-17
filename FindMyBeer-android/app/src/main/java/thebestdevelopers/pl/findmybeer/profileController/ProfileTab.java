@@ -15,8 +15,11 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.facebook.login.LoginManager;
+
 import thebestdevelopers.pl.findmybeer.BottomNavigationViewHelper;
 import thebestdevelopers.pl.findmybeer.HomeTab;
+import thebestdevelopers.pl.findmybeer.SessionController;
 import thebestdevelopers.pl.findmybeer.loginController.Login;
 import thebestdevelopers.pl.findmybeer.R;
 import thebestdevelopers.pl.findmybeer.favController.FavTab;
@@ -27,6 +30,7 @@ import thebestdevelopers.pl.findmybeer.searchController.SearchTab;
 public class ProfileTab extends AppCompatActivity {
 
     TextView mLoginText;
+    private SessionController sessionController;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,13 +39,17 @@ public class ProfileTab extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_profile_tab);
 
-        ProgressBar spinner = (ProgressBar)findViewById(R.id.mProgressBarHome);
+        sessionController = new SessionController(getApplicationContext());
+
+        ProgressBar spinner = findViewById(R.id.mProgressBarHome);
         spinner.setVisibility(View.VISIBLE);
         TextView mName = findViewById(R.id.tLogin);
         mName.setVisibility(View.GONE);
+        TextView mError= findViewById(R.id.tError);
+        mName.setVisibility(View.GONE);
 
         overridePendingTransition(0, 0);
-        BottomNavigationView tabs = (BottomNavigationView) findViewById(R.id.navigationtabs5);
+        BottomNavigationView tabs = findViewById(R.id.navigationtabs5);
         BottomNavigationViewHelper.disableShiftMode(tabs);
         tabs.getMenu().findItem(R.id.action_user).setChecked(true);
         String id = "8";
@@ -95,9 +103,9 @@ public class ProfileTab extends AppCompatActivity {
         builder.setMessage("Are you sure you want to log out?")
                 .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        //temp - potem wylogowanie
-                        Intent myIntent = new Intent(getApplicationContext(), Login.class);
-                        startActivity(myIntent);
+                        LoginManager.getInstance().logOut();
+                        sessionController.logoutUser();
+                        finish();
                     }
                 })
                 .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -107,6 +115,7 @@ public class ProfileTab extends AppCompatActivity {
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
+
     }
 
     public void mButtonChangePswOnClick(View v){
@@ -130,6 +139,7 @@ public class ProfileTab extends AppCompatActivity {
                         //temp - potem usuniecie konta
                         Intent myIntent = new Intent(getApplicationContext(), Login.class);
                         startActivity(myIntent);
+                        finish();
                     }
                 })
                 .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {

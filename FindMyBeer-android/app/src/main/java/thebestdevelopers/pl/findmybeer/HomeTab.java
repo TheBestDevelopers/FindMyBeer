@@ -29,6 +29,7 @@ import java.util.ArrayList;
 
 import thebestdevelopers.pl.findmybeer.ApiController.HttpRequests;
 import thebestdevelopers.pl.findmybeer.favController.FavTab;
+import thebestdevelopers.pl.findmybeer.loginController.Login;
 import thebestdevelopers.pl.findmybeer.mapsController.MapTab;
 import thebestdevelopers.pl.findmybeer.profileController.ProfileTab;
 import thebestdevelopers.pl.findmybeer.pubInfo.PubInfo;
@@ -55,15 +56,23 @@ public class HomeTab extends AppCompatActivity implements ItemClickListener, Goo
     ItemClickListener itemClickListener;
     HttpRequests httpRequests;
     private TextView mErrorTextView;
+    private SessionController sessionController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hometab);
         overridePendingTransition(0, 0);
+
+        sessionController = new SessionController(getApplicationContext());
+        if (!sessionController.isLoggedIn()) {
+            sessionController.checkLogin();
+            finish();
+        }
+
         setBottomNavigationView();
         itemClickListener = this;
-        spinner = (ProgressBar)findViewById(R.id.mProgressBarHome);
+        spinner = findViewById(R.id.mProgressBarHome);
         spinner.setVisibility(View.VISIBLE);
         sortingTypeChooser = new SortingTypeChooser();
         httpRequests = new HttpRequests(this);
@@ -204,7 +213,7 @@ public class HomeTab extends AppCompatActivity implements ItemClickListener, Goo
                     @Override
                     public void processFinish(String result, Boolean timeout){
                         if (timeout) {
-                            showAlert("Cannot connect to database. Try again later.");
+                            showAlert("Error with server connection. Try again later.");
                         }
                         else {
                             NearbyPubsParser parser = new NearbyPubsParser();
@@ -220,7 +229,7 @@ public class HomeTab extends AppCompatActivity implements ItemClickListener, Goo
                         }
                         spinner.setVisibility(View.GONE);
                     }
-                }, new DownloadUrlWithGetMethod()).execute(dataTransfer);
+                }, new DownloadUrlWithGetMethod(getApplicationContext())).execute(dataTransfer);
             }
 
             private void showAlert(String message) {

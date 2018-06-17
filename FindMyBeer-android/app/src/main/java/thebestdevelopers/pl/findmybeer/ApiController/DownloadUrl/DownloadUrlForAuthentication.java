@@ -1,5 +1,6 @@
 package thebestdevelopers.pl.findmybeer.ApiController.DownloadUrl;
 
+import android.content.Context;
 import android.util.Base64;
 
 
@@ -16,6 +17,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
+import thebestdevelopers.pl.findmybeer.SessionController;
 
 
 public class DownloadUrlForAuthentication implements IDownloadUrl {
@@ -23,10 +25,14 @@ public class DownloadUrlForAuthentication implements IDownloadUrl {
     private String username, password;
     static java.net.CookieManager msCookieManager = new java.net.CookieManager();
     static final String COOKIES_HEADER = "Set-Cookie";
+    private SessionController sessionController;
+    private Context applicationContext;
 
-    public DownloadUrlForAuthentication(String _username, String _password) {
+    public DownloadUrlForAuthentication(String _username, String _password, Context _applicationContext) {
         username = _username;
         password = _password;
+        applicationContext = _applicationContext;
+        sessionController = new SessionController(applicationContext);
     }
 
     public String readUrl(String myUrl) throws IOException {
@@ -34,6 +40,7 @@ public class DownloadUrlForAuthentication implements IDownloadUrl {
         String data = "";
         InputStream inputStream = null;
         HttpURLConnection urlConnection = null;
+
 
         try {
             URL url = new URL(myUrl);
@@ -49,8 +56,10 @@ public class DownloadUrlForAuthentication implements IDownloadUrl {
                 List<HttpCookie> cookies = HttpCookie.parse(cookiesHeader);
                 for (HttpCookie cookie : cookies) {
                     msCookieManager.getCookieStore().add(null, cookie);
-                }
 
+                }
+                String sessionToken = cookies.get(0).toString();
+                sessionController.createLoginSession(sessionToken);
                 try {
                     BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
 

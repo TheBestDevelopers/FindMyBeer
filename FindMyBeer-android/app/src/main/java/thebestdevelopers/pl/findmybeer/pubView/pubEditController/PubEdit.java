@@ -29,7 +29,7 @@ public class PubEdit extends AppCompatActivity {
         actionBar.hide();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         overridePendingTransition(0, 0);
-        BottomNavigationView tabs = (BottomNavigationView) findViewById(R.id.navigationtabs);
+        BottomNavigationView tabs = findViewById(R.id.navigationtabs);
         BottomNavigationViewHelper.disableShiftMode(tabs);
         overridePendingTransition(0, 0);
         tabs.getMenu().findItem(R.id.action_edit).setChecked(true);

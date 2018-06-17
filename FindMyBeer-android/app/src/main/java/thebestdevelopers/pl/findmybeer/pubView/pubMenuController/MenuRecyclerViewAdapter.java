@@ -24,8 +24,8 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter {
 
         public MyViewHolder(View v) {
             super(v);
-            mName = (TextView) v.findViewById(R.id.fav_name);
-            mPrice = (TextView) v.findViewById(R.id.fav_address);
+            mName = v.findViewById(R.id.fav_name);
+            mPrice = v.findViewById(R.id.fav_address);
         }
     }
 

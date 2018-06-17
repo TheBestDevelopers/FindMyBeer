@@ -30,17 +30,17 @@ public class PubDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pub_details);
 
-        ScrollView v = (ScrollView) findViewById(R.id.bView);
+        ScrollView v = findViewById(R.id.bView);
         v.setVisibility(View.GONE);
 
-        ProgressBar spinner = (ProgressBar)findViewById(R.id.mProgressBarHome);
+        ProgressBar spinner = findViewById(R.id.mProgressBarHome);
         spinner.setVisibility(View.VISIBLE);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         overridePendingTransition(0, 0);
-        BottomNavigationView tabs = (BottomNavigationView) findViewById(R.id.navigationtabs);
+        BottomNavigationView tabs = findViewById(R.id.navigationtabs);
         BottomNavigationViewHelper.disableShiftMode(tabs);
         overridePendingTransition(0, 0);
         tabs.getMenu().findItem(R.id.action_home).setChecked(true);
@@ -92,8 +92,8 @@ public class PubDetails extends AppCompatActivity {
      * @param v
      */
     public void mButtonGetDirectionsClick(View v){
-        mName = (TextView)findViewById(R.id.tName);
-        mAddress = (TextView)findViewById(R.id.tAddress);
+        mName = findViewById(R.id.tName);
+        mAddress = findViewById(R.id.tAddress);
         String name =  mName.getText().toString();
         String address = mAddress.getText().toString();
         if ((name!= null || !name.equals("")) && (address!= null || !address.equals("") )) {

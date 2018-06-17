@@ -78,10 +78,10 @@ public class SearchTab
         setContentView(R.layout.activity_search_tab);
         overridePendingTransition(0, 0);
         setBottomNavigationView();
-        spinner = (ProgressBar)findViewById(R.id.mProgressBarSearch);
+        spinner = findViewById(R.id.mProgressBarSearch);
         spinner.setVisibility(View.VISIBLE);
 
-        buttonChooseFilters = (Button)findViewById(R.id.mButtonFilters);
+        buttonChooseFilters = findViewById(R.id.mButtonFilters);
         buttonChooseFilters.setEnabled(false);
         mErrorTextView = findViewById(R.id.mErrorTextView);
 
@@ -159,7 +159,7 @@ public class SearchTab
             @Override
             public void processFinish(String result, Boolean timeout){
                 if (timeout) {
-                    showAlert("Cannot connect to database. Try again later.");
+                    showAlert("Error with server connection. Try again later.");
                 }
                 else {
                     NearbyPubsParser parser = new NearbyPubsParser();
@@ -176,7 +176,7 @@ public class SearchTab
                 spinner.setVisibility(View.GONE);
                 buttonChooseFilters.setEnabled(true);
             }
-        }, new DownloadUrlWithGetMethod()).execute(dataTransfer);
+        }, new DownloadUrlWithGetMethod(getApplicationContext())).execute(dataTransfer);
     }
 
     private void showAlert(String message) {

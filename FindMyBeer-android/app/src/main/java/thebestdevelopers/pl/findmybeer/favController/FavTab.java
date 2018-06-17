@@ -37,22 +37,22 @@ public class FavTab extends AppCompatActivity {
         actionBar.hide();
         setContentView(R.layout.activity_fav_tab);
 
-        TextView txt = (TextView) findViewById(R.id.tFavs);
-        TextView txt2 = (TextView) findViewById(R.id.tError);
+        TextView txt = findViewById(R.id.tFavs);
+        TextView txt2 = findViewById(R.id.tError);
         txt.setVisibility(View.VISIBLE);
         txt2.setVisibility(View.GONE);
-        RelativeLayout v = (RelativeLayout) findViewById(R.id.bView);
+        RelativeLayout v = findViewById(R.id.bView);
         v.setVisibility(View.GONE);
-        ProgressBar spinner = (ProgressBar)findViewById(R.id.mProgressBarHome);
+        ProgressBar spinner = findViewById(R.id.mProgressBarHome);
         spinner.setVisibility(View.VISIBLE);
 
-        BottomNavigationView tabs = (BottomNavigationView) findViewById(R.id.navigationtabs2);
+        BottomNavigationView tabs = findViewById(R.id.navigationtabs2);
         BottomNavigationViewHelper.disableShiftMode(tabs);
         overridePendingTransition(0, 0);
         tabs.getMenu().findItem(R.id.action_fav).setChecked(true);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.fav_list);
+        RecyclerView recyclerView = findViewById(R.id.fav_list);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());

@@ -592,6 +592,8 @@
         </subPane>
       </pane>
       <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -676,14 +678,22 @@
       <updated>1528998433683</updated>
       <workItem from="1528998435509" duration="276000" />
       <workItem from="1529002840676" duration="1320000" />
+<<<<<<< HEAD
       <workItem from="1529040911062" duration="72000" />
       <workItem from="1529055981568" duration="2921000" />
       <workItem from="1529059033360" duration="929000" />
+=======
+      <workItem from="1529074900662" duration="537000" />
+>>>>>>> 7312bf683fda304e79655361ec221836fe678168
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< HEAD
     <option name="totallyTimeSpent" value="5518000" />
+=======
+    <option name="totallyTimeSpent" value="2133000" />
+>>>>>>> 7312bf683fda304e79655361ec221836fe678168
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -700,7 +710,6 @@
       <window_info id="UI Designer" order="2" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.22206897" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Messages" order="7" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info id="Image Layers" order="2" />
       <window_info anchor="bottom" id="Java Enterprise" order="7" />
@@ -709,8 +718,12 @@
       <window_info anchor="bottom" id="Run" order="2" weight="0.20275863" />
       <window_info anchor="bottom" id="Spring" order="7" />
       <window_info anchor="bottom" id="Terminal" order="7" />
+<<<<<<< HEAD
       <window_info id="Persistence" order="3" side_tool="true" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25260416" />
+=======
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25600505" />
+>>>>>>> 7312bf683fda304e79655361ec221836fe678168
       <window_info anchor="right" id="Bean Validation" order="3" />
       <window_info id="Web" order="2" side_tool="true" />
       <window_info anchor="right" id="Gradle" order="3" />
@@ -720,6 +733,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Build" order="7" weight="0.32975295" />
+      <window_info anchor="bottom" id="Messages" order="7" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" />
