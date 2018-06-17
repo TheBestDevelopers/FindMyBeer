@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -37,6 +38,9 @@ public class Login extends AppCompatActivity {
     private HttpRequests httpRequests;
     private EditText mEditTextUsername;
     private EditText mEditTextPassword;
+    private Button mLoginButton;
+    private Button mSignUpButton;
+    private Button mFacebookLoginButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +51,9 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         spinner = findViewById(R.id.mProgressBarLogin);
         spinner.setVisibility(View.GONE);
-
+        mLoginButton = findViewById(R.id.mButtonLogIn);
+        mSignUpButton = findViewById(R.id.mButtonRegister);
+        mFacebookLoginButton = findViewById(R.id.mButtonLogInFacebook);
 
         mEditTextUsername = findViewById(R.id.mEditTextLogin);
         mEditTextPassword = findViewById(R.id.mEditTextPassword);
@@ -78,7 +84,7 @@ public class Login extends AppCompatActivity {
     }
 
     public void mButtonLogInOnClick(View v){
-        spinner.setVisibility(View.VISIBLE);
+
 //        Intent myIntent = new Intent(getBaseContext(), HomeTab.class);
 //        startActivity(myIntent);
         manageHttpConnection();
@@ -98,13 +104,17 @@ public class Login extends AppCompatActivity {
 
     private void manageHttpConnection() {
         String url = httpRequests.authUser();
+        spinner.setVisibility(View.VISIBLE);
+        mLoginButton.setEnabled(false);
+        mSignUpButton.setEnabled(false);
+        mFacebookLoginButton.setEnabled(false);
         Object dataTransfer[] = new Object[1];
         dataTransfer[0] = url;
         GetDataAsyncTask asyncTask = (GetDataAsyncTask) new GetDataAsyncTask(new IAsyncResponse(){
             @Override
             public void processFinish(String result, Boolean timeout){
                 if (timeout) {
-                    showAlert("Cannot connect to database. Try again later.");
+                    showAlert("Error with server connection. Try again later.");
                 }
                 else {
                     if (result != null && result.length() != 0) {
@@ -127,6 +137,9 @@ public class Login extends AppCompatActivity {
                     }
                 }
                 spinner.setVisibility(View.GONE);
+                mLoginButton.setEnabled(true);
+                mSignUpButton.setEnabled(true);
+                mFacebookLoginButton.setEnabled(true);
 
             }
         }, new DownloadUrlForAuthentication(mEditTextUsername.getText().toString(), mEditTextPassword.getText().toString(), getApplicationContext())).execute(dataTransfer);

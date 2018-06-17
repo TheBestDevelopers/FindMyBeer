@@ -45,7 +45,6 @@
         android:backgroundTint="#B3FFFFFF"
         android:onClick="mButtonRegisterOnClick"
         android:text="Sign up"
-        android:textColor="@android:color/black"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

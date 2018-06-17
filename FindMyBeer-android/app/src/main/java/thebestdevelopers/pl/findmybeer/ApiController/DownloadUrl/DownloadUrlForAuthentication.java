@@ -58,7 +58,7 @@ public class DownloadUrlForAuthentication implements IDownloadUrl {
                     msCookieManager.getCookieStore().add(null, cookie);
 
                 }
-                String sessionToken = cookies.get(0).getValue();
+                String sessionToken = cookies.get(0).toString();
                 sessionController.createLoginSession(sessionToken);
                 try {
                     BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));

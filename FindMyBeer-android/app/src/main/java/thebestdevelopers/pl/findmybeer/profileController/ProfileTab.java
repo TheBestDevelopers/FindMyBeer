@@ -102,6 +102,7 @@ public class ProfileTab extends AppCompatActivity {
                 .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         sessionController.logoutUser();
+                        finish();
                     }
                 })
                 .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -135,6 +136,7 @@ public class ProfileTab extends AppCompatActivity {
                         //temp - potem usuniecie konta
                         Intent myIntent = new Intent(getApplicationContext(), Login.class);
                         startActivity(myIntent);
+                        finish();
                     }
                 })
                 .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {

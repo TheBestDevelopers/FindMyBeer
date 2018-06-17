@@ -24,7 +24,7 @@ public class SessionController {
         // All Shared Preferences Keys
         private static final String IS_LOGIN = "IsLoggedIn";
 
-        public static final String KEY_SESSION_TOKEN = "token";
+        public static final String KEY_COOKIE = "Cookie";
 
         // Constructor
         @SuppressLint("CommitPrefEdits")
@@ -37,10 +37,10 @@ public class SessionController {
         /**
          * Create login session
          */
-        public void createLoginSession(String token) {
+        public void createLoginSession(String cookie) {
             // Storing login value as TRUE
             editor.putBoolean(IS_LOGIN, true);
-            editor.putString(KEY_SESSION_TOKEN, token);
+            editor.putString(KEY_COOKIE, cookie);
             // commit changes
             editor.commit();
         }
@@ -66,25 +66,12 @@ public class SessionController {
 
         }
 
-        /**
-         * Get stored session data
-         */
         public HashMap<String, String> getUserDetails() {
-            HashMap<String, String> user = new HashMap<String, String>();
-//            // user name
-//            user.put(KEY_NAME, pref.getString(KEY_NAME, null));
-//
-//            // user email id
-//            user.put(KEY_EMAIL, pref.getString(KEY_EMAIL, null));
-
-            user.put(KEY_SESSION_TOKEN, pref.getString(KEY_SESSION_TOKEN, null));
-            // return user
+            HashMap<String, String> user = new HashMap<>();
+            user.put(KEY_COOKIE, pref.getString(KEY_COOKIE, null));
             return user;
         }
 
-        /**
-         * Clear session details
-         */
         public void logoutUser() {
             // Clearing all data from Shared Preferences
             editor.clear();
@@ -94,11 +81,7 @@ public class SessionController {
             Intent i = new Intent(_context, Login.class);
             // Closing all the Activities
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-            // Add new Flag to start new Activity
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-            // Staring Login Activity
             _context.startActivity(i);
         }
 

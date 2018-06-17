@@ -35,7 +35,7 @@ public class DownloadUrlWithGetMethod implements IDownloadUrl {
             urlConnection.setDoInput(true);
             urlConnection.setConnectTimeout(10000);
             urlConnection.setInstanceFollowRedirects(false);
-            urlConnection.setRequestProperty(sessionController.KEY_SESSION_TOKEN, sessionController.getUserDetails().get(sessionController.KEY_SESSION_TOKEN));
+            urlConnection.setRequestProperty(sessionController.KEY_COOKIE, sessionController.getUserDetails().get(sessionController.KEY_COOKIE));
             urlConnection.connect();
 
             try {

@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -30,6 +31,7 @@ public class Register extends AppCompatActivity {
     private EditText mEditTextUsername;
     private EditText mEditTextPassword;
     private ProgressBar spinner;
+    private Button mSignUpButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,7 @@ public class Register extends AppCompatActivity {
         httpRequests = new HttpRequests(this);
         mEditTextUsername = findViewById(R.id.mEditTextLogin);
         mEditTextPassword = findViewById(R.id.mEditTextPassword);
+        mSignUpButton = findViewById(R.id.mButtonRegister);
         spinner = findViewById(R.id.mProgressBarLogin);
         spinner.setVisibility(View.GONE);
     }
@@ -50,6 +53,8 @@ public class Register extends AppCompatActivity {
 
     private void manageHttpConnection() {
         String url = httpRequests.authUser();
+        spinner.setVisibility(View.VISIBLE);
+        mSignUpButton.setEnabled(false);
         Object dataTransfer[] = new Object[1];
         dataTransfer[0] = url;
         final Context context = getApplicationContext();
@@ -57,7 +62,7 @@ public class Register extends AppCompatActivity {
             @Override
             public void processFinish(String result, Boolean timeout){
                 if (timeout) {
-                    showAlert("Cannot connect to database. Try again later.");
+                    showAlert("\"Error with server connection. Try again later.");
                 }
                 else {
                     if (result != null) {
@@ -70,7 +75,7 @@ public class Register extends AppCompatActivity {
                     }
                 }
                 spinner.setVisibility(View.GONE);
-
+                mSignUpButton.setEnabled(true);
             }
         }, new DownloadUrlWithPostMethod(mEditTextUsername.getText().toString(), mEditTextPassword.getText().toString())).execute(dataTransfer);
     }

@@ -65,7 +65,10 @@ public class HomeTab extends AppCompatActivity implements ItemClickListener, Goo
         overridePendingTransition(0, 0);
 
         sessionController = new SessionController(getApplicationContext());
-        sessionController.checkLogin();
+        if (!sessionController.isLoggedIn()) {
+            sessionController.checkLogin();
+            finish();
+        }
 
         setBottomNavigationView();
         itemClickListener = this;
@@ -210,7 +213,7 @@ public class HomeTab extends AppCompatActivity implements ItemClickListener, Goo
                     @Override
                     public void processFinish(String result, Boolean timeout){
                         if (timeout) {
-                            showAlert("Cannot connect to database. Try again later.");
+                            showAlert("Error with server connection. Try again later.");
                         }
                         else {
                             NearbyPubsParser parser = new NearbyPubsParser();

@@ -159,7 +159,7 @@ public class SearchTab
             @Override
             public void processFinish(String result, Boolean timeout){
                 if (timeout) {
-                    showAlert("Cannot connect to database. Try again later.");
+                    showAlert("Error with server connection. Try again later.");
                 }
                 else {
                     NearbyPubsParser parser = new NearbyPubsParser();
