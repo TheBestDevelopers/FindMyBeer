@@ -12,8 +12,8 @@ import java.io.IOException;
  *
  */
 public interface ConveniencesService {
-    //@PreAuthorize("hasAnyAuthority('admin','client', 'pub')")
+    @PreAuthorize("hasAnyAuthority('admin','client')")
     ConveniencesDTO getAllConveniences();
-    //@PreAuthorize("hasAnyAuthority('admin','client', 'pub')")
+    @PreAuthorize("hasAnyAuthority('admin','client')")
     ConveniencesDTO getPubConveniences(int pubId);
 }

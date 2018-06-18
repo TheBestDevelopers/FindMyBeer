@@ -23,19 +23,13 @@ public class ConveniencesController implements Serializable{
     ConveniencesService conveniencesService;
 
     @GetMapping("getConveniences")
-    public ConveniencesDTO getAllConveniences( Principal principal){
-        //User user = (User) ((Authentication) principal).getPrincipal();
-        //if(!user.getUsername().equals(param.getUsername()))
-        //throw new UserDeclinedException("You don't have permission");
+    public ConveniencesDTO getAllConveniences(){
 
         return conveniencesService.getAllConveniences();
     }
 
     @GetMapping("getPubConveniences")
-    public ConveniencesDTO getPubConveniences(@RequestParam("pubID") int pubId, Principal principal){
-        //User user = (User) ((Authentication) principal).getPrincipal();
-        //if(!user.getUsername().equals(param.getUsername()))
-        //throw new UserDeclinedException("You don't have permission");
+    public ConveniencesDTO getPubConveniences(@RequestParam("pubID") int pubId){
 
         return conveniencesService.getPubConveniences(pubId);
     }

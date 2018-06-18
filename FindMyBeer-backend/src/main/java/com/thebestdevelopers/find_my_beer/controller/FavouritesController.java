@@ -2,8 +2,12 @@ package com.thebestdevelopers.find_my_beer.controller;
 
 import com.thebestdevelopers.find_my_beer.DTO.BooleanDTO;
 import com.thebestdevelopers.find_my_beer.DTO.Favourities.FavResult;
+import com.thebestdevelopers.find_my_beer.model.UserEntity;
+import com.thebestdevelopers.find_my_beer.repository.UserRepository;
 import com.thebestdevelopers.find_my_beer.service.FavouritesService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -17,24 +21,36 @@ import java.util.List;
 @RestController
 @RequestMapping("api/favourites/")
 public class FavouritesController {
+
     @Autowired
     FavouritesService favService;
 
-    @GetMapping("getFavourites")
-    public List<FavResult> getFavouritePubs(@RequestParam("userID") int userId, Principal principal) throws IOException {
-        //User user = (User) ((Authentication) principal).getPrincipal();
-        //UserEntity userEntity = userRepository.findByUsername(user.getUsername()).get(0);
+    @Autowired
+    UserRepository userRepository;
 
-        return favService.getFavouritePubs(userId);
+    @GetMapping("getFavourites")
+    public List<FavResult> getFavouritePubs( Principal principal) throws IOException {
+        User user = (User) ((Authentication) principal).getPrincipal();
+        UserEntity userEntity = userRepository.findByUsername(user.getUsername()).get(0);
+
+        return favService.getFavouritePubs((int) userEntity.getUserId());
     }
 
     @GetMapping("addFavourite")
-    public BooleanDTO addFavourite(@RequestParam("userID") int userId, @RequestParam("pubID") int pubId, Principal principal){
-        return favService.addFavourite(userId, pubId);
+    public BooleanDTO addFavourite(@RequestParam("pubID") int pubId, Principal principal){
+
+        User user = (User) ((Authentication) principal).getPrincipal();
+        UserEntity userEntity = userRepository.findByUsername(user.getUsername()).get(0);
+
+        return favService.addFavourite((int) userEntity.getUserId(), pubId);
     }
 
     @GetMapping("deleteFavourite")
-    public BooleanDTO deleteFavourite(@RequestParam("userID") int userId, @RequestParam("pubID") int pubId, Principal principal){
-        return favService.deleteFavourite(userId, pubId);
+    public BooleanDTO deleteFavourite(@RequestParam("pubID") int pubId, Principal principal){
+
+        User user = (User) ((Authentication) principal).getPrincipal();
+        UserEntity userEntity = userRepository.findByUsername(user.getUsername()).get(0);
+
+        return favService.deleteFavourite((int) userEntity.getUserId(), pubId);
     }
 }
