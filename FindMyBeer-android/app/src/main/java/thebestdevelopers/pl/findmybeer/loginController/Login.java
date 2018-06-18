@@ -39,6 +39,7 @@ import thebestdevelopers.pl.findmybeer.ApiController.HttpRequests;
 import thebestdevelopers.pl.findmybeer.HomeTab;
 import thebestdevelopers.pl.findmybeer.R;
 import thebestdevelopers.pl.findmybeer.SessionController;
+import thebestdevelopers.pl.findmybeer.pubView.pubEditController.PubEdit;
 import thebestdevelopers.pl.findmybeer.registerController.Register;
 import thebestdevelopers.pl.findmybeer.pubView.pubDetailsController.PubDetails;
 
@@ -74,7 +75,8 @@ public class Login extends AppCompatActivity {
             }
 
         }
-        else {
+        else
+{
             ActionBar actionBar = getSupportActionBar();
             actionBar.hide();
 
@@ -98,7 +100,8 @@ public class Login extends AppCompatActivity {
                 @Override
                 public void onSuccess(LoginResult loginResult) {
                     facebookLoginButton.setVisibility(View.INVISIBLE); //<- IMPORTANT
-                    sessionController.createLoginSession(""); //
+                    AccessToken accessToken = loginResult.getAccessToken();
+                    sessionController.createLoginSession(accessToken.getToken());
                     Intent intent = new Intent(getBaseContext(), HomeTab.class);
                     startActivity(intent);
                     finish();//<- IMPORTANT

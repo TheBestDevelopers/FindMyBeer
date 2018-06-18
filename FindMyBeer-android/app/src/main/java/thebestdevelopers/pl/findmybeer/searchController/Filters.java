@@ -88,11 +88,6 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
                 SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         mUseMyLocationCheckBox = findViewById(R.id.mUseMyLocationCheckBox);
         mUseMyLocationCheckBox.setChecked(true);
-//        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-//        checkedSortingTypePosition = preferences.getInt("checkedSortingType", 0);
-//        for (int i = 0; i < preferences.getInt("checkedConveniencesSize", 0); ++i) {
-//            checkedConveniencesPositions.add(preferences.getInt("checkedConveniences" + i, 0));
-//        }
         setAAutoCompleteAdapter();
         setSortingTypeChooser();
         getConveniencesListFromApi();
@@ -145,19 +140,6 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
         mPlaceArrayAdapter.setGoogleApiClient(null);
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-//        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-//        SharedPreferences.Editor editor = preferences.edit();
-//        editor.putInt("checkedSortingType", checkedSortingTypePosition);
-//        editor.putInt("checkedConveniencesSize", checkedConveniencesPositions.size());
-//        for (Integer position : checkedConveniencesPositions)
-//            editor.putInt("checkedConveniences" + position, position);
-//        editor.apply();
-
-    }
-
     public void mButtonCancelOnClick(View v) {
         finish();
     }
@@ -205,8 +187,6 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
         mListViewSorting.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         mListViewSorting.setAdapter(arrayAdapterSortingTypes);
         mListViewSorting.setItemChecked(0, true);
-       // mListViewSorting.setItemChecked(checkedSortingTypePosition, true);
-       // checkedSortingTypePosition = 0;
     }
 
     private void setConveniencesChooser() {
@@ -214,10 +194,6 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
         mListViewConveniences = findViewById(R.id.mListViewConveniences);
         mListViewConveniences.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         mListViewConveniences.setAdapter(arrayAdapterConveniences);
-//        for (Integer position : checkedConveniencesPositions) {
-//            mListViewConveniences.setItemChecked(position, true);
-//        }
-//        checkedConveniencesPositions.clear();
     }
 
     private void getCheckedSortingType() {

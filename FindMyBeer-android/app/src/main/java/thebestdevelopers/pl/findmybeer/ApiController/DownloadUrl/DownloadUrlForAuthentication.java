@@ -44,6 +44,7 @@ public class DownloadUrlForAuthentication implements IDownloadUrl {
         InputStream inputStream = null;
         HttpURLConnection urlConnection = null;
 
+
         try {
             URL url = new URL(myUrl);
             final String basicAuth = "Basic " + Base64.encodeToString((username + ":" + password).getBytes(), Base64.NO_WRAP);

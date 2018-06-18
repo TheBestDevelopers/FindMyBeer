@@ -22,7 +22,7 @@ public class DownloadUrlWithGetMethod implements IDownloadUrl {
         sessionController = new SessionController(applicationContext);
     }
 
-    public String readUrl(String myUrl) throws IOException
+    public String readUrl(String myUrl) throws Exception
     {
         String data = "";
         InputStream inputStream = null;
@@ -54,24 +54,26 @@ public class DownloadUrlWithGetMethod implements IDownloadUrl {
                     data = sb.toString();
                     br.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    throw e;
                 }
                 finally {
                     inputStream.close();
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+               throw e;
             }
             finally {
                 urlConnection.disconnect();
             }
 
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            throw e;
         } catch (java.net.SocketTimeoutException e) {
             throw e;
         } catch (IOException e) {
-            e.printStackTrace();
+           throw e;
+        } catch (Exception e) {
+            throw e;
         }
         return data;
     }

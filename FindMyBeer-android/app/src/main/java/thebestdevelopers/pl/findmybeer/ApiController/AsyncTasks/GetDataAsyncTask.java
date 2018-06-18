@@ -29,7 +29,9 @@ public class GetDataAsyncTask extends AsyncTask<Object, String, String> {
         } catch (java.net.SocketTimeoutException e) {
                 timeout = true;
         } catch (IOException e) {
-            e.printStackTrace();
+            timeout = true;
+        } catch (Exception e) {
+            timeout = true;
         }
         return apiData;
     }
