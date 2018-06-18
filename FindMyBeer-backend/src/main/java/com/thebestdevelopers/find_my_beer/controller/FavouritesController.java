@@ -36,7 +36,7 @@ public class FavouritesController {
         return favService.getFavouritePubs((int) userEntity.getUserId());
     }
 
-    @GetMapping("addFavourite")
+    @PostMapping("addFavourite")
     public BooleanDTO addFavourite(@RequestParam("pubID") int pubId, Principal principal){
 
         User user = (User) ((Authentication) principal).getPrincipal();
@@ -45,7 +45,7 @@ public class FavouritesController {
         return favService.addFavourite((int) userEntity.getUserId(), pubId);
     }
 
-    @GetMapping("deleteFavourite")
+    @DeleteMapping("deleteFavourite")
     public BooleanDTO deleteFavourite(@RequestParam("pubID") int pubId, Principal principal){
 
         User user = (User) ((Authentication) principal).getPrincipal();

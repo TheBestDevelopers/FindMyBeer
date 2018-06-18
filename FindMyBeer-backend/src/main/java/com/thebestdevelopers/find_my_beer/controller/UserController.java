@@ -6,6 +6,8 @@ import com.thebestdevelopers.find_my_beer.DTO.UserDTO;
 import com.thebestdevelopers.find_my_beer.controller.userControllerParam.CreateUserParam;
 import com.thebestdevelopers.find_my_beer.controller.userControllerParam.EditUserParam;
 import com.thebestdevelopers.find_my_beer.controller.userControllerParam.GetUserParam;
+import com.thebestdevelopers.find_my_beer.model.UserEntity;
+import com.thebestdevelopers.find_my_beer.repository.UserRepository;
 import com.thebestdevelopers.find_my_beer.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,6 +29,9 @@ import java.util.List;
 public class UserController {
     @Autowired
     UserService userService;
+
+    @Autowired
+    UserRepository userRepository;
 
     @GetMapping("")
     public UserDTO getUser(Principal principal){
@@ -58,7 +63,9 @@ public class UserController {
 
     @GetMapping("getUsername")
     public GetUsernameDTO getUsername(@RequestParam("ID") int id, Principal principal) {
-        return userService.getUsername(id);
+        User user = (User) ((Authentication) principal).getPrincipal();
+        UserEntity userEntity = userRepository.findByUsername(user.getUsername()).get(0);
+        return userService.getUsername((int)userEntity.getUserId());
     }
 
 }
