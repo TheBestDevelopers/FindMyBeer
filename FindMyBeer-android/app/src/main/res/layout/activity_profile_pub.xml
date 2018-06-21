@@ -69,19 +69,5 @@
         android:text="      Delete account"
         android:textAlignment="viewStart" />
 
-    <Button
-        android:id="@+id/bTemp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="220dp"
-        android:background="@drawable/roundedbutton"
-        android:backgroundTint="#B3FFFFFF"
-        android:onClick="mButtonTemp"
-        android:text="      Go to user view - temp"
-        android:textAlignment="viewStart" />
-
-
 
 </android.support.design.widget.CoordinatorLayout>

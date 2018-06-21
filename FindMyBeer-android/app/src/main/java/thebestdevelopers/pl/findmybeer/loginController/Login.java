@@ -1,15 +1,9 @@
 package thebestdevelopers.pl.findmybeer.loginController;
 
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageInstaller;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,16 +14,9 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.HttpMethod;
-import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import thebestdevelopers.pl.findmybeer.ApiController.AsyncTasks.GetDataAsyncTask;
@@ -39,7 +26,6 @@ import thebestdevelopers.pl.findmybeer.ApiController.HttpRequests;
 import thebestdevelopers.pl.findmybeer.HomeTab;
 import thebestdevelopers.pl.findmybeer.R;
 import thebestdevelopers.pl.findmybeer.SessionController;
-import thebestdevelopers.pl.findmybeer.pubView.pubEditController.PubEdit;
 import thebestdevelopers.pl.findmybeer.registerController.Register;
 import thebestdevelopers.pl.findmybeer.pubView.pubDetailsController.PubDetails;
 
@@ -87,8 +73,8 @@ public class Login extends AppCompatActivity {
             mSignUpButton = findViewById(R.id.mButtonRegister);
             mFacebookLoginButton = findViewById(R.id.mButtonLogInFacebook);
 
-            mEditTextUsername = findViewById(R.id.mEditTextLogin);
-            mEditTextPassword = findViewById(R.id.mEditTextPassword);
+            mEditTextUsername = findViewById(R.id.mEditTextOldPswd);
+            mEditTextPassword = findViewById(R.id.mEditTextNewPswd);
 
             httpRequests = new HttpRequests(this);
             facebookLoginButton = findViewById(R.id.mButtonLogInFacebook);

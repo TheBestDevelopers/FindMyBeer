@@ -107,12 +107,6 @@ public class ProfileTab extends AppCompatActivity {
         startActivity(myIntent);
     }
 
-    public void mButtonTemp(View v){
-        //obsluga zmiany hasla
-        Intent myIntent = new Intent(getApplicationContext(), HomeTab.class);
-        startActivity(myIntent);
-    }
-
     public void mButtonDeleteOnClick(View v){
         //obsluga usuniecia konta
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

@@ -60,8 +60,6 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
             btn2.setVisibility(View.VISIBLE);
             Button btn3 = activity.findViewById(R.id.bDelete);
             btn3.setVisibility(View.VISIBLE);
-            Button btn4 = activity.findViewById(R.id.bTemp);
-            btn4.setVisibility(View.VISIBLE);
         }
         else {
             TextView mName = activity.findViewById(R.id.tLogin);

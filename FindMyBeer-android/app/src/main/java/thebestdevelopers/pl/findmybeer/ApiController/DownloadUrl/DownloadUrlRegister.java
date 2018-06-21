@@ -11,11 +11,11 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class DownloadUrlWithPostMethod implements IDownloadUrl {
+public class DownloadUrlRegister implements IDownloadUrl {
 
     private String username, password;
 
-    public DownloadUrlWithPostMethod(String _username, String _password) {
+    public DownloadUrlRegister(String _username, String _password) {
         username = _username;
         password = _password;
     }

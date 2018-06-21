@@ -22,16 +22,18 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
     private String url, userName;
     WeakReference<Activity> mWeakActivity;
     Context context;
+    String method;
 
-    public GetJsonResult(Activity activity, Context _context) {
+    public GetJsonResult(Activity activity, Context _context, String _method) {
         mWeakActivity = new WeakReference<Activity>(activity);
         context = _context;
+        method = _method;
     }
 
     @Override
     protected String doInBackground(Object... objects) {
         url = (String)objects[0];
-        DownloadProfileUrl downloadUrl = new DownloadProfileUrl(context);
+        DownloadProfileUrl downloadUrl = new DownloadProfileUrl(context, method);
         try {
             googlePlacesData = downloadUrl.readUrl(url);
         } catch (Exception e) {
@@ -61,8 +63,6 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
             btn2.setVisibility(View.VISIBLE);
             Button btn3 = activity.findViewById(R.id.bDelete);
             btn3.setVisibility(View.VISIBLE);
-            Button btn4 = activity.findViewById(R.id.bTemp);
-            btn4.setVisibility(View.VISIBLE);
             ProgressBar spinner = activity.findViewById(R.id.mProgressBarHome);
             spinner.setVisibility(View.GONE);
             TextView txt2 = activity.findViewById(R.id.tError);

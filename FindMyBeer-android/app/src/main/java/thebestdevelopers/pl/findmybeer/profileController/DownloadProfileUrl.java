@@ -16,11 +16,13 @@ import thebestdevelopers.pl.findmybeer.SessionController;
 public class DownloadProfileUrl {
     private SessionController sessionController;
     private Context context;
+    String method;
 
     // Application context needed to manage session and get cookies for authorization
-    public DownloadProfileUrl(Context _context) {
+    public DownloadProfileUrl(Context _context, String _method) {
         context = _context;
         sessionController = new SessionController(context);
+        method = _method;
     }
 
     public String readUrl(String myUrl) throws Exception
@@ -34,6 +36,7 @@ public class DownloadProfileUrl {
             urlConnection=(HttpURLConnection) url.openConnection();
             // Set cookie as a request property to authorize
             urlConnection.setRequestProperty(sessionController.KEY_COOKIE, sessionController.getCookie());
+            urlConnection.setRequestMethod(method);
             urlConnection.connect();
 
             inputStream = urlConnection.getInputStream();

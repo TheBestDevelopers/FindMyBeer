@@ -1,8 +1,6 @@
 package thebestdevelopers.pl.findmybeer.registerController;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -15,16 +13,10 @@ import android.widget.Toast;
 
 import thebestdevelopers.pl.findmybeer.ApiController.AsyncTasks.GetDataAsyncTask;
 import thebestdevelopers.pl.findmybeer.ApiController.AsyncTasks.IAsyncResponse;
-import thebestdevelopers.pl.findmybeer.ApiController.DownloadUrl.DownloadUrlForAuthentication;
-import thebestdevelopers.pl.findmybeer.ApiController.DownloadUrl.DownloadUrlWithPostMethod;
+import thebestdevelopers.pl.findmybeer.ApiController.DownloadUrl.DownloadUrlRegister;
 import thebestdevelopers.pl.findmybeer.ApiController.HttpRequests;
-import thebestdevelopers.pl.findmybeer.HomeTab;
 import thebestdevelopers.pl.findmybeer.R;
 import thebestdevelopers.pl.findmybeer.loginController.Login;
-import thebestdevelopers.pl.findmybeer.loginController.LoginParser;
-import thebestdevelopers.pl.findmybeer.loginController.Role;
-import thebestdevelopers.pl.findmybeer.loginController.User;
-import thebestdevelopers.pl.findmybeer.pubView.pubDetailsController.PubDetails;
 
 public class Register extends AppCompatActivity {
     private HttpRequests httpRequests;
@@ -40,8 +32,8 @@ public class Register extends AppCompatActivity {
         actionBar.hide();
         setContentView(R.layout.activity_register);
         httpRequests = new HttpRequests(this);
-        mEditTextUsername = findViewById(R.id.mEditTextLogin);
-        mEditTextPassword = findViewById(R.id.mEditTextPassword);
+        mEditTextUsername = findViewById(R.id.mEditTextOldPswd);
+        mEditTextPassword = findViewById(R.id.mEditTextNewPswd);
         mSignUpButton = findViewById(R.id.mButtonRegister);
         spinner = findViewById(R.id.mProgressBarLogin);
         spinner.setVisibility(View.GONE);
@@ -77,7 +69,7 @@ public class Register extends AppCompatActivity {
                 spinner.setVisibility(View.GONE);
                 mSignUpButton.setEnabled(true);
             }
-        }, new DownloadUrlWithPostMethod(mEditTextUsername.getText().toString(), mEditTextPassword.getText().toString())).execute(dataTransfer);
+        }, new DownloadUrlRegister(mEditTextUsername.getText().toString(), mEditTextPassword.getText().toString())).execute(dataTransfer);
     }
 
     private void showAlert(String message) {

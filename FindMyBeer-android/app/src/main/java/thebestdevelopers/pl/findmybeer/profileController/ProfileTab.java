@@ -54,7 +54,7 @@ public class ProfileTab extends AppCompatActivity {
         tabs.getMenu().findItem(R.id.action_user).setChecked(true);
         String id = "8";
         String url = getUrl3(id);
-        GetJsonResult getNearbyPlacesData = new GetJsonResult(this, getApplicationContext());
+        GetJsonResult getNearbyPlacesData = new GetJsonResult(this, getApplicationContext(), "GET");
         Object dataTransfer[] = new Object[1];
         dataTransfer[0] = url;
         getNearbyPlacesData.execute(dataTransfer);
@@ -124,12 +124,6 @@ public class ProfileTab extends AppCompatActivity {
         startActivity(myIntent);
     }
 
-    public void mButtonTemp(View v){
-        //obsluga zmiany hasla
-        Intent myIntent = new Intent(getApplicationContext(), PubDetails.class);
-        startActivity(myIntent);
-    }
-
     public void mButtonDeleteOnClick(View v){
         //obsluga usuniecia konta
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -174,4 +168,5 @@ public class ProfileTab extends AppCompatActivity {
         Log.d("created url", googlePlaceUrl.toString());
         return googlePlaceUrl.toString();
     }
+
 }
