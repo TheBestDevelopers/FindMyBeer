@@ -78,7 +78,6 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
     }
     private void showAlert(String message) {
-        //temporary solution - should appear a message box or a textview with this info and it should appear once...
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
     }
 }
