@@ -185,7 +185,7 @@ public class PubInfo extends AppCompatActivity {
     private String getUrl2(String id) {
         StringBuilder googlePlaceUrl = new StringBuilder(getResources().getString(R.string.databaseIP)); //temp
         //TO DO
-        googlePlaceUrl.append("/api/pubs/getPubInfo?userID="+"8"); //zamiast 2 ma byc user id
+        googlePlaceUrl.append("/api/pubs/getPubInfo?"); //zamiast 2 ma byc user id
         googlePlaceUrl.append("&pubID="+id);
         Log.d("created url", googlePlaceUrl.toString());
         return googlePlaceUrl.toString();
@@ -195,7 +195,7 @@ public class PubInfo extends AppCompatActivity {
     private String getUrl3(String id) {
         StringBuilder googlePlaceUrl = new StringBuilder(getResources().getString(R.string.databaseIP)); //temp
         //TO DO
-        googlePlaceUrl.append("/api/favourites/addFavourite?userID="+"8"); //zamiast 2 ma byc user id
+        googlePlaceUrl.append("/api/favourites/addFavourite?"); //zamiast 2 ma byc user id
         googlePlaceUrl.append("&pubID="+id);
         Log.d("created url", googlePlaceUrl.toString());
         return googlePlaceUrl.toString();
@@ -204,8 +204,7 @@ public class PubInfo extends AppCompatActivity {
     private String getUrl4(String id) {
         StringBuilder googlePlaceUrl = new StringBuilder(getResources().getString(R.string.databaseIP)); //temp
         //TO DO
-        googlePlaceUrl.append("/api/favourites/deleteFavourite?pubID="+id); //zamiast 2 ma byc user id
-        googlePlaceUrl.append("&userID="+"8");
+        googlePlaceUrl.append("/api/favourites/deleteFavourite?pubID="+id);
         Log.d("created url", googlePlaceUrl.toString());
         return googlePlaceUrl.toString();
     }

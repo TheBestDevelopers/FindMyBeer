@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/FindMyBeer-android.iml" filepath="$PROJECT_DIR$/FindMyBeer-android.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://E:\studia\semestr 6\PP\17.06\FindMyBeer\FindMyBeer-android\app\app.iml" filepath="E:\studia\semestr 6\PP\17.06\FindMyBeer\FindMyBeer-android\app\app.iml" />
     </modules>
   </component>
 </project>

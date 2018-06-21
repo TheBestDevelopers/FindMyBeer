@@ -114,8 +114,7 @@ public class FavTab extends AppCompatActivity {
     //http://localhost:8080/api/favourites/getFavourites?userID=9
     private String getUrl(String id) {
         StringBuilder menuUrl = new StringBuilder(getResources().getString(R.string.databaseIP));
-        menuUrl.append("/api/favourites/getFavourites?userID=");
-        menuUrl.append(id);
+        menuUrl.append("/api/favourites/getFavourites");
         Log.d("created url", menuUrl.toString());
         return menuUrl.toString();
     }

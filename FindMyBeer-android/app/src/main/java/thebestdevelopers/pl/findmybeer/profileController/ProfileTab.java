@@ -170,8 +170,7 @@ public class ProfileTab extends AppCompatActivity {
     //http://localhost:8080/api/users/getUsername?ID=8
     private String getUrl3(String id) {
         StringBuilder googlePlaceUrl = new StringBuilder(getResources().getString(R.string.databaseIP));
-        googlePlaceUrl.append("/api/users/getUsername?ID=");
-        googlePlaceUrl.append(id);
+        googlePlaceUrl.append("/api/users/getUsername?ID=1");
         Log.d("created url", googlePlaceUrl.toString());
         return googlePlaceUrl.toString();
     }

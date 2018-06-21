@@ -117,8 +117,7 @@ public class PubDetails extends AppCompatActivity {
     private String getUrl(String id) {
         StringBuilder googlePlaceUrl = new StringBuilder(getResources().getString(R.string.databaseIP)); //temp
         //TO DO
-        googlePlaceUrl.append("/api/pubs/getPubView?pubID=");
-        googlePlaceUrl.append(id);
+        googlePlaceUrl.append("/api/pubs/getPubView");
         Log.d("created url", googlePlaceUrl.toString());
         return googlePlaceUrl.toString();
     }

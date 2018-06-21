@@ -57,6 +57,7 @@ public class Menu extends AppCompatActivity {
             mId = (String) b.get("placeID");
         }
 
+
         String url = getUrl(mId);
         GetJsonResult getMenuData = new GetJsonResult(this, getApplicationContext());
         Object dataTransfer[] = new Object[1];

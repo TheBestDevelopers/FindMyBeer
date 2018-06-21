@@ -111,8 +111,7 @@ public class editConveniences extends AppCompatActivity {
     private String getUrl(String id) {
         StringBuilder googlePlaceUrl = new StringBuilder(getResources().getString(R.string.databaseIP)); //temp
         //TO DO
-        googlePlaceUrl.append("/api/pubs/getPubView?pubID=");
-        googlePlaceUrl.append(id);
+        googlePlaceUrl.append("/api/pubs/getPubView");
         Log.d("created url", googlePlaceUrl.toString());
         return googlePlaceUrl.toString();
     }
@@ -120,8 +119,7 @@ public class editConveniences extends AppCompatActivity {
     private String getUrl2(String id) {
         StringBuilder googlePlaceUrl = new StringBuilder(getResources().getString(R.string.databaseIP)); //temp
         //TO DO
-        googlePlaceUrl.append("/api/pubs/setConveniences?pubID=");
-        googlePlaceUrl.append(id);
+        googlePlaceUrl.append("/api/pubs/setConveniences?");
 
         CheckBox chbx1 = findViewById(R.id.checkbox_wifi);
         CheckBox chbx2 = findViewById(R.id.checkbox_adapted_disabled);
@@ -131,7 +129,7 @@ public class editConveniences extends AppCompatActivity {
         CheckBox chbx6 = findViewById(R.id.checkbox_roastingroom);
         CheckBox chbx7 = findViewById(R.id.checkbox_toilet);
 
-        googlePlaceUrl.append("&WI-FI=" + chbx1.isChecked());
+        googlePlaceUrl.append("WI-FI=" + chbx1.isChecked());
         googlePlaceUrl.append("&TOILET=" + chbx7.isChecked());
         googlePlaceUrl.append("&ROASTING_ROOM=" + chbx6.isChecked());
         googlePlaceUrl.append("&DISCOUNTS_FOR_STUDENTS=" + chbx5.isChecked());

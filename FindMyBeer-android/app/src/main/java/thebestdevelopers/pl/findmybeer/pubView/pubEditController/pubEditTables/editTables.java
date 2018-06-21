@@ -132,8 +132,7 @@ public class editTables extends AppCompatActivity {
     private String getUrl(String id) {
         StringBuilder googlePlaceUrl = new StringBuilder(getResources().getString(R.string.databaseIP)); //temp
         //TO DO
-        googlePlaceUrl.append("/api/pubs/getPubView?pubID=");
-        googlePlaceUrl.append(id);
+        googlePlaceUrl.append("/api/pubs/getPubView");
         Log.d("created url", googlePlaceUrl.toString());
         return googlePlaceUrl.toString();
     }
@@ -142,9 +141,8 @@ public class editTables extends AppCompatActivity {
     private String getUrl2(String id) {
         StringBuilder googlePlaceUrl = new StringBuilder(getResources().getString(R.string.databaseIP)); //temp
         //TO DO
-        googlePlaceUrl.append("/api/pubs/setTables?pubID=");
-        googlePlaceUrl.append(id);
-        googlePlaceUrl.append("&chair1="+ np1.getValue());
+        googlePlaceUrl.append("/api/pubs/setTables?");
+        googlePlaceUrl.append("chair1="+ np1.getValue());
         googlePlaceUrl.append("&chair2="+ np2.getValue());
         googlePlaceUrl.append("&chair4="+ np4.getValue());
         googlePlaceUrl.append("&chair6="+ np6.getValue());

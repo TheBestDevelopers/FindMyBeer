@@ -37,12 +37,12 @@ public class Menu extends AppCompatActivity {
         if (b != null) {
             mId = (String) b.get("placeID");
         }
-        /*
+
         String url = getUrl(mId);
         GetJsonResult getMenuData = new GetJsonResult(this);
         Object dataTransfer[] = new Object[1];
         dataTransfer[0] = url;
-        getMenuData.execute(dataTransfer); */
+        getMenuData.execute(dataTransfer);
 
         Intent i;
         tabs.setOnNavigationItemSelectedListener

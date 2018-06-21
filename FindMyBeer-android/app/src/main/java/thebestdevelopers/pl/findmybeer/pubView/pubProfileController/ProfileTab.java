@@ -38,6 +38,14 @@ public class ProfileTab extends AppCompatActivity {
         BottomNavigationViewHelper.disableShiftMode(tabs);
         tabs.getMenu().findItem(R.id.action_user).setChecked(true);
         sessionController = new SessionController(getApplicationContext());
+
+        String id = "8";
+        String url = getUrl3(id);
+        GetJsonResult getNearbyPlacesData = new GetJsonResult(this, getApplicationContext());
+        Object dataTransfer[] = new Object[1];
+        dataTransfer[0] = url;
+        getNearbyPlacesData.execute(dataTransfer);
+
         Intent i;
 
         mLoginText = findViewById(R.id.tLogin);
@@ -137,6 +145,14 @@ public class ProfileTab extends AppCompatActivity {
         StringBuilder googlePlaceUrl = new StringBuilder(getResources().getString(R.string.databaseIP));
         googlePlaceUrl.append(id);
         googlePlaceUrl.append("&key="+"AIzaSyB3iQRgruru1jotumbRTuzOYiWSePz41ZQ");
+        Log.d("created url", googlePlaceUrl.toString());
+        return googlePlaceUrl.toString();
+    }
+
+    //http://localhost:8080/api/users/getUsername?ID=8
+    private String getUrl3(String id) {
+        StringBuilder googlePlaceUrl = new StringBuilder(getResources().getString(R.string.databaseIP));
+        googlePlaceUrl.append("/api/users/getUsername?ID=1");
         Log.d("created url", googlePlaceUrl.toString());
         return googlePlaceUrl.toString();
     }
