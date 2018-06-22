@@ -155,7 +155,7 @@ public class PubServiceImpl implements PubService {
         List<RatingsEntity> ratingsEntityList = ratingRepository.findByPubId(pubId);
         List<FavouritiesEntity> favouritiesEntityList = favouritesRepository.findByPubId(pubId);
         boolean isFavouriteFlag = false;
-        if (userId==-1)
+        if (userId!=-1)
             isFavouriteFlag = this.isFavourite(favouritiesEntityList, userId);
 
         //parsing number of tables witch 1, 2, 4, 6, 8 chairs
