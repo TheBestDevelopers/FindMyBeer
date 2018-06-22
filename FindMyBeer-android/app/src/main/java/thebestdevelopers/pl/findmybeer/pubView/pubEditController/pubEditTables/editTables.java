@@ -32,7 +32,7 @@ public class editTables extends AppCompatActivity {
         ScrollView v = findViewById(R.id.bView);
         v.setVisibility(View.GONE);
 
-        ProgressBar spinner = findViewById(R.id.mProgressBarHome);
+        ProgressBar spinner = findViewById(R.id.mProgressBarProfile);
         spinner.setVisibility(View.VISIBLE);
 
         ActionBar actionBar = getSupportActionBar();
@@ -112,7 +112,7 @@ public class editTables extends AppCompatActivity {
     }
 
     public void mButtonChangeClick(View v) {
-        ProgressBar spinner = findViewById(R.id.mProgressBarHome);
+        ProgressBar spinner = findViewById(R.id.mProgressBarProfile);
         spinner.setVisibility(View.VISIBLE);
         String url = getUrl2(id);
         GetJsonResult getNearbyPlacesData = new GetJsonResult(this, getApplicationContext());

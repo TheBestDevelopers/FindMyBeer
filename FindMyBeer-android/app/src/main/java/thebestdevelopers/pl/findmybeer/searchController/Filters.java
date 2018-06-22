@@ -1,8 +1,6 @@
 package thebestdevelopers.pl.findmybeer.searchController;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -35,7 +33,7 @@ import java.util.ArrayList;
 
 import thebestdevelopers.pl.findmybeer.ApiController.HttpRequests;
 import thebestdevelopers.pl.findmybeer.R;
-import thebestdevelopers.pl.findmybeer.ApiController.DownloadUrl.DownloadUrlWithGetMethod;
+import thebestdevelopers.pl.findmybeer.ApiController.DownloadUrl.DownloadUrlWithoutJSONBody;
 import thebestdevelopers.pl.findmybeer.ApiController.AsyncTasks.GetDataAsyncTask;
 import thebestdevelopers.pl.findmybeer.ApiController.AsyncTasks.IAsyncResponse;
 import thebestdevelopers.pl.findmybeer.searchController.Conveniences.ConveniencesParser;
@@ -239,7 +237,7 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
                 spinner.setVisibility(View.GONE);
                 buttonSave.setEnabled(true);
             }
-        }, new DownloadUrlWithGetMethod(getApplicationContext())).execute(dataTransfer);
+        }, new DownloadUrlWithoutJSONBody(getApplicationContext(), "GET")).execute(dataTransfer);
     }
     private void showAlert(String message) {
         //temporary solution - should appear a message box or a textview with this info and it should appear once...

@@ -51,4 +51,20 @@ public class HttpRequests {
         return url.toString();
     }
 
+    public String changePassword(String oldPassword, String newPassword) {
+        StringBuilder url = new StringBuilder(apiUrl);
+        url.append("/api/users/?password=");
+        url.append(oldPassword);
+        url.append("&newPassword=");
+        url.append(newPassword);
+        return url.toString();
+    }
+
+    public String deleteAccount(String password) {
+        StringBuilder url = new StringBuilder(apiUrl);
+        url.append("/api/users/?password=");
+        url.append(password);
+        return url.toString();
+    }
+
 }

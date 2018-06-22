@@ -9,12 +9,25 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ProgressBar;
 
+import thebestdevelopers.pl.findmybeer.ApiController.AsyncTasks.GetDataAsyncTask;
+import thebestdevelopers.pl.findmybeer.ApiController.AsyncTasks.IAsyncResponse;
+import thebestdevelopers.pl.findmybeer.ApiController.DownloadUrl.DownloadUrlWithPutMethod;
+import thebestdevelopers.pl.findmybeer.ApiController.DownloadUrl.DownloadUrlWithoutJSONBody;
+import thebestdevelopers.pl.findmybeer.ApiController.HttpRequests;
 import thebestdevelopers.pl.findmybeer.R;
+import thebestdevelopers.pl.findmybeer.SessionController;
 
 public class ChangePasswordActivity extends AppCompatActivity {
 
-    String id;
+    EditText oldPassword;
+    EditText newPassword;
+    SessionController sessionController;
+    HttpRequests httpRequests;
+    ProgressBar mProgressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,39 +37,69 @@ public class ChangePasswordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_change_password);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        Intent i = getIntent();
-        Bundle b = i.getExtras();
-        if (b != null) {
-            id = (String) b.get("placeID"); //wczytanie id miejsca oznaczonego markerem
-        }
-    }
-    //url do zmiany hasla
-    private String getUrl() {
-        StringBuilder googlePlaceUrl = new StringBuilder(getResources().getString(R.string.databaseIP));
-        googlePlaceUrl.append(id);
-        googlePlaceUrl.append("&key="+"AIzaSyB3iQRgruru1jotumbRTuzOYiWSePz41ZQ");
-        Log.d("created url", googlePlaceUrl.toString());
-        return googlePlaceUrl.toString();
+        mProgressBar = findViewById(R.id.mProgressBarPswd);
+        mProgressBar.setVisibility(View.GONE);
+        httpRequests = new HttpRequests(this);
+        oldPassword = findViewById(R.id.mEditTextOldPswd);
+        newPassword = findViewById(R.id.mEditTextNewPswd);
+        sessionController = new SessionController(this);
     }
 
     public void onClick(View v) {
+        manageHttpConnection();
+    }
 
+    private void manageHttpConnection() {
+        String url = httpRequests.changePassword(oldPassword.getText().toString(), newPassword.getText().toString());
+        mProgressBar.setVisibility(View.VISIBLE);
         Object dataTransfer[] = new Object[1];
-        GetJsonResult getNearbyPlacesData = new GetJsonResult(this, getApplicationContext());
-        String url = getUrl();
         dataTransfer[0] = url;
-        try {
-            getNearbyPlacesData.execute(dataTransfer);
-        } catch (Exception e) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("Cannot connect to the server!")
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
+        GetDataAsyncTask asyncTask = (GetDataAsyncTask) new GetDataAsyncTask(new IAsyncResponse(){
+            @Override
+            public void processFinish(String result, Boolean timeout){
+                if (timeout) {
+                    showAlert("Error with server connection. Try again later.");
+                }
+                else {
+                    if (result.equals("true")) {
+                        successfulChange("Password changed successfully!");
+                    }
+                    else showAlert("This is not your password!");
+                }
+                mProgressBar.setVisibility(View.GONE);
+            }
+        }, new DownloadUrlWithoutJSONBody(getApplicationContext(), "PUT")).execute(dataTransfer);
+    }
 
-                        }
-                    })
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .show();
-        }
+    private void showAlert(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(message)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
+    private void successfulChange(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(message)
+                .setPositiveButton("OK, log out", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        sessionController.logoutUser();
+                        finish();
+                    }
+                })
+                .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialogInterface) {
+                        sessionController.logoutUser();
+                        finish();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 }
+

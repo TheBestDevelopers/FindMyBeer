@@ -73,7 +73,7 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
             tConveniences = activity.findViewById(R.id.tConveniences);
             tTables = activity.findViewById(R.id.tTables);
 
-            spinner = activity.findViewById(R.id.mProgressBarHome);
+            spinner = activity.findViewById(R.id.mProgressBarProfile);
 
                 String convs = "";
 

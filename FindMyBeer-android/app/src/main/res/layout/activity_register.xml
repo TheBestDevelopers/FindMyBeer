@@ -38,6 +38,7 @@
         android:id="@+id/mButtonRegister"
         android:layout_width="300dp"
         android:layout_height="40dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
@@ -46,12 +47,14 @@
         android:onClick="mButtonRegisterOnClick"
         android:text="Sign up"
         android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mEditTextNewPswd" />
+        app:layout_constraintTop_toBottomOf="@+id/mEditTextPassword"
+        app:layout_constraintVertical_bias="0.136" />
 
     <TextView
-        android:id="@+id/mTextViewOldPswd"
+        android:id="@+id/mTextViewUsername"
         android:layout_width="60dp"
         android:layout_height="30dp"
         android:layout_marginEnd="8dp"
@@ -66,7 +69,7 @@
         app:layout_constraintTop_toBottomOf="@+id/mImageLogo" />
 
     <EditText
-        android:id="@+id/mEditTextOldPswd"
+        android:id="@+id/mEditTextUsername"
         android:layout_width="320dp"
         android:layout_height="40dp"
         android:layout_marginEnd="8dp"
@@ -77,10 +80,10 @@
         android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mTextViewOldPswd" />
+        app:layout_constraintTop_toBottomOf="@+id/mTextViewUsername" />
 
     <TextView
-        android:id="@+id/mTextNewPswd"
+        android:id="@+id/mTextPassword"
         android:layout_width="101dp"
         android:layout_height="30dp"
         android:layout_marginEnd="8dp"
@@ -92,10 +95,10 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mEditTextOldPswd" />
+        app:layout_constraintTop_toBottomOf="@+id/mEditTextUsername" />
 
     <EditText
-        android:id="@+id/mEditTextNewPswd"
+        android:id="@+id/mEditTextPassword"
         android:layout_width="320dp"
         android:layout_height="40dp"
         android:layout_marginEnd="8dp"
@@ -105,8 +108,7 @@
         android:inputType="textPassword"
         android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mTextNewPswd" />
+        app:layout_constraintTop_toBottomOf="@+id/mTextPassword" />
 
 </android.support.constraint.ConstraintLayout>

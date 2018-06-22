@@ -29,18 +29,16 @@ import java.util.ArrayList;
 
 import thebestdevelopers.pl.findmybeer.ApiController.HttpRequests;
 import thebestdevelopers.pl.findmybeer.favController.FavTab;
-import thebestdevelopers.pl.findmybeer.loginController.Login;
 import thebestdevelopers.pl.findmybeer.mapsController.MapTab;
 import thebestdevelopers.pl.findmybeer.profileController.ProfileTab;
 import thebestdevelopers.pl.findmybeer.pubInfo.PubInfo;
-import thebestdevelopers.pl.findmybeer.ApiController.DownloadUrl.DownloadUrlWithGetMethod;
+import thebestdevelopers.pl.findmybeer.ApiController.DownloadUrl.DownloadUrlWithoutJSONBody;
 import thebestdevelopers.pl.findmybeer.ApiController.AsyncTasks.GetDataAsyncTask;
 import thebestdevelopers.pl.findmybeer.pubListController.ItemClickListener;
 import thebestdevelopers.pl.findmybeer.ApiController.AsyncTasks.IAsyncResponse;
 import thebestdevelopers.pl.findmybeer.pubListController.NearbyPubsParser;
 import thebestdevelopers.pl.findmybeer.pubListController.Pub;
 import thebestdevelopers.pl.findmybeer.pubListController.PubListRecyclerViewerAdapter;
-import thebestdevelopers.pl.findmybeer.pubView.pubDetailsController.PubDetails;
 import thebestdevelopers.pl.findmybeer.searchController.SearchTab;
 import thebestdevelopers.pl.findmybeer.searchController.Sorting.SortingTypeChooser;
 
@@ -66,32 +64,21 @@ public class HomeTab extends AppCompatActivity implements ItemClickListener, Goo
         overridePendingTransition(0, 0);
 
         sessionController = new SessionController(getApplicationContext());
-//        if (!sessionController.isLoggedIn()) {
-//            sessionController.checkLogin();
-//            finish();
-//        }
-//        else if (sessionController.isPubLoggedIn()) {
-//            Intent i = new Intent(getApplicationContext(), PubDetails.class);
-//            startActivity(i);
-//            finish();
-//        }
-//        else {
-            setBottomNavigationView();
-            itemClickListener = this;
-            spinner = findViewById(R.id.mProgressBarHome);
-            spinner.setVisibility(View.VISIBLE);
-            sortingTypeChooser = new SortingTypeChooser();
-            httpRequests = new HttpRequests(this);
-            mErrorTextView = findViewById(R.id.mErrorTextView);
+        setBottomNavigationView();
+        itemClickListener = this;
+        spinner = findViewById(R.id.mProgressBarProfile);
+        spinner.setVisibility(View.VISIBLE);
+        sortingTypeChooser = new SortingTypeChooser();
+        httpRequests = new HttpRequests(this);
+        mErrorTextView = findViewById(R.id.mErrorTextView);
 
-            setRecyclerView();
+        setRecyclerView();
 
-            if (googleServicesAvailable()) {
-                manageLocation();
-            } else {
-                Toast.makeText(this, "There's no Google Services installed", Toast.LENGTH_LONG).show();
-            }
-      //  }
+        if (googleServicesAvailable()) {
+            manageLocation();
+        } else {
+            Toast.makeText(this, "There's no Google Services installed", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -236,7 +223,7 @@ public class HomeTab extends AppCompatActivity implements ItemClickListener, Goo
                         }
                         spinner.setVisibility(View.GONE);
                     }
-                }, new DownloadUrlWithGetMethod(getApplicationContext())).execute(dataTransfer);
+                }, new DownloadUrlWithoutJSONBody(getApplicationContext(), "GET")).execute(dataTransfer);
             }
 
             private void showAlert(String message) {

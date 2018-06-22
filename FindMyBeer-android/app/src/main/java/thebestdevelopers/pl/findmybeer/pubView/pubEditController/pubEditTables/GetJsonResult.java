@@ -5,14 +5,11 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
 
@@ -56,11 +53,11 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
         Activity activity = mWeakActivity.get();
         if (change.equals("change")) {
             if (s.equals("true")) {
-                ProgressBar spinner = activity.findViewById(R.id.mProgressBarHome);
+                ProgressBar spinner = activity.findViewById(R.id.mProgressBarProfile);
                 spinner.setVisibility(View.GONE);
                 return;
             } else {
-                ProgressBar spinner = activity.findViewById(R.id.mProgressBarHome);
+                ProgressBar spinner = activity.findViewById(R.id.mProgressBarProfile);
                 spinner.setVisibility(View.GONE);
                 Toast.makeText(activity, "Processing request", Toast.LENGTH_LONG).show();
                 return;
@@ -88,7 +85,7 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
 
             np8 = activity.findViewById(R.id.numberPicker8);
             np8.setValue(Integer.parseInt(chair8));
-            spinner = activity.findViewById(R.id.mProgressBarHome);
+            spinner = activity.findViewById(R.id.mProgressBarProfile);
         }
         spinner.setVisibility(View.GONE);
         ScrollView v = activity.findViewById(R.id.bView);

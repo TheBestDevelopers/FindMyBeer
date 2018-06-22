@@ -12,14 +12,16 @@ import java.net.URL;
 
 import thebestdevelopers.pl.findmybeer.SessionController;
 
-public class DownloadUrlWithGetMethod implements IDownloadUrl {
+public class DownloadUrlWithoutJSONBody implements IDownloadUrl {
 
     private Context applicationContext;
     private SessionController sessionController;
+    private String method;
 
-    public DownloadUrlWithGetMethod(Context _applicationContext) {
+    public DownloadUrlWithoutJSONBody(Context _applicationContext, String _method) {
         applicationContext = _applicationContext;
         sessionController = new SessionController(applicationContext);
+        method = _method;
     }
 
     public String readUrl(String myUrl) throws Exception
@@ -31,10 +33,8 @@ public class DownloadUrlWithGetMethod implements IDownloadUrl {
         try {
             URL url = new URL(myUrl);
             urlConnection=(HttpURLConnection) url.openConnection();
-           // urlConnection.setRequestMethod("GET");
-          //  urlConnection.setDoInput(true);
+            urlConnection.setRequestMethod(method);
             urlConnection.setConnectTimeout(10000);
-            //urlConnection.setInstanceFollowRedirects(false);
             // Set cookie as a request property to authorize
             urlConnection.setRequestProperty(sessionController.KEY_COOKIE, sessionController.getCookie());
             urlConnection.connect();

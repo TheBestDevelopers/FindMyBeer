@@ -32,8 +32,8 @@ public class Register extends AppCompatActivity {
         actionBar.hide();
         setContentView(R.layout.activity_register);
         httpRequests = new HttpRequests(this);
-        mEditTextUsername = findViewById(R.id.mEditTextOldPswd);
-        mEditTextPassword = findViewById(R.id.mEditTextNewPswd);
+        mEditTextUsername = findViewById(R.id.mEditTextUsername);
+        mEditTextPassword = findViewById(R.id.mEditTextPassword);
         mSignUpButton = findViewById(R.id.mButtonRegister);
         spinner = findViewById(R.id.mProgressBarLogin);
         spinner.setVisibility(View.GONE);

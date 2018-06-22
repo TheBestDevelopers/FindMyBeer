@@ -9,14 +9,22 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.facebook.login.LoginManager;
 
+import thebestdevelopers.pl.findmybeer.ApiController.AsyncTasks.GetDataAsyncTask;
+import thebestdevelopers.pl.findmybeer.ApiController.AsyncTasks.IAsyncResponse;
+import thebestdevelopers.pl.findmybeer.ApiController.DownloadUrl.DownloadUrlWithPutMethod;
+import thebestdevelopers.pl.findmybeer.ApiController.DownloadUrl.DownloadUrlWithoutJSONBody;
+import thebestdevelopers.pl.findmybeer.ApiController.HttpRequests;
 import thebestdevelopers.pl.findmybeer.BottomNavigationViewHelper;
 import thebestdevelopers.pl.findmybeer.HomeTab;
 import thebestdevelopers.pl.findmybeer.SessionController;
@@ -24,13 +32,16 @@ import thebestdevelopers.pl.findmybeer.loginController.Login;
 import thebestdevelopers.pl.findmybeer.R;
 import thebestdevelopers.pl.findmybeer.favController.FavTab;
 import thebestdevelopers.pl.findmybeer.mapsController.MapTab;
-import thebestdevelopers.pl.findmybeer.pubView.pubDetailsController.PubDetails;
 import thebestdevelopers.pl.findmybeer.searchController.SearchTab;
 
 public class ProfileTab extends AppCompatActivity {
 
     TextView mLoginText;
     private SessionController sessionController;
+    HttpRequests httpRequests;
+    String password;
+    ProgressBar spinner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,8 +51,9 @@ public class ProfileTab extends AppCompatActivity {
         setContentView(R.layout.activity_profile_tab);
 
         sessionController = new SessionController(getApplicationContext());
+        httpRequests = new HttpRequests(this);
+        spinner = findViewById(R.id.mProgressBarProfile);
 
-        ProgressBar spinner = findViewById(R.id.mProgressBarHome);
         spinner.setVisibility(View.VISIBLE);
         TextView mName = findViewById(R.id.tLogin);
         mName.setVisibility(View.GONE);
@@ -126,14 +138,21 @@ public class ProfileTab extends AppCompatActivity {
 
     public void mButtonDeleteOnClick(View v){
         //obsluga usuniecia konta
+        final EditText input = new EditText(this);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        input.setLayoutParams(lp);
+        input.setInputType(InputType.TYPE_CLASS_TEXT |
+                InputType.TYPE_TEXT_VARIATION_PASSWORD);
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Are you sure you want to delete your account?")
-                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+        builder.setMessage("Confirm your password to delete account")
+                .setView(input)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        //temp - potem usuniecie konta
-                        Intent myIntent = new Intent(getApplicationContext(), Login.class);
-                        startActivity(myIntent);
-                        finish();
+                        password = input.getText().toString();
+                        manageHttpConnection();
                     }
                 })
                 .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -144,21 +163,27 @@ public class ProfileTab extends AppCompatActivity {
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }
-    //url do usuniecia konta
-    private String getUrl(String id) {
-        StringBuilder googlePlaceUrl = new StringBuilder(getResources().getString(R.string.databaseIP));
-        googlePlaceUrl.append(id);
-        googlePlaceUrl.append("&key="+"AIzaSyB3iQRgruru1jotumbRTuzOYiWSePz41ZQ");
-        Log.d("created url", googlePlaceUrl.toString());
-        return googlePlaceUrl.toString();
-    }
-    //url do wylogowania
-    private String getUrl2(String id) {
-        StringBuilder googlePlaceUrl = new StringBuilder(getResources().getString(R.string.databaseIP));
-        googlePlaceUrl.append(id);
-        googlePlaceUrl.append("&key="+"AIzaSyB3iQRgruru1jotumbRTuzOYiWSePz41ZQ");
-        Log.d("created url", googlePlaceUrl.toString());
-        return googlePlaceUrl.toString();
+
+    private void manageHttpConnection() {
+        String url = httpRequests.deleteAccount(password);
+        spinner.setVisibility(View.VISIBLE);
+        Object dataTransfer[] = new Object[1];
+        dataTransfer[0] = url;
+        GetDataAsyncTask asyncTask = (GetDataAsyncTask) new GetDataAsyncTask(new IAsyncResponse(){
+            @Override
+            public void processFinish(String result, Boolean timeout){
+                if (timeout) {
+                    showAlert("Error with server connection. Try again later.");
+                }
+                else {
+                    if (result.equals("true")) {
+                        successfulChange("Account deleted successfully!");
+                    }
+                    else showAlert("This is not your password!");
+                }
+                spinner.setVisibility(View.GONE);
+            }
+        }, new DownloadUrlWithoutJSONBody(getApplicationContext(), "DELETE")).execute(dataTransfer);
     }
 
     //http://localhost:8080/api/users/getUsername?ID=8
@@ -167,6 +192,37 @@ public class ProfileTab extends AppCompatActivity {
         googlePlaceUrl.append("/api/users/getUsername?ID=1");
         Log.d("created url", googlePlaceUrl.toString());
         return googlePlaceUrl.toString();
+    }
+
+    private void showAlert(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(message)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
+    private void successfulChange(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(message)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        sessionController.logoutUser();
+                        finish();
+                    }
+                })
+                .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialogInterface) {
+                        sessionController.logoutUser();
+                        finish();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
 }

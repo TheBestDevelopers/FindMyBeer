@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -54,7 +53,7 @@ public class PubInfo extends AppCompatActivity {
         mName = findViewById(R.id.tName);
         mAddress = findViewById(R.id.tAddress);
 
-        spinner = findViewById(R.id.mProgressBarHome);
+        spinner = findViewById(R.id.mProgressBarProfile);
         spinner.setVisibility(View.VISIBLE);
 
 
