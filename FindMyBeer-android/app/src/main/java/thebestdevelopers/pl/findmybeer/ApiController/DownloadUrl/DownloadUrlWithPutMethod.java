@@ -12,12 +12,12 @@ import java.net.URL;
 
 import thebestdevelopers.pl.findmybeer.SessionController;
 
-public class DownloadUrlWithGetMethod implements IDownloadUrl {
+public class DownloadUrlWithPutMethod implements IDownloadUrl {
 
     private Context applicationContext;
     private SessionController sessionController;
 
-    public DownloadUrlWithGetMethod(Context _applicationContext) {
+    public DownloadUrlWithPutMethod(Context _applicationContext) {
         applicationContext = _applicationContext;
         sessionController = new SessionController(applicationContext);
     }
@@ -31,8 +31,8 @@ public class DownloadUrlWithGetMethod implements IDownloadUrl {
         try {
             URL url = new URL(myUrl);
             urlConnection=(HttpURLConnection) url.openConnection();
-           // urlConnection.setRequestMethod("GET");
-          //  urlConnection.setDoInput(true);
+             urlConnection.setRequestMethod("DELETE");
+            //  urlConnection.setDoInput(true);
             urlConnection.setConnectTimeout(10000);
             //urlConnection.setInstanceFollowRedirects(false);
             // Set cookie as a request property to authorize
@@ -60,7 +60,7 @@ public class DownloadUrlWithGetMethod implements IDownloadUrl {
                     inputStream.close();
                 }
             } catch (IOException e) {
-               throw e;
+                throw e;
             }
             finally {
                 urlConnection.disconnect();
@@ -71,7 +71,7 @@ public class DownloadUrlWithGetMethod implements IDownloadUrl {
         } catch (java.net.SocketTimeoutException e) {
             throw e;
         } catch (IOException e) {
-           throw e;
+            throw e;
         } catch (Exception e) {
             throw e;
         }
