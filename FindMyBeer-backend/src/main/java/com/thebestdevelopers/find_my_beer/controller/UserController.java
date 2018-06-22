@@ -62,7 +62,7 @@ public class UserController {
     }
 
     @GetMapping("getUsername")
-    public GetUsernameDTO getUsername(@RequestParam("ID") int id, Principal principal) {
+    public GetUsernameDTO getUsername(Principal principal) {
         User user = (User) ((Authentication) principal).getPrincipal();
         UserEntity userEntity = userRepository.findByUsername(user.getUsername()).get(0);
         return userService.getUsername((int)userEntity.getUserId());
