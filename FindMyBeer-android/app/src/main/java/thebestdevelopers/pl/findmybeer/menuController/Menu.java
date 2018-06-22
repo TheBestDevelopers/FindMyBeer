@@ -35,7 +35,7 @@ public class Menu extends AppCompatActivity {
         txt.setVisibility(View.GONE);
         RelativeLayout v = findViewById(R.id.bView);
         v.setVisibility(View.GONE);
-        ProgressBar spinner = findViewById(R.id.mProgressBarHome);
+        ProgressBar spinner = findViewById(R.id.mProgressBarProfile);
         spinner.setVisibility(View.VISIBLE);
         TextView txt2 = findViewById(R.id.tError);
         txt2.setVisibility(View.GONE);

@@ -12,7 +12,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
 
@@ -63,11 +62,11 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
         HashMap<String, String> nearbyPlaceList;
         if (change.equals("change")) {
             if (s.equals("true")) {
-                ProgressBar spinner = activity.findViewById(R.id.mProgressBarHome);
+                ProgressBar spinner = activity.findViewById(R.id.mProgressBarProfile);
                 spinner.setVisibility(View.GONE);
                 return;
             } else {
-                ProgressBar spinner = activity.findViewById(R.id.mProgressBarHome);
+                ProgressBar spinner = activity.findViewById(R.id.mProgressBarProfile);
                 spinner.setVisibility(View.GONE);
                 Toast.makeText(activity, "Processing request", Toast.LENGTH_LONG).show();
                 return;
@@ -79,7 +78,7 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
         showNearbyPlaces(nearbyPlaceList);
         if (activity != null) {
 
-            spinner = activity.findViewById(R.id.mProgressBarHome);
+            spinner = activity.findViewById(R.id.mProgressBarProfile);
 
             CheckBox chbx1 = activity.findViewById(R.id.checkbox_wifi);
             CheckBox chbx2 = activity.findViewById(R.id.checkbox_adapted_disabled);

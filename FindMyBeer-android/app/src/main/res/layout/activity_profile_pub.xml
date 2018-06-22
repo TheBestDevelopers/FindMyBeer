@@ -14,6 +14,12 @@
         android:background="@android:color/background_light"
         app:menu="@menu/tabs_navigation_pub"
         />
+    <ProgressBar
+        android:id="@+id/mProgressBarProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"/>
 
     <Button
         android:id="@+id/bLogOut"

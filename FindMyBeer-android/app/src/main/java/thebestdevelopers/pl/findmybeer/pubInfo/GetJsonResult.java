@@ -11,7 +11,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
 
@@ -59,7 +58,7 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
     protected void onPostExecute(String s) {
         Activity activity = mWeakActivity.get();
         if (activity != null) {
-            spinner = activity.findViewById(R.id.mProgressBarHome);
+            spinner = activity.findViewById(R.id.mProgressBarProfile);
             if (!s.equals("Exception")) {
                 if (favs.equals("add")) {
                     if (s.equals("{\"result\":false}")) {
@@ -168,7 +167,7 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
         } else {
             TextView txt2 = activity.findViewById(R.id.tError);
             txt2.setVisibility(View.VISIBLE);
-            ProgressBar spinner = activity.findViewById(R.id.mProgressBarHome);
+            ProgressBar spinner = activity.findViewById(R.id.mProgressBarProfile);
             spinner.setVisibility(View.GONE);
         }
     }

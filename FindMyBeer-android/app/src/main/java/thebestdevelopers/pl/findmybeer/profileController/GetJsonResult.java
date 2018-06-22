@@ -1,9 +1,7 @@
 package thebestdevelopers.pl.findmybeer.profileController;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
@@ -11,7 +9,6 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
 
@@ -63,7 +60,7 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
             btn2.setVisibility(View.VISIBLE);
             Button btn3 = activity.findViewById(R.id.bDelete);
             btn3.setVisibility(View.VISIBLE);
-            ProgressBar spinner = activity.findViewById(R.id.mProgressBarHome);
+            ProgressBar spinner = activity.findViewById(R.id.mProgressBarProfile);
             spinner.setVisibility(View.GONE);
             TextView txt2 = activity.findViewById(R.id.tError);
             txt2.setVisibility(View.GONE);
@@ -74,7 +71,7 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
             mName.setVisibility(View.VISIBLE);
             TextView txt2 = activity.findViewById(R.id.tError);
             txt2.setVisibility(View.VISIBLE);
-            ProgressBar spinner = activity.findViewById(R.id.mProgressBarHome);
+            ProgressBar spinner = activity.findViewById(R.id.mProgressBarProfile);
             spinner.setVisibility(View.GONE);
         }
     }

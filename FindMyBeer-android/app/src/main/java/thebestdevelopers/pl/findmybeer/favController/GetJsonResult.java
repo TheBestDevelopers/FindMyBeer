@@ -12,7 +12,6 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,14 +69,14 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
             txt.setVisibility(View.VISIBLE);
             RelativeLayout v = activity.findViewById(R.id.bView);
             v.setVisibility(View.VISIBLE);
-            ProgressBar spinner = activity.findViewById(R.id.mProgressBarHome);
+            ProgressBar spinner = activity.findViewById(R.id.mProgressBarProfile);
             spinner.setVisibility(View.GONE);
         } else {
             TextView txt = activity.findViewById(R.id.tFavs);
             txt.setVisibility(View.VISIBLE);
             TextView txt2 = activity.findViewById(R.id.tError);
             txt2.setVisibility(View.VISIBLE);
-            ProgressBar spinner = activity.findViewById(R.id.mProgressBarHome);
+            ProgressBar spinner = activity.findViewById(R.id.mProgressBarProfile);
             spinner.setVisibility(View.GONE);
         }
     }

@@ -33,7 +33,7 @@ public class PubDetails extends AppCompatActivity {
         ScrollView v = findViewById(R.id.bView);
         v.setVisibility(View.GONE);
 
-        ProgressBar spinner = findViewById(R.id.mProgressBarHome);
+        ProgressBar spinner = findViewById(R.id.mProgressBarProfile);
         spinner.setVisibility(View.VISIBLE);
 
         ActionBar actionBar = getSupportActionBar();
