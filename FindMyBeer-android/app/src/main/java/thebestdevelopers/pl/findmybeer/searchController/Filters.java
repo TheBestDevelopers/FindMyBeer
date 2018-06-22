@@ -1,12 +1,12 @@
 package thebestdevelopers.pl.findmybeer.searchController;
 
 import android.content.Intent;
-<<<<<<< HEAD
+//<<<<<<< HEAD
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.preference.PreferenceManager;
-=======
->>>>>>> ae5319b5f38db02e4826da28b0b18a6b697d2511
+//=======
+//>>>>>>> ae5319b5f38db02e4826da28b0b18a6b697d2511
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
