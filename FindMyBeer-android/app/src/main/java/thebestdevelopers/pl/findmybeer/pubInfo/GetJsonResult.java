@@ -33,10 +33,12 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
 
     WeakReference<Activity> mWeakActivity;
     private Context context;
+    String methode;
 
-    public GetJsonResult(Activity activity, Context _context) {
+    public GetJsonResult(Activity activity, Context _context, String meth) {
         mWeakActivity = new WeakReference<Activity>(activity);
         context = _context;
+        methode = meth;
     }
 
     @Override
@@ -44,7 +46,7 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
         url = (String) objects[0];
         if (objects.length > 1)
             favs = (String) objects[1];
-        DownloadPubUrl downloadUrl = new DownloadPubUrl(context);
+        DownloadPubUrl downloadUrl = new DownloadPubUrl(context, methode);
         try {
             googlePlacesData = downloadUrl.readUrl(url);
         } catch (Exception e) {

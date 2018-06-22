@@ -3,6 +3,7 @@ package thebestdevelopers.pl.findmybeer;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -64,7 +65,7 @@ public class HomeTab extends AppCompatActivity implements ItemClickListener, Goo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hometab);
         overridePendingTransition(0, 0);
-
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         sessionController = new SessionController(getApplicationContext());
 //        if (!sessionController.isLoggedIn()) {
 //            sessionController.checkLogin();

@@ -164,8 +164,7 @@ public class MapTab extends AppCompatActivity implements OnMapReadyCallback, Goo
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
                 } else {
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
+                    Toast.makeText(this, "No access to the location services", Toast.LENGTH_LONG).show();
                 }
                 return;
             }
@@ -195,12 +194,12 @@ public class MapTab extends AppCompatActivity implements OnMapReadyCallback, Goo
 
     @Override
     public void onConnectionSuspended(int i) {
-
+        Toast.makeText(this, "No access to the location services", Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
+        Toast.makeText(this, "No access to the location services", Toast.LENGTH_LONG).show();
     }
 
     @Override

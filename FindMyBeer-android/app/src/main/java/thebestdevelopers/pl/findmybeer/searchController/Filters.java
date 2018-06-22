@@ -2,6 +2,7 @@ package thebestdevelopers.pl.findmybeer.searchController;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -77,6 +78,7 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
         setContentView(R.layout.activity_filters);
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         buttonSave = findViewById(R.id.mButtonSave);
         buttonSave.setEnabled(false);

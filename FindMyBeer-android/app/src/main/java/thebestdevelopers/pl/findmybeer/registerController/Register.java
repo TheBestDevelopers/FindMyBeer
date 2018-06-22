@@ -2,6 +2,7 @@ package thebestdevelopers.pl.findmybeer.registerController;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,6 +32,7 @@ public class Register extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         setContentView(R.layout.activity_register);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         httpRequests = new HttpRequests(this);
         mEditTextUsername = findViewById(R.id.mEditTextOldPswd);
         mEditTextPassword = findViewById(R.id.mEditTextNewPswd);

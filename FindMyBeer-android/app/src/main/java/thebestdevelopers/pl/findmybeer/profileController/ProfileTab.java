@@ -46,7 +46,7 @@ public class ProfileTab extends AppCompatActivity {
         TextView mName = findViewById(R.id.tLogin);
         mName.setVisibility(View.GONE);
         TextView mError= findViewById(R.id.tError);
-        mName.setVisibility(View.GONE);
+        mError.setVisibility(View.GONE);
 
         overridePendingTransition(0, 0);
         BottomNavigationView tabs = findViewById(R.id.navigationtabs5);
@@ -164,7 +164,7 @@ public class ProfileTab extends AppCompatActivity {
     //http://localhost:8080/api/users/getUsername?ID=8
     private String getUrl3(String id) {
         StringBuilder googlePlaceUrl = new StringBuilder(getResources().getString(R.string.databaseIP));
-        googlePlaceUrl.append("/api/users/getUsername?ID=1");
+        googlePlaceUrl.append("/api/users/getUsername");
         Log.d("created url", googlePlaceUrl.toString());
         return googlePlaceUrl.toString();
     }

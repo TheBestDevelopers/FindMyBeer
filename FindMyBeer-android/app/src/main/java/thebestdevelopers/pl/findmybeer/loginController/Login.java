@@ -1,6 +1,7 @@
 package thebestdevelopers.pl.findmybeer.loginController;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -48,6 +49,7 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         sessionController = new SessionController(getApplicationContext());
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         if (sessionController.isLoggedIn()) {
             if (sessionController.isPubLoggedIn()) {
                 Intent i = new Intent(getApplicationContext(), PubDetails.class);

@@ -17,11 +17,13 @@ public class DownloadPubUrl {
 
     private SessionController sessionController;
     private Context context;
+    String methode;
 
     // Application context needed to manage session and get cookies for authorization
-    public DownloadPubUrl(Context _context) {
+    public DownloadPubUrl(Context _context, String meth) {
         context = _context;
         sessionController = new SessionController(context);
+        methode = meth;
     }
 
     public String readUrl(String myUrl) throws Exception
@@ -35,6 +37,7 @@ public class DownloadPubUrl {
             urlConnection=(HttpURLConnection) url.openConnection();
             // Set cookie as a request property to authorize
             urlConnection.setRequestProperty(sessionController.KEY_COOKIE, sessionController.getCookie());
+            urlConnection.setRequestMethod(methode);
             urlConnection.connect();
 
             inputStream = urlConnection.getInputStream();

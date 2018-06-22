@@ -39,7 +39,7 @@ public class Menu extends AppCompatActivity {
         }
 
         String url = getUrl(mId);
-        GetJsonResult getMenuData = new GetJsonResult(this);
+        GetJsonResult getMenuData = new GetJsonResult(this, getApplicationContext(), "GET");
         Object dataTransfer[] = new Object[1];
         dataTransfer[0] = url;
         getMenuData.execute(dataTransfer);
@@ -77,8 +77,7 @@ public class Menu extends AppCompatActivity {
 
     private String getUrl(String id) {
         StringBuilder menuUrl = new StringBuilder(getResources().getString(R.string.databaseIP));
-        menuUrl.append("/api/pubs/getPubMenu?pubID=");
-        menuUrl.append(id);
+        menuUrl.append("/api/pubs/getPubMenuForPubs");
         Log.d("created url", menuUrl.toString());
         return menuUrl.toString();
     }

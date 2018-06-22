@@ -1,5 +1,6 @@
 package thebestdevelopers.pl.findmybeer.pubView.pubMenuController;
 
+import android.content.Context;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -10,9 +11,21 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class DownloadMenuUrl {
+import thebestdevelopers.pl.findmybeer.SessionController;
 
-    public String readUrl(String myUrl) throws IOException
+public class DownloadMenuUrl {
+    private SessionController sessionController;
+    private Context context;
+    String method;
+
+    // Application context needed to manage session and get cookies for authorization
+    public DownloadMenuUrl(Context _context, String _method) {
+        context = _context;
+        sessionController = new SessionController(context);
+        method = _method;
+    }
+
+    public String readUrl(String myUrl) throws Exception
     {
         String data = "";
         InputStream inputStream = null;
@@ -21,6 +34,9 @@ public class DownloadMenuUrl {
         try {
             URL url = new URL(myUrl);
             urlConnection=(HttpURLConnection) url.openConnection();
+            // Set cookie as a request property to authorize
+            urlConnection.setRequestProperty(sessionController.KEY_COOKIE, sessionController.getCookie());
+            urlConnection.setRequestMethod(method);
             urlConnection.connect();
 
             inputStream = urlConnection.getInputStream();
@@ -37,9 +53,11 @@ public class DownloadMenuUrl {
             br.close();
 
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            throw e;
         } catch (IOException e) {
-            e.printStackTrace();
+            throw e;
+        } catch (Exception e) {
+            throw e;
         }
         finally {
             inputStream.close();
@@ -49,4 +67,5 @@ public class DownloadMenuUrl {
 
         return data;
     }
+
 }
