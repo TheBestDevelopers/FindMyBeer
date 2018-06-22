@@ -61,6 +61,14 @@ public class PubController implements Serializable {
         return pubService.getPubMenu(pubId);
     }
 
+    @GetMapping("getPubMenuForPubs")
+    public PubMenuDTO getPubMenuForPubs(Principal principal){
+        User user = (User) ((Authentication) principal).getPrincipal();
+        UserEntity userEntity = userRepository.findByUsername(user.getUsername()).get(0);
+
+        return pubService.getPubMenu((int) userEntity.getUserId());
+    }
+
     @GetMapping("getPubs")
     public GetPubsDTO getPubs(@RequestParam("longitude") Double longitude, @RequestParam("latitude") Double latitude) throws IOException{
 
