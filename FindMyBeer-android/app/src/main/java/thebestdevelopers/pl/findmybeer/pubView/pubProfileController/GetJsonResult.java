@@ -66,6 +66,8 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
             mName.setText("No data");
             mName.setVisibility(View.VISIBLE);
         }
+        ProgressBar spinner = activity.findViewById(R.id.mProgressBarProfile);
+        spinner.setVisibility(View.GONE);
     }
 
     private void showNearbyPlaces(HashMap<String, String> googlePlace)
