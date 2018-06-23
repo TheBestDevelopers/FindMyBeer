@@ -29,7 +29,6 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
     private String chair1, chair2, chair4, chair6, chair8;
     private String favourite = "", ourPub = "false";
 
-
     WeakReference<Activity> mWeakActivity;
     private Context context;
     String methode;
@@ -133,7 +132,6 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
                         bFav.setText("Add to favourites");
 
                     String convs = "";
-
                     if (wifi.equals("true"))
                         convs += "WI-FI\n";
                     if (adaptedforthedisabled.equals("true"))

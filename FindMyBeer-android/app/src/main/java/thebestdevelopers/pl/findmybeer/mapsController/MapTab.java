@@ -7,17 +7,16 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -36,17 +35,16 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 
 import thebestdevelopers.pl.findmybeer.BottomNavigationViewHelper;
-import thebestdevelopers.pl.findmybeer.Manifest;
-import thebestdevelopers.pl.findmybeer.favController.FavTab;
 import thebestdevelopers.pl.findmybeer.HomeTab;
+import thebestdevelopers.pl.findmybeer.R;
+import thebestdevelopers.pl.findmybeer.favController.FavTab;
 import thebestdevelopers.pl.findmybeer.profileController.ProfileTab;
 import thebestdevelopers.pl.findmybeer.pubInfo.PubInfo;
-import thebestdevelopers.pl.findmybeer.R;
 import thebestdevelopers.pl.findmybeer.searchController.SearchTab;
 
 public class MapTab extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener,
-        GoogleMap.OnInfoWindowClickListener{
+        GoogleMap.OnInfoWindowClickListener {
 
     GoogleMap mGoogleMap;
     GoogleApiClient mGoogleApiClient;
@@ -110,6 +108,7 @@ public class MapTab extends AppCompatActivity implements OnMapReadyCallback, Goo
                 });
 
     }
+
     private void initMap() {
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.mapfragment);
         mapFragment.getMapAsync(this);
@@ -155,6 +154,7 @@ public class MapTab extends AppCompatActivity implements OnMapReadyCallback, Goo
                 .build();
         mGoogleApiClient.connect();
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
@@ -204,7 +204,7 @@ public class MapTab extends AppCompatActivity implements OnMapReadyCallback, Goo
 
     @Override
     public void onLocationChanged(Location location) {
-        if(location == null) {
+        if (location == null) {
             Toast.makeText(this, "No access to the location services", Toast.LENGTH_LONG).show();
         } else {
             latitude = location.getLatitude();
@@ -225,7 +225,7 @@ public class MapTab extends AppCompatActivity implements OnMapReadyCallback, Goo
         dataTransfer[2] = this;
         try {
             getNearbyPlacesData.execute(dataTransfer);
-        } catch(Exception e) {
+        } catch (Exception e) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Cannot connect to the server!")
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -261,21 +261,20 @@ public class MapTab extends AppCompatActivity implements OnMapReadyCallback, Goo
         }
     }
 
-    //http://localhost:8080/api/pubs/getPubs?longitude=18.976369&latitude=50.2301888
     private String getUrl2(double lat, double lng) {
         StringBuilder googlePlaceUrl = new StringBuilder(getResources().getString(R.string.databaseIP));
-        googlePlaceUrl.append("/api/pubs/getPubs?longitude="+lng+"&latitude="+lat);
+        googlePlaceUrl.append("/api/pubs/getPubs?longitude=" + lng + "&latitude=" + lat);
         Log.d("created url", googlePlaceUrl.toString());
         return googlePlaceUrl.toString();
     }
 
     private String getUrl(double lat, double lng, String nearby) {
         StringBuilder googlePlaceUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
-        googlePlaceUrl.append("location="+lat+","+lng);
-        googlePlaceUrl.append("&radius="+"5000");
-        googlePlaceUrl.append("&type="+nearby);
-        googlePlaceUrl.append("&name="+nearby);
-        googlePlaceUrl.append("&key="+"AIzaSyB3iQRgruru1jotumbRTuzOYiWSePz41ZQ");
+        googlePlaceUrl.append("location=" + lat + "," + lng);
+        googlePlaceUrl.append("&radius=" + "5000");
+        googlePlaceUrl.append("&type=" + nearby);
+        googlePlaceUrl.append("&name=" + nearby);
+        googlePlaceUrl.append("&key=" + "AIzaSyB3iQRgruru1jotumbRTuzOYiWSePz41ZQ");
         return googlePlaceUrl.toString();
     }
 

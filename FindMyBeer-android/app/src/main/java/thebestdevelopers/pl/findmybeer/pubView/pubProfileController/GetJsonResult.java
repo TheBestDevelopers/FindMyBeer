@@ -1,9 +1,7 @@
 package thebestdevelopers.pl.findmybeer.pubView.pubProfileController;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
@@ -29,7 +27,7 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
 
     @Override
     protected String doInBackground(Object... objects) {
-        url = (String)objects[0];
+        url = (String) objects[0];
         DownloadProfileUrl downloadUrl = new DownloadProfileUrl(context);
         try {
             googlePlacesData = downloadUrl.readUrl(url);
@@ -60,8 +58,7 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
             btn2.setVisibility(View.VISIBLE);
             Button btn3 = activity.findViewById(R.id.bDelete);
             btn3.setVisibility(View.VISIBLE);
-        }
-        else {
+        } else {
             TextView mName = activity.findViewById(R.id.tLogin);
             mName.setText("No data");
             mName.setVisibility(View.VISIBLE);
@@ -70,8 +67,7 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
         spinner.setVisibility(View.GONE);
     }
 
-    private void showNearbyPlaces(HashMap<String, String> googlePlace)
-    {
+    private void showNearbyPlaces(HashMap<String, String> googlePlace) {
         userName = googlePlace.get("user_name");
     }
 }

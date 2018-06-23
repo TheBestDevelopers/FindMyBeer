@@ -2,11 +2,11 @@ package thebestdevelopers.pl.findmybeer.favController;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,19 +17,15 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import thebestdevelopers.pl.findmybeer.BottomNavigationViewHelper;
 import thebestdevelopers.pl.findmybeer.HomeTab;
-import thebestdevelopers.pl.findmybeer.profileController.ProfileTab;
 import thebestdevelopers.pl.findmybeer.R;
-import thebestdevelopers.pl.findmybeer.searchController.SearchTab;
 import thebestdevelopers.pl.findmybeer.mapsController.MapTab;
+import thebestdevelopers.pl.findmybeer.profileController.ProfileTab;
+import thebestdevelopers.pl.findmybeer.searchController.SearchTab;
 
 public class FavTab extends AppCompatActivity {
 
-    String mId;
-    ArrayList<PubData> mfavList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,20 +54,11 @@ public class FavTab extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         //przekazane info z pubinfo
-
-        String mId = "8";
-
-        String url = getUrl(mId);
+        String url = getUrl();
         GetJsonResult getFavData = new GetJsonResult(this, getApplicationContext());
         Object dataTransfer[] = new Object[1];
         dataTransfer[0] = url;
         getFavData.execute(dataTransfer);
-
-        //trzeba przeslac do bazy
-        //dodanie elementow do listy - pobranie z bazy
-        //tymczasowe rozwiazanie
-
-        //recyclerView.setAdapter(new FavRecyclerViewAdapter(mfavList, recyclerView));
 
         Intent i;
         tabs.setOnNavigationItemSelectedListener
@@ -110,9 +97,7 @@ public class FavTab extends AppCompatActivity {
                 });
     }
 
-    //TO_DO
-    //http://localhost:8080/api/favourites/getFavourites?userID=9
-    private String getUrl(String id) {
+    private String getUrl() {
         StringBuilder menuUrl = new StringBuilder(getResources().getString(R.string.databaseIP));
         menuUrl.append("/api/favourites/getFavourites");
         Log.d("created url", menuUrl.toString());

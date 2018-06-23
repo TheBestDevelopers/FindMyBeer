@@ -7,8 +7,7 @@ import org.json.JSONObject;
 
 public class LoginParser {
 
-    private User getLoggedUserData(JSONObject loggedUserDataJsonObject)
-    {
+    private User getLoggedUserData(JSONObject loggedUserDataJsonObject) {
         User user = null;
         try {
             String username = loggedUserDataJsonObject.getString("username");
@@ -16,27 +15,25 @@ public class LoginParser {
             String role = loggedUserDataJsonObject.getString("role");
             Role userRole = Role.CLIENT;
             switch (role) {
-                case "client" :
+                case "client":
                     userRole = Role.CLIENT;
                     break;
-                case "admin" :
+                case "admin":
                     userRole = Role.ADMIN;
                     break;
-                case "pub" :
+                case "pub":
                     userRole = Role.PUB;
                     break;
             }
 
-            user = new User(username,id,userRole);
-        }
-            catch (JSONException e) {
+            user = new User(username, id, userRole);
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         return user;
-}
+    }
 
-    public User parse(String jsonData)
-    {
+    public User parse(String jsonData) {
         JSONObject jsonObject = null;
         try {
             jsonObject = new JSONObject(jsonData);

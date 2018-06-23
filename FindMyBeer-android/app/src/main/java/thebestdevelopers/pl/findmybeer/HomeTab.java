@@ -1,20 +1,18 @@
 package thebestdevelopers.pl.findmybeer;
 
-import android.app.AlertDialog;
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,7 +22,6 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.Manifest;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -32,15 +29,15 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
 
+import thebestdevelopers.pl.findmybeer.ApiController.AsyncTasks.GetDataAsyncTask;
+import thebestdevelopers.pl.findmybeer.ApiController.AsyncTasks.IAsyncResponse;
+import thebestdevelopers.pl.findmybeer.ApiController.DownloadUrl.DownloadUrlWithoutJSONBody;
 import thebestdevelopers.pl.findmybeer.ApiController.HttpRequests;
 import thebestdevelopers.pl.findmybeer.favController.FavTab;
 import thebestdevelopers.pl.findmybeer.mapsController.MapTab;
 import thebestdevelopers.pl.findmybeer.profileController.ProfileTab;
 import thebestdevelopers.pl.findmybeer.pubInfo.PubInfo;
-import thebestdevelopers.pl.findmybeer.ApiController.DownloadUrl.DownloadUrlWithoutJSONBody;
-import thebestdevelopers.pl.findmybeer.ApiController.AsyncTasks.GetDataAsyncTask;
 import thebestdevelopers.pl.findmybeer.pubListController.ItemClickListener;
-import thebestdevelopers.pl.findmybeer.ApiController.AsyncTasks.IAsyncResponse;
 import thebestdevelopers.pl.findmybeer.pubListController.NearbyPubsParser;
 import thebestdevelopers.pl.findmybeer.pubListController.Pub;
 import thebestdevelopers.pl.findmybeer.pubListController.PubListRecyclerViewerAdapter;
@@ -55,7 +52,7 @@ public class HomeTab extends AppCompatActivity implements ItemClickListener, Goo
     Double longitude = 0.0;
     ArrayList<Pub> pubs;
     private PubListRecyclerViewerAdapter mAdapter;
-    SortingTypeChooser  sortingTypeChooser;
+    SortingTypeChooser sortingTypeChooser;
     RecyclerView recyclerView;
     ItemClickListener itemClickListener;
     HttpRequests httpRequests;
@@ -228,13 +225,12 @@ public class HomeTab extends AppCompatActivity implements ItemClickListener, Goo
                 String url = httpRequests.getNearbyPubsUrl(longitude, latitude);
                 Object dataTransfer[] = new Object[1];
                 dataTransfer[0] = url;
-                GetDataAsyncTask asyncTask = (GetDataAsyncTask) new GetDataAsyncTask(new IAsyncResponse(){
+                GetDataAsyncTask asyncTask = (GetDataAsyncTask) new GetDataAsyncTask(new IAsyncResponse() {
                     @Override
-                    public void processFinish(String result, Boolean timeout){
+                    public void processFinish(String result, Boolean timeout) {
                         if (timeout) {
                             showAlert("Error with server connection. Try again later.");
-                        }
-                        else {
+                        } else {
                             NearbyPubsParser parser = new NearbyPubsParser();
                             pubs = parser.parse(result);
                             if (pubs != null) {

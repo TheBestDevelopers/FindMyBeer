@@ -19,6 +19,8 @@ public class PubData {
         return mAddress;
     }
 
-    public String getId() { return mID; }
+    public String getId() {
+        return mID;
+    }
 
 }

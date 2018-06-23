@@ -3,14 +3,12 @@ package thebestdevelopers.pl.findmybeer.pubView.pubDetailsController;
 import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
 
@@ -19,7 +17,7 @@ import thebestdevelopers.pl.findmybeer.R;
 public class GetJsonResult extends AsyncTask<Object, String, String> {
 
     private String googlePlacesData;
-    private String placeName, vicinity, phone, rating, website;
+    private String placeName, vicinity, rating;
     private String url;
     public TextView mName, mRating, mAddress, mPhone, mWebsite, tConveniences, tTables;
     public ProgressBar spinner;
@@ -27,7 +25,6 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
     private String wifi, adaptedforthedisabled, boardgames, discountsforgroups;
     private String discountsforstudents, roastingroom, toilet;
     private String chair1, chair2, chair4, chair6, chair8;
-
 
 
     WeakReference<Activity> mWeakActivity;
@@ -40,39 +37,39 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
 
     @Override
     protected String doInBackground(Object... objects) {
-        url = (String)objects[0];
+        url = (String) objects[0];
         DownloadPubUrl downloadUrl = new DownloadPubUrl(context);
         try {
             googlePlacesData = downloadUrl.readUrl(url);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            return "Exception";
         }
-
         return googlePlacesData;
     }
 
     @Override
-    protected void onPostExecute(String s){
+    protected void onPostExecute(String s) {
         HashMap<String, String> nearbyPlaceList;
-        DataPubParser parser = new DataPubParser();
-        nearbyPlaceList = parser.parse(s);
-        showNearbyPlaces(nearbyPlaceList);
         Activity activity = mWeakActivity.get();
-        if (activity != null) {
+        if (!s.equals("Exception")) {
+            DataPubParser parser = new DataPubParser();
+            nearbyPlaceList = parser.parse(s);
+            showNearbyPlaces(nearbyPlaceList);
+            if (activity != null) {
 
-            mName = activity.findViewById(R.id.tName);
-            mName.setText(placeName);
+                mName = activity.findViewById(R.id.tName);
+                mName.setText(placeName);
 
-            mAddress = activity.findViewById(R.id.tAddress);
-            mAddress.setText(vicinity);
+                mAddress = activity.findViewById(R.id.tAddress);
+                mAddress.setText(vicinity);
 
-            mRating = activity.findViewById(R.id.tRating);
-            mRating.setText(rating+"/5");
+                mRating = activity.findViewById(R.id.tRating);
+                mRating.setText(rating + "/5");
 
-            tConveniences = activity.findViewById(R.id.tConveniences);
-            tTables = activity.findViewById(R.id.tTables);
+                tConveniences = activity.findViewById(R.id.tConveniences);
+                tTables = activity.findViewById(R.id.tTables);
 
-            spinner = activity.findViewById(R.id.mProgressBarProfile);
+                spinner = activity.findViewById(R.id.mProgressBarProfile);
 
                 String convs = "";
 
@@ -101,31 +98,37 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
                         "8 person table: " + chair8;
 
                 tTables.setText(chairs);
+            }
+            spinner = activity.findViewById(R.id.mProgressBarProfile);
+            spinner.setVisibility(View.GONE);
+            ScrollView v = activity.findViewById(R.id.bView);
+            v.setVisibility(View.VISIBLE);
+        } else {
+            TextView txt = activity.findViewById(R.id.tError);
+            txt.setVisibility(View.VISIBLE);
+            spinner = activity.findViewById(R.id.mProgressBarProfile);
+            spinner.setVisibility(View.GONE);
         }
-        spinner.setVisibility(View.GONE);
-        ScrollView v = activity.findViewById(R.id.bView);
-        v.setVisibility(View.VISIBLE);
     }
 
-    private void showNearbyPlaces(HashMap<String, String> googlePlace)
-    {
-            placeName = googlePlace.get("place_name");
-            vicinity = googlePlace.get("vicinity");
-            rating = googlePlace.get("rating");
+    private void showNearbyPlaces(HashMap<String, String> googlePlace) {
+        placeName = googlePlace.get("place_name");
+        vicinity = googlePlace.get("vicinity");
+        rating = googlePlace.get("rating");
 
-                wifi = googlePlace.get("WI-FI");
-                adaptedforthedisabled = googlePlace.get("adapted for the disabled");
-                boardgames = googlePlace.get("board games");
-                discountsforgroups = googlePlace.get("discounts for groups");
-                discountsforstudents = googlePlace.get("discounts for students");
-                roastingroom = googlePlace.get("roasting room");
-                toilet = googlePlace.get("toilet");
+        wifi = googlePlace.get("WI-FI");
+        adaptedforthedisabled = googlePlace.get("adapted for the disabled");
+        boardgames = googlePlace.get("board games");
+        discountsforgroups = googlePlace.get("discounts for groups");
+        discountsforstudents = googlePlace.get("discounts for students");
+        roastingroom = googlePlace.get("roasting room");
+        toilet = googlePlace.get("toilet");
 
-                chair1 = googlePlace.get("chair1");
-                chair2 = googlePlace.get("chair2");
-                chair4 = googlePlace.get("chair4");
-                chair6 = googlePlace.get("chair6");
-                chair8 = googlePlace.get("chair8");
+        chair1 = googlePlace.get("chair1");
+        chair2 = googlePlace.get("chair2");
+        chair4 = googlePlace.get("chair4");
+        chair6 = googlePlace.get("chair6");
+        chair8 = googlePlace.get("chair8");
 
     }
 }

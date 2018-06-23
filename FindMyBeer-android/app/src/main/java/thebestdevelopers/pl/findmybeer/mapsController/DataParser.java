@@ -1,6 +1,5 @@
 package thebestdevelopers.pl.findmybeer.mapsController;
 
-import java.util.HashMap;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -8,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class DataParser {
@@ -17,13 +17,12 @@ public class DataParser {
         String placeName = "-";
         String vicinity = "-";
         String latitude = "";
-        String longitude ="";
+        String longitude = "";
         String reference = "";
         String id = "";
         String ourPub = "";
 
-        Log.d("DataParser","jsonobject ="+googlePlaceJson.toString());
-
+        Log.d("DataParser", "jsonobject =" + googlePlaceJson.toString());
 
         try {
             if (!googlePlaceJson.isNull("name")) {
@@ -52,20 +51,18 @@ public class DataParser {
             googlePlaceMap.put("place_id", id);
             googlePlaceMap.put("our_pub", ourPub);
 
-        }
-        catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         return googlePlaceMap;
-
     }
-    private List<HashMap<String, String>>getPlaces(JSONArray jsonArray) {
+
+    private List<HashMap<String, String>> getPlaces(JSONArray jsonArray) {
         int count = jsonArray.length();
         List<HashMap<String, String>> placelist = new ArrayList<>();
         HashMap<String, String> placeMap = null;
 
-        for(int i = 0; i<count;i++)
-        {
+        for (int i = 0; i < count; i++) {
             try {
                 placeMap = getPlace((JSONObject) jsonArray.get(i));
                 placelist.add(placeMap);

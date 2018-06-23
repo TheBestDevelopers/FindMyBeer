@@ -10,15 +10,11 @@ import java.util.HashMap;
 
 public class DataMenuParser {
 
-    private HashMap<String, String> getMenu(JSONObject googlePlaceJson)
-    {
+    private HashMap<String, String> getMenu(JSONObject googlePlaceJson) {
         HashMap<String, String> menuList = new HashMap<>();
-        String menu = "", size="";
+        String menu = "", size = "";
 
-        Log.d("DataParser","jsonobject ="+googlePlaceJson.toString());
-
-
-        //{"result":{"menu": "beer1:7 beer2:6 beer3:8", "size" : "3"}}
+        Log.d("DataParser", "jsonobject =" + googlePlaceJson.toString());
 
         try {
             if (!googlePlaceJson.isNull("menu")) {
@@ -27,19 +23,15 @@ public class DataMenuParser {
             if (!googlePlaceJson.isNull("size")) {
                 size = googlePlaceJson.getString("size");
             }
-
             menuList.put("menu", menu);
             menuList.put("size", size);
-        }
-        catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         return menuList;
-
     }
 
-    public HashMap<String, String> parse(String jsonData)
-    {
+    public HashMap<String, String> parse(String jsonData) {
         JSONArray jsonArray = null;
         JSONObject jsonObject = null;
         JSONObject jObjectResult = null;

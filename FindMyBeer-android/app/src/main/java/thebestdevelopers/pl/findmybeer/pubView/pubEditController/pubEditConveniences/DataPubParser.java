@@ -10,11 +10,10 @@ import java.util.HashMap;
 
 public class DataPubParser {
 
-    private HashMap<String, String> getPlace(JSONObject googlePlaceJson)
-    {
+    private HashMap<String, String> getPlace(JSONObject googlePlaceJson) {
         HashMap<String, String> googlePlaceMap = new HashMap<>();
 
-        Log.d("DataParser","jsonobject ="+googlePlaceJson.toString());
+        Log.d("DataParser", "jsonobject =" + googlePlaceJson.toString());
 
         try {
             if (!googlePlaceJson.isNull("conveniences")) {
@@ -39,16 +38,13 @@ public class DataPubParser {
                 if (!googlePlaceJson.getJSONObject("conveniences").isNull("TOILET"))
                     googlePlaceMap.put("toilet", googlePlaceJson.getJSONObject("conveniences").getString("TOILET"));
             }
-        }
-        catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         return googlePlaceMap;
-
     }
 
-    public HashMap<String, String> parse(String jsonData)
-    {
+    public HashMap<String, String> parse(String jsonData) {
         JSONArray jsonArray = null;
         JSONObject jsonObject;
         JSONObject jObjectResult = null;

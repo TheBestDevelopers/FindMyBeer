@@ -11,14 +11,12 @@ import java.util.HashMap;
 import java.util.List;
 
 public class DataFavParser {
-    private HashMap<String, String> getFav(JSONObject googlePlaceJson)
-    {
+    private HashMap<String, String> getFav(JSONObject googlePlaceJson) {
         HashMap<String, String> menuList = new HashMap<>();
-        String name = "", vicinity="", placeID="";
+        String name = "", vicinity = "", placeID = "";
 
-        Log.d("DataParser","jsonobject ="+googlePlaceJson.toString());
+        Log.d("DataParser", "jsonobject =" + googlePlaceJson.toString());
 
-        //TO_DO
         try {
             if (!googlePlaceJson.isNull("name")) {
                 name = googlePlaceJson.getString("name");
@@ -34,22 +32,18 @@ public class DataFavParser {
             menuList.put("name", name);
             menuList.put("vicinity", vicinity);
             menuList.put("place_id", placeID);
-        }
-        catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         return menuList;
-
     }
 
-    private List<HashMap<String, String>> getFavs(JSONArray jsonArray)
-    {
+    private List<HashMap<String, String>> getFavs(JSONArray jsonArray) {
         int count = jsonArray.length();
         List<HashMap<String, String>> placelist = new ArrayList<>();
         HashMap<String, String> placeMap = null;
 
-        for(int i = 0; i<count;i++)
-        {
+        for (int i = 0; i < count; i++) {
             try {
                 placeMap = getFav((JSONObject) jsonArray.get(i));
                 placelist.add(placeMap);
@@ -60,8 +54,7 @@ public class DataFavParser {
         return placelist;
     }
 
-    public List<HashMap<String, String>> parse(String jsonData)
-    {
+    public List<HashMap<String, String>> parse(String jsonData) {
         String temp = "{\"results\":";
         String nowy = temp + jsonData + "}";
         jsonData = nowy;

@@ -1,7 +1,5 @@
 package thebestdevelopers.pl.findmybeer.profileController;
 
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,8 +8,7 @@ import java.util.HashMap;
 
 public class DataProfileParser {
 
-    private HashMap<String, String> getPlace(JSONObject googlePlaceJson)
-    {
+    private HashMap<String, String> getPlace(JSONObject googlePlaceJson) {
         HashMap<String, String> googlePlaceMap = new HashMap<>();
         String userName = "";
 
@@ -20,17 +17,14 @@ public class DataProfileParser {
                 userName = googlePlaceJson.getString("username");
             }
             googlePlaceMap.put("user_name", userName);
-
-        }
-        catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         return googlePlaceMap;
 
     }
 
-    public HashMap<String, String> parse(String jsonData)
-    {
+    public HashMap<String, String> parse(String jsonData) {
         JSONArray jsonArray = null;
         JSONObject jsonObject;
         JSONObject jObjectResult = null;

@@ -1,15 +1,10 @@
 package thebestdevelopers.pl.findmybeer.searchController;
 
 import android.content.Intent;
-//<<<<<<< HEAD
-import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.preference.PreferenceManager;
-//=======
-//>>>>>>> ae5319b5f38db02e4826da28b0b18a6b697d2511
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.view.WindowManager;
@@ -25,25 +20,27 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceBuffer;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.ResultCallback;
-
-
 import java.util.ArrayList;
 
-import thebestdevelopers.pl.findmybeer.ApiController.HttpRequests;
-import thebestdevelopers.pl.findmybeer.R;
-import thebestdevelopers.pl.findmybeer.ApiController.DownloadUrl.DownloadUrlWithoutJSONBody;
 import thebestdevelopers.pl.findmybeer.ApiController.AsyncTasks.GetDataAsyncTask;
 import thebestdevelopers.pl.findmybeer.ApiController.AsyncTasks.IAsyncResponse;
+import thebestdevelopers.pl.findmybeer.ApiController.DownloadUrl.DownloadUrlWithoutJSONBody;
+import thebestdevelopers.pl.findmybeer.ApiController.HttpRequests;
+import thebestdevelopers.pl.findmybeer.R;
 import thebestdevelopers.pl.findmybeer.searchController.Conveniences.ConveniencesParser;
 import thebestdevelopers.pl.findmybeer.searchController.Sorting.SortingTypesStore;
+
+//<<<<<<< HEAD
+//=======
+//>>>>>>> ae5319b5f38db02e4826da28b0b18a6b697d2511
 
 public class Filters extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener,
         GoogleApiClient.ConnectionCallbacks {
@@ -135,7 +132,7 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-        Toast.makeText(this,"Google Places API connection failed with error code:" +
+        Toast.makeText(this, "Google Places API connection failed with error code:" +
                         connectionResult.getErrorCode(),
                 Toast.LENGTH_LONG).show();
     }
@@ -187,7 +184,7 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
         SortingTypesStore sortingTypesStore = new SortingTypesStore();
         sortingTypes = sortingTypesStore.getSortingTypes();
 
-        arrayAdapterSortingTypes = new ArrayAdapter<>(this,android.R.layout.simple_list_item_single_choice, sortingTypes);
+        arrayAdapterSortingTypes = new ArrayAdapter<>(this, android.R.layout.simple_list_item_single_choice, sortingTypes);
         mListViewSorting = findViewById(R.id.mListViewSorting);
         mListViewSorting.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         mListViewSorting.setAdapter(arrayAdapterSortingTypes);
@@ -195,7 +192,7 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
     }
 
     private void setConveniencesChooser() {
-        arrayAdapterConveniences = new ArrayAdapter<>(this,android.R.layout.simple_list_item_single_choice, conveniences);
+        arrayAdapterConveniences = new ArrayAdapter<>(this, android.R.layout.simple_list_item_single_choice, conveniences);
         mListViewConveniences = findViewById(R.id.mListViewConveniences);
         mListViewConveniences.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         mListViewConveniences.setAdapter(arrayAdapterConveniences);
@@ -219,21 +216,21 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
             }
         }
     }
+
     private void getConveniencesListFromApi() {
         String url = httpRequests.getConveniencesUrl();
         Object dataTransfer[] = new Object[1];
         dataTransfer[0] = url;
-        GetDataAsyncTask asyncTask = (GetDataAsyncTask) new GetDataAsyncTask(new IAsyncResponse(){
+        GetDataAsyncTask asyncTask = (GetDataAsyncTask) new GetDataAsyncTask(new IAsyncResponse() {
             @Override
-            public void processFinish(String result, Boolean timeout){
+            public void processFinish(String result, Boolean timeout) {
                 if (timeout) {
                     showAlert("Cannot connect to database. Try again later.");
-                }
-                else {
+                } else {
                     ConveniencesParser parser = new ConveniencesParser();
                     conveniences = parser.parse(result);
                     if (conveniences != null && conveniences.size() != 0) {
-                       // spinner.setVisibility(View.GONE);
+                        // spinner.setVisibility(View.GONE);
                         for (String s : conveniences)
                             s.replace("_", " ");
                         setConveniencesChooser();
@@ -246,6 +243,7 @@ public class Filters extends AppCompatActivity implements GoogleApiClient.OnConn
             }
         }, new DownloadUrlWithoutJSONBody(getApplicationContext(), "GET")).execute(dataTransfer);
     }
+
     private void showAlert(String message) {
         //temporary solution - should appear a message box or a textview with this info and it should appear once...
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();

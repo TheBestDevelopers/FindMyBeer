@@ -1,12 +1,13 @@
 package thebestdevelopers.pl.findmybeer.menuController;
 
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import java.util.ArrayList;
+
 import thebestdevelopers.pl.findmybeer.R;
 
 public class MenuRecyclerViewAdapter extends RecyclerView.Adapter {
@@ -29,7 +30,7 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter {
     }
 
     // konstruktor adaptera
-    public MenuRecyclerViewAdapter(ArrayList<MenuData> menuList, RecyclerView recyclerView){
+    public MenuRecyclerViewAdapter(ArrayList<MenuData> menuList, RecyclerView recyclerView) {
         mMenuList = menuList;
         mRecyclerView = recyclerView;
     }
@@ -49,7 +50,7 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter {
         // uzupełniamy layout artykułu
         MenuData data = mMenuList.get(i);
         String str = data.getName();
-        str = str.replace('_',' ');
+        str = str.replace('_', ' ');
         ((MyViewHolder) viewHolder).mName.setText(str);
         ((MyViewHolder) viewHolder).mPrice.setText("Cena: " + data.getAdress() + " zł");
     }

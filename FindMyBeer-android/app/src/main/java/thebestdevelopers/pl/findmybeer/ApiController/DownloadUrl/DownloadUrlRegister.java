@@ -3,6 +3,7 @@ package thebestdevelopers.pl.findmybeer.ApiController.DownloadUrl;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -20,8 +21,7 @@ public class DownloadUrlRegister implements IDownloadUrl {
         password = _password;
     }
 
-    public String readUrl(String myUrl) throws IOException
-    {
+    public String readUrl(String myUrl) throws IOException {
         String data = "";
         InputStream inputStream = null;
 
@@ -31,16 +31,16 @@ public class DownloadUrlRegister implements IDownloadUrl {
             postDataParams.put("password", password);
             postDataParams.put("role", "client");
 
-            URL    url            = new URL( myUrl );
-            HttpURLConnection conn= (HttpURLConnection) url.openConnection();
-            conn.setDoOutput( true );
-            conn.setDoInput( true );
-            conn.setRequestMethod( "POST" );
-            conn.setRequestProperty( "Content-Type", "application/json");
-            conn.setRequestProperty( "charset", "utf-8");
-            conn.setUseCaches( false );
+            URL url = new URL(myUrl);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("charset", "utf-8");
+            conn.setUseCaches(false);
             conn.connect();
-            DataOutputStream wr = new DataOutputStream(conn.getOutputStream ());
+            DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
             wr.writeBytes(postDataParams.toString());
             wr.flush();
             wr.close();
@@ -61,18 +61,16 @@ public class DownloadUrlRegister implements IDownloadUrl {
                     br.close();
                 } catch (IOException e) {
                     throw e;
-                }
-                finally {
+                } finally {
                     inputStream.close();
                 }
             } catch (IOException e) {
                 throw e;
-            }
-            finally {
+            } finally {
                 conn.disconnect();
             }
         } catch (IOException e) {
-           throw e;
+            throw e;
         } catch (JSONException e) {
             e.printStackTrace();
         }

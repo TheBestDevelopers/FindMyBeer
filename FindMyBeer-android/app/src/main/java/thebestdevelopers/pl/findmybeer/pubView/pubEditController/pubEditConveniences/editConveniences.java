@@ -2,11 +2,11 @@ package thebestdevelopers.pl.findmybeer.pubView.pubEditController.pubEditConveni
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +23,7 @@ import thebestdevelopers.pl.findmybeer.pubView.pubProfileController.ProfileTab;
 public class editConveniences extends AppCompatActivity {
 
     String id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +51,7 @@ public class editConveniences extends AppCompatActivity {
             id = (String) b.get("placeID");
         }
 
-        String url = getUrl(id);
+        String url = getUrl();
         GetJsonResult getNearbyPlacesData = new GetJsonResult(this, getApplicationContext());
         Object dataTransfer[] = new Object[1];
         dataTransfer[0] = url;
@@ -85,7 +86,6 @@ public class editConveniences extends AppCompatActivity {
                                 finish();
                                 break;
                         }
-
                         return true;
                     }
                 });
@@ -93,7 +93,7 @@ public class editConveniences extends AppCompatActivity {
 
     public void mButtonChangeClick(View v) {
         //pobranie checkboxów i wysłanie zapytania na serwer
-        String url = getUrl2(id);
+        String url = getUrl2();
         GetJsonResult getNearbyPlacesData = new GetJsonResult(this, getApplicationContext());
         Object dataTransfer[] = new Object[2];
         dataTransfer[0] = url;
@@ -107,16 +107,15 @@ public class editConveniences extends AppCompatActivity {
         finish();
     }
 
-    //http://localhost:8080/api/pubs/getPubInfo?userID=2&pubID=3
-    private String getUrl(String id) {
+    private String getUrl() {
         StringBuilder googlePlaceUrl = new StringBuilder(getResources().getString(R.string.databaseIP)); //temp
         //TO DO
         googlePlaceUrl.append("/api/pubs/getPubView");
         Log.d("created url", googlePlaceUrl.toString());
         return googlePlaceUrl.toString();
     }
-    //http://localhost:8080/api/pubs/setConveniences?pubID=13&WI-FI=true&TOILET=true&ROASTING_ROOM=false&DISCOUNTS_FOR_STUDENTS=true&FACILITIES_FOR_THE_DISABLED=false&BOARD_GAMES=false
-    private String getUrl2(String id) {
+
+    private String getUrl2() {
         StringBuilder googlePlaceUrl = new StringBuilder(getResources().getString(R.string.databaseIP)); //temp
         //TO DO
         googlePlaceUrl.append("/api/pubs/setConveniences?");

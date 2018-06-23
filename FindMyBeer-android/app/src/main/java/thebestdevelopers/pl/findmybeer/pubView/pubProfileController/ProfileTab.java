@@ -23,10 +23,8 @@ import thebestdevelopers.pl.findmybeer.ApiController.AsyncTasks.IAsyncResponse;
 import thebestdevelopers.pl.findmybeer.ApiController.DownloadUrl.DownloadUrlWithoutJSONBody;
 import thebestdevelopers.pl.findmybeer.ApiController.HttpRequests;
 import thebestdevelopers.pl.findmybeer.BottomNavigationViewHelper;
-import thebestdevelopers.pl.findmybeer.HomeTab;
-import thebestdevelopers.pl.findmybeer.SessionController;
-import thebestdevelopers.pl.findmybeer.loginController.Login;
 import thebestdevelopers.pl.findmybeer.R;
+import thebestdevelopers.pl.findmybeer.SessionController;
 import thebestdevelopers.pl.findmybeer.pubView.pubDetailsController.PubDetails;
 import thebestdevelopers.pl.findmybeer.pubView.pubEditController.PubEdit;
 
@@ -53,8 +51,7 @@ public class ProfileTab extends AppCompatActivity {
         httpRequests = new HttpRequests(this);
         spinner = findViewById(R.id.mProgressBarProfile);
 
-        String id = "8";
-        String url = getUrl3(id);
+        String url = getUrl3();
         GetJsonResult getNearbyPlacesData = new GetJsonResult(this, getApplicationContext());
         Object dataTransfer[] = new Object[1];
         dataTransfer[0] = url;
@@ -96,7 +93,7 @@ public class ProfileTab extends AppCompatActivity {
                 });
     }
 
-    public void mButtonLogOutOnClick(View v){
+    public void mButtonLogOutOnClick(View v) {
         //obsluga wylogowania
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Are you sure you want to log out?")
@@ -115,13 +112,13 @@ public class ProfileTab extends AppCompatActivity {
                 .show();
     }
 
-    public void mButtonChangePswOnClick(View v){
+    public void mButtonChangePswOnClick(View v) {
         //obsluga zmiany hasla
         Intent myIntent = new Intent(getApplicationContext(), thebestdevelopers.pl.findmybeer.profileController.ChangePasswordActivity.class);
         startActivity(myIntent);
     }
 
-    public void mButtonDeleteOnClick(View v){
+    public void mButtonDeleteOnClick(View v) {
         //obsluga usuniecia konta
         final EditText input = new EditText(this);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
@@ -154,17 +151,15 @@ public class ProfileTab extends AppCompatActivity {
         spinner.setVisibility(View.VISIBLE);
         Object dataTransfer[] = new Object[1];
         dataTransfer[0] = url;
-        GetDataAsyncTask asyncTask = (GetDataAsyncTask) new GetDataAsyncTask(new IAsyncResponse(){
+        GetDataAsyncTask asyncTask = (GetDataAsyncTask) new GetDataAsyncTask(new IAsyncResponse() {
             @Override
-            public void processFinish(String result, Boolean timeout){
+            public void processFinish(String result, Boolean timeout) {
                 if (timeout) {
                     showAlert("Error with server connection. Try again later.");
-                }
-                else {
+                } else {
                     if (result.equals("true")) {
                         successfulChange("Account deleted successfully!");
-                    }
-                    else showAlert("This is not your password!");
+                    } else showAlert("This is not your password!");
                 }
                 spinner.setVisibility(View.GONE);
             }
@@ -202,8 +197,7 @@ public class ProfileTab extends AppCompatActivity {
                 .show();
     }
 
-    //http://localhost:8080/api/users/getUsername?ID=8
-    private String getUrl3(String id) {
+    private String getUrl3() {
         StringBuilder googlePlaceUrl = new StringBuilder(getResources().getString(R.string.databaseIP));
         googlePlaceUrl.append("/api/users/getUsername");
         Log.d("created url", googlePlaceUrl.toString());

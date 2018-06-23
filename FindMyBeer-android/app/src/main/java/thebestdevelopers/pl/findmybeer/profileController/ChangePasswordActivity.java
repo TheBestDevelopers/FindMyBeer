@@ -3,12 +3,13 @@ package thebestdevelopers.pl.findmybeer.profileController;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+
 import thebestdevelopers.pl.findmybeer.ApiController.AsyncTasks.GetDataAsyncTask;
 import thebestdevelopers.pl.findmybeer.ApiController.AsyncTasks.IAsyncResponse;
 import thebestdevelopers.pl.findmybeer.ApiController.DownloadUrl.DownloadUrlWithoutJSONBody;
@@ -50,17 +51,15 @@ public class ChangePasswordActivity extends AppCompatActivity {
         mProgressBar.setVisibility(View.VISIBLE);
         Object dataTransfer[] = new Object[1];
         dataTransfer[0] = url;
-        GetDataAsyncTask asyncTask = (GetDataAsyncTask) new GetDataAsyncTask(new IAsyncResponse(){
+        GetDataAsyncTask asyncTask = (GetDataAsyncTask) new GetDataAsyncTask(new IAsyncResponse() {
             @Override
-            public void processFinish(String result, Boolean timeout){
+            public void processFinish(String result, Boolean timeout) {
                 if (timeout) {
                     showAlert("Error with server connection. Try again later.");
-                }
-                else {
+                } else {
                     if (result.equals("true")) {
                         successfulChange("Password changed successfully!");
-                    }
-                    else showAlert("This is not your password!");
+                    } else showAlert("This is not your password!");
                 }
                 mProgressBar.setVisibility(View.GONE);
             }
@@ -69,13 +68,13 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
     private void showAlert(String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(message)
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                        }
-                    })
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .show();
+        builder.setMessage(message)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
     private void successfulChange(String message) {

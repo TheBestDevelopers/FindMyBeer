@@ -2,11 +2,11 @@ package thebestdevelopers.pl.findmybeer.pubView.pubEditController;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -21,6 +21,7 @@ import thebestdevelopers.pl.findmybeer.pubView.pubProfileController.ProfileTab;
 public class PubEdit extends AppCompatActivity {
 
     String id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

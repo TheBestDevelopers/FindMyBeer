@@ -1,19 +1,14 @@
 package thebestdevelopers.pl.findmybeer.pubInfo;
 
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class DataPubParser {
 
-    private HashMap<String, String> getPlace(JSONObject googlePlaceJson)
-    {
+    private HashMap<String, String> getPlace(JSONObject googlePlaceJson) {
         HashMap<String, String> googlePlaceMap = new HashMap<>();
         String placeName = "";
         String vicinity = "";
@@ -68,7 +63,7 @@ public class DataPubParser {
                 if (!googlePlaceJson.getJSONObject("conveniences").isNull("TOILET"))
                     googlePlaceMap.put("toilet", googlePlaceJson.getJSONObject("conveniences").getString("TOILET"));
             }
-            if(!googlePlaceJson.isNull("tables")) {
+            if (!googlePlaceJson.isNull("tables")) {
                 if (!googlePlaceJson.getJSONObject("tables").isNull("chair1"))
                     googlePlaceMap.put("chair1", googlePlaceJson.getJSONObject("tables").getString("chair1"));
 
@@ -94,8 +89,6 @@ public class DataPubParser {
                     googlePlaceMap.put("chair8", googlePlaceJson.getJSONObject("tables").getString("chair8"));
             }
 
-
-
             googlePlaceMap.put("place_name", placeName);
             googlePlaceMap.put("vicinity", vicinity);
             googlePlaceMap.put("rating", rating);
@@ -103,17 +96,13 @@ public class DataPubParser {
             googlePlaceMap.put("phone", phone);
             googlePlaceMap.put("favourite", favourite);
             googlePlaceMap.put("ourPub", ourPub);
-
-        }
-        catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         return googlePlaceMap;
-
     }
 
-    public HashMap<String, String> parse(String jsonData)
-    {
+    public HashMap<String, String> parse(String jsonData) {
         JSONArray jsonArray = null;
         JSONObject jsonObject;
         JSONObject jObjectResult = null;
@@ -126,5 +115,4 @@ public class DataPubParser {
         }
         return getPlace(jObjectResult);
     }
-
 }

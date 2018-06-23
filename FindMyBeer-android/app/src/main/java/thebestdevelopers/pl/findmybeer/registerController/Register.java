@@ -3,9 +3,9 @@ package thebestdevelopers.pl.findmybeer.registerController;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -41,7 +41,7 @@ public class Register extends AppCompatActivity {
         spinner.setVisibility(View.GONE);
     }
 
-    public void mButtonRegisterOnClick(View v){
+    public void mButtonRegisterOnClick(View v) {
         manageHttpConnection();
     }
 
@@ -52,13 +52,12 @@ public class Register extends AppCompatActivity {
         Object dataTransfer[] = new Object[1];
         dataTransfer[0] = url;
         final Context context = getApplicationContext();
-        GetDataAsyncTask asyncTask = (GetDataAsyncTask) new GetDataAsyncTask(new IAsyncResponse(){
+        GetDataAsyncTask asyncTask = (GetDataAsyncTask) new GetDataAsyncTask(new IAsyncResponse() {
             @Override
-            public void processFinish(String result, Boolean timeout){
+            public void processFinish(String result, Boolean timeout) {
                 if (timeout) {
                     showAlert("\"Error with server connection. Try again later.");
-                }
-                else {
+                } else {
                     if (result != null) {
                         showAlert("You signed up successfully!");
                         Intent myIntent = new Intent(getBaseContext(), Login.class);

@@ -9,24 +9,21 @@ import java.util.ArrayList;
 
 public class ConveniencesParser {
 
-    private ArrayList<String> getConveniences(JSONArray conveniencesLJsonArray)
-    {
+    private ArrayList<String> getConveniences(JSONArray conveniencesLJsonArray) {
         ArrayList<String> conveniences = new ArrayList<>();
 
         try {
-            for (int i =0; i< conveniencesLJsonArray.length(); ++i) {
+            for (int i = 0; i < conveniencesLJsonArray.length(); ++i) {
                 conveniences.add(conveniencesLJsonArray.get(i).toString());
             }
-        }
-        catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         return conveniences;
 
     }
 
-    public ArrayList<String> parse(String jsonData)
-    {
+    public ArrayList<String> parse(String jsonData) {
         JSONObject jsonObject = null;
         JSONArray jsonArray = null;
         try {

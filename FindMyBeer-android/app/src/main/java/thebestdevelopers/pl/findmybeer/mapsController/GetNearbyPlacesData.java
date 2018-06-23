@@ -3,10 +3,6 @@ package thebestdevelopers.pl.findmybeer.mapsController;
 import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
-import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -15,13 +11,10 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-import thebestdevelopers.pl.findmybeer.R;
-
-public class GetNearbyPlacesData extends AsyncTask<Object, String, String>{
+public class GetNearbyPlacesData extends AsyncTask<Object, String, String> {
 
     private String googlePlacesData;
     private GoogleMap mMap;
@@ -30,28 +23,26 @@ public class GetNearbyPlacesData extends AsyncTask<Object, String, String>{
     Activity act;
     private Context context;
 
-
     public GetNearbyPlacesData(Context _context) {
         context = _context;
     }
 
     @Override
     protected String doInBackground(Object... objects) {
-        mMap = (GoogleMap)objects[0];
-        url = (String)objects[1];
-        act = (Activity)objects[2];
+        mMap = (GoogleMap) objects[0];
+        url = (String) objects[1];
+        act = (Activity) objects[2];
         DownloadUrl downloadUrl = new DownloadUrl(context);
         try {
             googlePlacesData = downloadUrl.readUrl(url);
         } catch (Exception e) {
             return "Exception";
         }
-
         return googlePlacesData;
     }
 
     @Override
-    protected void onPostExecute(String s){
+    protected void onPostExecute(String s) {
         if (!equals("Exception")) {
             try {
                 DataParser parser = new DataParser();
@@ -65,19 +56,17 @@ public class GetNearbyPlacesData extends AsyncTask<Object, String, String>{
         }
     }
 
-    private void showNearbyPlaces()
-    {
-        for(int i = 0; i < nearbyPlaceList.size(); i++)
-        {
+    private void showNearbyPlaces() {
+        for (int i = 0; i < nearbyPlaceList.size(); i++) {
             MarkerOptions markerOptions = new MarkerOptions();
             HashMap<String, String> googlePlace = nearbyPlaceList.get(i);
             boolean ourPub = false;
             String placeName = googlePlace.get("place_name");
             String vicinity = googlePlace.get("vicinity");
-            double lat = Double.parseDouble( googlePlace.get("lat"));
-            double lng = Double.parseDouble( googlePlace.get("lng"));
+            double lat = Double.parseDouble(googlePlace.get("lat"));
+            double lng = Double.parseDouble(googlePlace.get("lng"));
             String id = googlePlace.get("place_id");
-            LatLng latLng = new LatLng( lat, lng);
+            LatLng latLng = new LatLng(lat, lng);
             markerOptions.position(latLng);
             markerOptions.title(placeName);
             if (googlePlace.get("our_pub").isEmpty())
@@ -86,7 +75,6 @@ public class GetNearbyPlacesData extends AsyncTask<Object, String, String>{
                 markerOptions.snippet("!!!" + id);
                 ourPub = true;
             }
-
             if (ourPub)
                 markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
             else

@@ -7,20 +7,20 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.support.v7.widget.SearchView;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -32,21 +32,21 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
 
+import thebestdevelopers.pl.findmybeer.ApiController.AsyncTasks.GetDataAsyncTask;
+import thebestdevelopers.pl.findmybeer.ApiController.AsyncTasks.IAsyncResponse;
+import thebestdevelopers.pl.findmybeer.ApiController.DownloadUrl.DownloadUrlWithoutJSONBody;
 import thebestdevelopers.pl.findmybeer.ApiController.HttpRequests;
 import thebestdevelopers.pl.findmybeer.BottomNavigationViewHelper;
 import thebestdevelopers.pl.findmybeer.HomeTab;
-import thebestdevelopers.pl.findmybeer.profileController.ProfileTab;
 import thebestdevelopers.pl.findmybeer.R;
 import thebestdevelopers.pl.findmybeer.favController.FavTab;
 import thebestdevelopers.pl.findmybeer.mapsController.MapTab;
+import thebestdevelopers.pl.findmybeer.profileController.ProfileTab;
 import thebestdevelopers.pl.findmybeer.pubInfo.PubInfo;
-import thebestdevelopers.pl.findmybeer.ApiController.DownloadUrl.DownloadUrlWithoutJSONBody;
-import thebestdevelopers.pl.findmybeer.ApiController.AsyncTasks.GetDataAsyncTask;
 import thebestdevelopers.pl.findmybeer.pubListController.ItemClickListener;
-import thebestdevelopers.pl.findmybeer.ApiController.AsyncTasks.IAsyncResponse;
 import thebestdevelopers.pl.findmybeer.pubListController.NearbyPubsParser;
-import thebestdevelopers.pl.findmybeer.pubListController.PubListRecyclerViewerAdapter;
 import thebestdevelopers.pl.findmybeer.pubListController.Pub;
+import thebestdevelopers.pl.findmybeer.pubListController.PubListRecyclerViewerAdapter;
 import thebestdevelopers.pl.findmybeer.searchController.Sorting.SortingTypeChooser;
 
 public class SearchTab
@@ -55,13 +55,13 @@ public class SearchTab
         implements
         GoogleApiClient.OnConnectionFailedListener,
         GoogleApiClient.ConnectionCallbacks,
-        ItemClickListener  {
+        ItemClickListener {
 
     private final int REQUEST_CODE = 0;
     private ArrayList<Pub> pubs = new ArrayList<>();
     private String sortingType = "distance ascending";
     private PubListRecyclerViewerAdapter mAdapter;
-    SortingTypeChooser  sortingTypeChooser;
+    SortingTypeChooser sortingTypeChooser;
     RecyclerView recyclerView;
     ArrayList<String> conveniences;
     private Double longitude = 0.0, latitude = 0.0;
@@ -130,19 +130,18 @@ public class SearchTab
             conveniences = data.getStringArrayListExtra("conveniences");
             Double newLongitude = data.getDoubleExtra("longitude", 0);
             Double newLatitude = data.getDoubleExtra("latitude", 0);
-            if (newLongitude != 0 && newLatitude != 0 ) {
+            if (newLongitude != 0 && newLatitude != 0) {
                 latitude = newLatitude;
                 longitude = newLongitude;
                 newLocationSet = true;
-            }
-            else {
+            } else {
                 newLocationSet = false;
             }
             String url;
-            if (conveniences != null )
-                url = httpRequests.getPubsWithConveniencesUrl(longitude,latitude, conveniences);
+            if (conveniences != null)
+                url = httpRequests.getPubsWithConveniencesUrl(longitude, latitude, conveniences);
             else
-                url = httpRequests.getNearbyPubsUrl(longitude,latitude);
+                url = httpRequests.getNearbyPubsUrl(longitude, latitude);
             spinner.setVisibility(View.VISIBLE);
             buttonChooseFilters.setEnabled(false);
             manageGetPubsHttpConnection(url);
@@ -155,14 +154,13 @@ public class SearchTab
         Object dataTransfer[] = new Object[1];
         dataTransfer[0] = url;
 
-        GetDataAsyncTask asyncTask = (GetDataAsyncTask) new GetDataAsyncTask(new IAsyncResponse(){
+        GetDataAsyncTask asyncTask = (GetDataAsyncTask) new GetDataAsyncTask(new IAsyncResponse() {
 
             @Override
-            public void processFinish(String result, Boolean timeout){
+            public void processFinish(String result, Boolean timeout) {
                 if (timeout) {
                     showAlert("Error with server connection. Try again later.");
-                }
-                else {
+                } else {
                     NearbyPubsParser parser = new NearbyPubsParser();
                     pubs = parser.parse(result);
                     if (pubs != null) {
@@ -216,10 +214,13 @@ public class SearchTab
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {{
-                updateFilters(newText);
-                return true;
-            }}
+            public boolean onQueryTextChange(String newText) {
+                {
+                    updateFilters(newText);
+                    return true;
+                }
+            }
+
             public void updateFilters(String newText) {
                 if (mAdapter != null) {
                     mAdapter.getFilter().filter(newText);
@@ -247,7 +248,7 @@ public class SearchTab
     }
 
     private void setBottomNavigationView() {
-        BottomNavigationView tabs =  findViewById(R.id.navigationtabs3);
+        BottomNavigationView tabs = findViewById(R.id.navigationtabs3);
         BottomNavigationViewHelper.disableShiftMode(tabs);
         tabs.getMenu().findItem(R.id.action_search).setChecked(true);
         tabs.setOnNavigationItemSelectedListener
@@ -313,9 +314,8 @@ public class SearchTab
                     String url;
                     if (conveniences == null || conveniences.size() == 0) {
                         url = httpRequests.getNearbyPubsUrl(longitude, latitude);
-                    }
-                    else {
-                        url = httpRequests.getPubsWithConveniencesUrl(longitude,latitude, conveniences);
+                    } else {
+                        url = httpRequests.getPubsWithConveniencesUrl(longitude, latitude, conveniences);
                     }
                     manageGetPubsHttpConnection(url);
                 }

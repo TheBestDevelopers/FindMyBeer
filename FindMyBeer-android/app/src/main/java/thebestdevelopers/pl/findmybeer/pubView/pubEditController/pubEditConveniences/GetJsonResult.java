@@ -20,17 +20,12 @@ import thebestdevelopers.pl.findmybeer.R;
 public class GetJsonResult extends AsyncTask<Object, String, String> {
 
     private String googlePlacesData;
-    private String placeName, vicinity, phone, rating, website;
     private String url, change;
-    public TextView mName, mRating, mAddress, mPhone, mWebsite, tConveniences, tTables;
+    public TextView mName, tConveniences, tTables;
     public ProgressBar spinner;
     public Button bFav, bMenu;
     private String wifi, adaptedforthedisabled, boardgames, discountsforgroups;
     private String discountsforstudents, roastingroom, toilet;
-    private String chair1, chair2, chair4, chair6, chair8;
-
-
-
     WeakReference<Activity> mWeakActivity;
     private Context context;
 
@@ -41,7 +36,7 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
 
     @Override
     protected String doInBackground(Object... objects) {
-        url = (String)objects[0];
+        url = (String) objects[0];
         if (objects.length > 1)
             change = (String) objects[1];
         else
@@ -52,12 +47,11 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
         } catch (Exception e) {
             return "Exception";
         }
-
         return googlePlacesData;
     }
 
     @Override
-    protected void onPostExecute(String s){
+    protected void onPostExecute(String s) {
         Activity activity = mWeakActivity.get();
         HashMap<String, String> nearbyPlaceList;
         if (change.equals("change")) {
@@ -74,10 +68,9 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
         }
         DataPubParser parser = new DataPubParser();
         nearbyPlaceList = parser.parse(s);
-        Log.d("placedata","called parse method");
+        Log.d("placedata", "called parse method");
         showNearbyPlaces(nearbyPlaceList);
         if (activity != null) {
-
             spinner = activity.findViewById(R.id.mProgressBarProfile);
 
             CheckBox chbx1 = activity.findViewById(R.id.checkbox_wifi);
@@ -88,57 +81,55 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
             CheckBox chbx6 = activity.findViewById(R.id.checkbox_roastingroom);
             CheckBox chbx7 = activity.findViewById(R.id.checkbox_toilet);
 
-                if (wifi.equals("true"))
-                    chbx1.setChecked(true);
-                else if (wifi.equals("false")) {
-                    chbx1.setChecked(false);
-                }
+            if (wifi.equals("true"))
+                chbx1.setChecked(true);
+            else if (wifi.equals("false")) {
+                chbx1.setChecked(false);
+            }
 
-                if (adaptedforthedisabled.equals("true"))
-                    chbx2.setChecked(true);
-                else if (adaptedforthedisabled.equals("false")) {
-                    chbx2.setChecked(false);
-                }
+            if (adaptedforthedisabled.equals("true"))
+                chbx2.setChecked(true);
+            else if (adaptedforthedisabled.equals("false")) {
+                chbx2.setChecked(false);
+            }
 
 
-                if (boardgames.equals("true"))
-                    chbx3.setChecked(true);
-                else if (boardgames.equals("true")) {
-                    chbx3.setChecked(false);
-                }
-                //if (discountsforgroups.equals("true"))
-                //    convs += "Discounts for groups\n";
+            if (boardgames.equals("true"))
+                chbx3.setChecked(true);
+            else if (boardgames.equals("true")) {
+                chbx3.setChecked(false);
+            }
+            //if (discountsforgroups.equals("true"))
+            //    convs += "Discounts for groups\n";
 
-                if (discountsforstudents.equals("true"))
-                    chbx5.setChecked(true);
-                else if (discountsforstudents.equals("true")) {
-                    chbx5.setChecked(false);
-                }
-                if (roastingroom.equals("true"))
-                    chbx6.setChecked(true);
-                else if (roastingroom.equals("true")) {
-                    chbx6.setChecked(false);
-                }
-                if (toilet.equals("true"))
-                    chbx7.setChecked(true);
-                else if (toilet.equals("true")) {
-                    chbx7.setChecked(false);
-                }
-
+            if (discountsforstudents.equals("true"))
+                chbx5.setChecked(true);
+            else if (discountsforstudents.equals("true")) {
+                chbx5.setChecked(false);
+            }
+            if (roastingroom.equals("true"))
+                chbx6.setChecked(true);
+            else if (roastingroom.equals("true")) {
+                chbx6.setChecked(false);
+            }
+            if (toilet.equals("true"))
+                chbx7.setChecked(true);
+            else if (toilet.equals("true")) {
+                chbx7.setChecked(false);
+            }
         }
         spinner.setVisibility(View.GONE);
         ScrollView v = activity.findViewById(R.id.bView);
         v.setVisibility(View.VISIBLE);
     }
 
-    private void showNearbyPlaces(HashMap<String, String> googlePlace)
-    {
-                wifi = googlePlace.get("WI-FI");
-                adaptedforthedisabled = googlePlace.get("adapted for the disabled");
-                boardgames = googlePlace.get("board games");
-                discountsforgroups = googlePlace.get("discounts for groups");
-                discountsforstudents = googlePlace.get("discounts for students");
-                roastingroom = googlePlace.get("roasting room");
-                toilet = googlePlace.get("toilet");
+    private void showNearbyPlaces(HashMap<String, String> googlePlace) {
+        wifi = googlePlace.get("WI-FI");
+        adaptedforthedisabled = googlePlace.get("adapted for the disabled");
+        boardgames = googlePlace.get("board games");
+        discountsforgroups = googlePlace.get("discounts for groups");
+        discountsforstudents = googlePlace.get("discounts for students");
+        roastingroom = googlePlace.get("roasting room");
+        toilet = googlePlace.get("toilet");
     }
 }

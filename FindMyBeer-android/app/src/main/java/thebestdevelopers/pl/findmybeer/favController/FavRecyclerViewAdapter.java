@@ -6,7 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import java.util.ArrayList;
+
 import thebestdevelopers.pl.findmybeer.R;
 import thebestdevelopers.pl.findmybeer.pubInfo.PubInfo;
 
@@ -30,7 +32,7 @@ public class FavRecyclerViewAdapter extends RecyclerView.Adapter {
     }
 
     // konstruktor adaptera
-    public FavRecyclerViewAdapter(ArrayList<PubData> favList, RecyclerView recyclerView){
+    public FavRecyclerViewAdapter(ArrayList<PubData> favList, RecyclerView recyclerView) {
         mFavList = favList;
         mRecyclerView = recyclerView;
     }
@@ -55,7 +57,6 @@ public class FavRecyclerViewAdapter extends RecyclerView.Adapter {
                 }
             }
         });
-
         // tworzymy i zwracamy obiekt ViewHolder
         return new MyViewHolder(view);
     }

@@ -33,7 +33,7 @@ public class HttpRequests {
             url.append(conv.toUpperCase());
             url.append(",");
         }
-        url.deleteCharAt(url.length()-1);
+        url.deleteCharAt(url.length() - 1);
 
         return url.toString().replace(" ", "%20");
     }

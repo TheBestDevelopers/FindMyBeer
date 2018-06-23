@@ -1,6 +1,7 @@
 package thebestdevelopers.pl.findmybeer.ApiController.AsyncTasks;
 
 import android.os.AsyncTask;
+
 import java.io.IOException;
 
 import thebestdevelopers.pl.findmybeer.ApiController.DownloadUrl.IDownloadUrl;
@@ -10,7 +11,7 @@ public class GetDataAsyncTask extends AsyncTask<Object, String, String> {
     public IAsyncResponse asyncResponseDelegate = null;
     IDownloadUrl downloadUrlDelegate = null;
 
-    private String apiData ="";
+    private String apiData = "";
     private String url;
 
     Boolean timeout = false;
@@ -23,11 +24,11 @@ public class GetDataAsyncTask extends AsyncTask<Object, String, String> {
 
     @Override
     protected String doInBackground(Object... objects) {
-        url = (String)objects[0];
+        url = (String) objects[0];
         try {
             apiData = downloadUrlDelegate.readUrl(url);
         } catch (java.net.SocketTimeoutException e) {
-                timeout = true;
+            timeout = true;
         } catch (IOException e) {
             timeout = true;
         } catch (Exception e) {
@@ -37,7 +38,7 @@ public class GetDataAsyncTask extends AsyncTask<Object, String, String> {
     }
 
     @Override
-    protected void onPostExecute(String s){
+    protected void onPostExecute(String s) {
         asyncResponseDelegate.processFinish(s, timeout);
     }
 

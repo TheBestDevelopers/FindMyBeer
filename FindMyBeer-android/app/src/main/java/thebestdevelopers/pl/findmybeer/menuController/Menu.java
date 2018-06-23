@@ -2,12 +2,11 @@ package thebestdevelopers.pl.findmybeer.menuController;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -16,16 +15,16 @@ import android.widget.TextView;
 
 import thebestdevelopers.pl.findmybeer.BottomNavigationViewHelper;
 import thebestdevelopers.pl.findmybeer.HomeTab;
-import thebestdevelopers.pl.findmybeer.profileController.ProfileTab;
 import thebestdevelopers.pl.findmybeer.R;
-import thebestdevelopers.pl.findmybeer.searchController.SearchTab;
 import thebestdevelopers.pl.findmybeer.favController.FavTab;
 import thebestdevelopers.pl.findmybeer.mapsController.MapTab;
+import thebestdevelopers.pl.findmybeer.profileController.ProfileTab;
+import thebestdevelopers.pl.findmybeer.searchController.SearchTab;
 
 public class Menu extends AppCompatActivity {
 
+    String mId;
 
-    String mId, mName, mAddress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +53,6 @@ public class Menu extends AppCompatActivity {
         if (b != null) {
             mId = (String) b.get("placeID");
         }
-
 
         String url = getUrl(mId);
         GetJsonResult getMenuData = new GetJsonResult(this, getApplicationContext());

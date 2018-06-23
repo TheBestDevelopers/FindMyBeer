@@ -22,15 +22,15 @@ public class DownloadUrl {
         context = _context;
         sessionController = new SessionController(context);
     }
-    public String readUrl(String myUrl) throws Exception
-    {
+
+    public String readUrl(String myUrl) throws Exception {
         String data = "";
         InputStream inputStream = null;
         HttpURLConnection urlConnection = null;
 
         try {
             URL url = new URL(myUrl);
-            urlConnection=(HttpURLConnection) url.openConnection();
+            urlConnection = (HttpURLConnection) url.openConnection();
             // Set cookie as a request property to authorize
             urlConnection.setRequestProperty(sessionController.KEY_COOKIE, sessionController.getCookie());
             urlConnection.connect();
@@ -40,8 +40,7 @@ public class DownloadUrl {
             StringBuffer sb = new StringBuffer();
 
             String line = "";
-            while((line = br.readLine()) != null)
-            {
+            while ((line = br.readLine()) != null) {
                 sb.append(line);
             }
 
@@ -54,12 +53,11 @@ public class DownloadUrl {
             throw e;
         } catch (Exception e) {
             throw e;
-        }
-        finally {
+        } finally {
             inputStream.close();
             urlConnection.disconnect();
         }
-        Log.d("DownloadURL","Returning data= "+data);
+        Log.d("DownloadURL", "Returning data= " + data);
 
         return data;
     }

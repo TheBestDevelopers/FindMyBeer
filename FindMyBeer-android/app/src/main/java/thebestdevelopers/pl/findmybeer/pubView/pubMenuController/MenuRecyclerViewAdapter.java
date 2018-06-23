@@ -30,7 +30,7 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter {
     }
 
     // konstruktor adaptera
-    public MenuRecyclerViewAdapter(ArrayList<MenuData> menuList, RecyclerView recyclerView){
+    public MenuRecyclerViewAdapter(ArrayList<MenuData> menuList, RecyclerView recyclerView) {
         mMenuList = menuList;
         mRecyclerView = recyclerView;
     }
@@ -40,7 +40,6 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter {
         // tworzymy layout artykułu oraz obiekt ViewHoldera
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.fav_layout, viewGroup, false);
-
         // tworzymy i zwracamy obiekt ViewHolder
         return new MyViewHolder(view);
     }
@@ -50,7 +49,7 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter {
         // uzupełniamy layout artykułu
         MenuData data = mMenuList.get(i);
         String str = data.getName();
-        str = str.replace('_',' ');
+        str = str.replace('_', ' ');
         ((MyViewHolder) viewHolder).mName.setText(str);
         ((MyViewHolder) viewHolder).mPrice.setText("Cena: " + data.getAdress() + " zł");
     }

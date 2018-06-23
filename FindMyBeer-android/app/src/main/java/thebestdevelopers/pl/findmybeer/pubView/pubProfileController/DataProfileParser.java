@@ -10,12 +10,11 @@ import java.util.HashMap;
 
 public class DataProfileParser {
 
-    private HashMap<String, String> getPlace(JSONObject googlePlaceJson)
-    {
+    private HashMap<String, String> getPlace(JSONObject googlePlaceJson) {
         HashMap<String, String> googlePlaceMap = new HashMap<>();
         String userName = "";
 
-        Log.d("DataParser","jsonobject ="+googlePlaceJson.toString());
+        Log.d("DataParser", "jsonobject =" + googlePlaceJson.toString());
 
 
         try {
@@ -24,16 +23,14 @@ public class DataProfileParser {
             }
             googlePlaceMap.put("user_name", userName);
 
-        }
-        catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         return googlePlaceMap;
 
     }
 
-    public HashMap<String, String> parse(String jsonData)
-    {
+    public HashMap<String, String> parse(String jsonData) {
         JSONArray jsonArray = null;
         JSONObject jsonObject;
         JSONObject jObjectResult = null;

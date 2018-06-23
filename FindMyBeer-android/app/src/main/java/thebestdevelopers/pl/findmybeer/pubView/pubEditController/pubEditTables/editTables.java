@@ -2,11 +2,11 @@ package thebestdevelopers.pl.findmybeer.pubView.pubEditController.pubEditTables;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +24,7 @@ public class editTables extends AppCompatActivity {
 
     String id;
     public NumberPicker np1, np2, np4, np6, np8;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +71,7 @@ public class editTables extends AppCompatActivity {
             id = (String) b.get("placeID");
         }
 
-        String url = getUrl(id);
+        String url = getUrl();
         GetJsonResult getNearbyPlacesData = new GetJsonResult(this, getApplicationContext());
         Object dataTransfer[] = new Object[1];
         dataTransfer[0] = url;
@@ -114,7 +115,7 @@ public class editTables extends AppCompatActivity {
     public void mButtonChangeClick(View v) {
         ProgressBar spinner = findViewById(R.id.mProgressBarProfile);
         spinner.setVisibility(View.VISIBLE);
-        String url = getUrl2(id);
+        String url = getUrl2();
         GetJsonResult getNearbyPlacesData = new GetJsonResult(this, getApplicationContext());
         Object dataTransfer[] = new Object[2];
         dataTransfer[0] = url;
@@ -128,8 +129,7 @@ public class editTables extends AppCompatActivity {
         finish();
     }
 
-    //http://localhost:8080/api/pubs/getPubInfo?userID=2&pubID=3
-    private String getUrl(String id) {
+    private String getUrl() {
         StringBuilder googlePlaceUrl = new StringBuilder(getResources().getString(R.string.databaseIP)); //temp
         //TO DO
         googlePlaceUrl.append("/api/pubs/getPubView");
@@ -137,16 +137,15 @@ public class editTables extends AppCompatActivity {
         return googlePlaceUrl.toString();
     }
 
-    //http://localhost:8080/api/pubs/setTables?pubID=13&chair1=3&chair2=0&chair4=7&chair6=2&chair8=0
-    private String getUrl2(String id) {
+    private String getUrl2() {
         StringBuilder googlePlaceUrl = new StringBuilder(getResources().getString(R.string.databaseIP)); //temp
         //TO DO
         googlePlaceUrl.append("/api/pubs/setTables?");
-        googlePlaceUrl.append("chair1="+ np1.getValue());
-        googlePlaceUrl.append("&chair2="+ np2.getValue());
-        googlePlaceUrl.append("&chair4="+ np4.getValue());
-        googlePlaceUrl.append("&chair6="+ np6.getValue());
-        googlePlaceUrl.append("&chair8="+ np8.getValue());
+        googlePlaceUrl.append("chair1=" + np1.getValue());
+        googlePlaceUrl.append("&chair2=" + np2.getValue());
+        googlePlaceUrl.append("&chair4=" + np4.getValue());
+        googlePlaceUrl.append("&chair6=" + np6.getValue());
+        googlePlaceUrl.append("&chair8=" + np8.getValue());
         Log.d("created url", googlePlaceUrl.toString());
         return googlePlaceUrl.toString();
     }

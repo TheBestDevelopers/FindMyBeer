@@ -36,6 +36,8 @@ public class Pub {
         return freeTablesCount;
     }
 
-    public String getPlaceID() { return id; }
+    public String getPlaceID() {
+        return id;
+    }
 
 }

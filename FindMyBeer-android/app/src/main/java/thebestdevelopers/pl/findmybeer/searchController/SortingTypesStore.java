@@ -17,6 +17,7 @@ public class SortingTypesStore {
         sortingTypes.add("free tables ascending");
         sortingTypes.add("free tables descending");
     }
+
     public ArrayList<String> getSortingTypes() {
         return sortingTypes;
     }

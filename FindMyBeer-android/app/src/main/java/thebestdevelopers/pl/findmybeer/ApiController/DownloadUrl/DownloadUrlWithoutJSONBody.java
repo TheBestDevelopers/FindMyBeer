@@ -24,15 +24,14 @@ public class DownloadUrlWithoutJSONBody implements IDownloadUrl {
         method = _method;
     }
 
-    public String readUrl(String myUrl) throws Exception
-    {
+    public String readUrl(String myUrl) throws Exception {
         String data = "";
         InputStream inputStream = null;
         HttpURLConnection urlConnection = null;
 
         try {
             URL url = new URL(myUrl);
-            urlConnection=(HttpURLConnection) url.openConnection();
+            urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod(method);
             urlConnection.setConnectTimeout(10000);
             // Set cookie as a request property to authorize
@@ -55,14 +54,12 @@ public class DownloadUrlWithoutJSONBody implements IDownloadUrl {
                     br.close();
                 } catch (IOException e) {
                     throw e;
-                }
-                finally {
+                } finally {
                     inputStream.close();
                 }
             } catch (IOException e) {
-               throw e;
-            }
-            finally {
+                throw e;
+            } finally {
                 urlConnection.disconnect();
             }
 
@@ -71,7 +68,7 @@ public class DownloadUrlWithoutJSONBody implements IDownloadUrl {
         } catch (java.net.SocketTimeoutException e) {
             throw e;
         } catch (IOException e) {
-           throw e;
+            throw e;
         } catch (Exception e) {
             throw e;
         }

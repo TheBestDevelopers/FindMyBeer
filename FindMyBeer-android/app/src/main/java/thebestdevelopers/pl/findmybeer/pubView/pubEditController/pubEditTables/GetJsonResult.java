@@ -18,11 +18,10 @@ import thebestdevelopers.pl.findmybeer.R;
 public class GetJsonResult extends AsyncTask<Object, String, String> {
 
     private String googlePlacesData;
-    private String url,change;
+    private String url, change;
     public ProgressBar spinner;
     private String chair1, chair2, chair4, chair6, chair8;
     private NumberPicker np1, np2, np4, np6, np8;
-
     WeakReference<Activity> mWeakActivity;
     private Context context;
 
@@ -33,7 +32,7 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
 
     @Override
     protected String doInBackground(Object... objects) {
-        url = (String)objects[0];
+        url = (String) objects[0];
         if (objects.length > 1)
             change = (String) objects[1];
         else
@@ -44,12 +43,11 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
         } catch (Exception e) {
             return "Exception";
         }
-
         return googlePlacesData;
     }
 
     @Override
-    protected void onPostExecute(String s){
+    protected void onPostExecute(String s) {
         Activity activity = mWeakActivity.get();
         if (change.equals("change")) {
             if (s.equals("true")) {
@@ -66,11 +64,10 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
         HashMap<String, String> nearbyPlaceList;
         DataPubParser parser = new DataPubParser();
         nearbyPlaceList = parser.parse(s);
-        Log.d("placedata","called parse method");
+        Log.d("placedata", "called parse method");
         showNearbyPlaces(nearbyPlaceList);
 
         if (activity != null) {
-
             np1 = activity.findViewById(R.id.numberPicker1);
             np1.setValue(Integer.parseInt(chair1));
 
@@ -92,13 +89,12 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
         v.setVisibility(View.VISIBLE);
     }
 
-    private void showNearbyPlaces(HashMap<String, String> googlePlace)
-    {
-                chair1 = googlePlace.get("chair1");
-                chair2 = googlePlace.get("chair2");
-                chair4 = googlePlace.get("chair4");
-                chair6 = googlePlace.get("chair6");
-                chair8 = googlePlace.get("chair8");
+    private void showNearbyPlaces(HashMap<String, String> googlePlace) {
+        chair1 = googlePlace.get("chair1");
+        chair2 = googlePlace.get("chair2");
+        chair4 = googlePlace.get("chair4");
+        chair6 = googlePlace.get("chair6");
+        chair8 = googlePlace.get("chair8");
 
     }
 }

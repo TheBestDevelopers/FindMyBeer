@@ -1,27 +1,26 @@
 package thebestdevelopers.pl.findmybeer.pubListController;
 
+import android.location.Location;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
+import android.widget.TextView;
+
 import java.util.ArrayList;
-    import java.util.List;
+import java.util.List;
 
-    import android.location.Location;
-    import android.support.v7.widget.RecyclerView;
-    import android.view.LayoutInflater;
-    import android.view.View;
-    import android.view.ViewGroup;
-    import android.widget.TextView;
+import thebestdevelopers.pl.findmybeer.R;
 
-    import android.widget.Filter;
-    import android.widget.Filterable;
-
-    import thebestdevelopers.pl.findmybeer.R;
-
-public class PubListRecyclerViewerAdapter extends RecyclerView.Adapter<PubListRecyclerViewerAdapter.ViewHolder> implements Filterable{
+public class PubListRecyclerViewerAdapter extends RecyclerView.Adapter<PubListRecyclerViewerAdapter.ViewHolder> implements Filterable {
     private List<Pub> pubs;
     private List<Pub> filteredPubs;
     Location userLocation;
     private ItemClickListener clickListener;
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView textViewStars;
         public TextView textViewPubName;
@@ -38,6 +37,7 @@ public class PubListRecyclerViewerAdapter extends RecyclerView.Adapter<PubListRe
             itemView.setOnClickListener(this);
 
         }
+
         @Override
         public void onClick(View view) {
             if (clickListener != null) {
@@ -52,7 +52,7 @@ public class PubListRecyclerViewerAdapter extends RecyclerView.Adapter<PubListRe
     }
 
     public void removeAll() {
-        for (int i=0; i< pubs.size(); ++i) {
+        for (int i = 0; i < pubs.size(); ++i) {
             pubs.remove(pubs.get(i));
             notifyItemRemoved(i);
             notifyItemRangeChanged(i, pubs.size());
@@ -89,7 +89,7 @@ public class PubListRecyclerViewerAdapter extends RecyclerView.Adapter<PubListRe
         else if (currentPub.distance > 1000)
             setDistanceKilometers(currentPub.distance, holder);
         else
-            holder.textViewDistance.setText(currentPub.distance  + "m");
+            holder.textViewDistance.setText(currentPub.distance + "m");
         holder.textViewStars.setText(currentPub.getRating().toString());
         holder.textViewFreeTables.setText(currentPub.getFreeTablesCount().toString());
     }
@@ -99,7 +99,7 @@ public class PubListRecyclerViewerAdapter extends RecyclerView.Adapter<PubListRe
     }
 
     private void setDistanceKilometers(Integer distance, ViewHolder holder) {
-        holder.textViewDistance.setText(distance/1000 + "km " +distance % 1000 + "m");
+        holder.textViewDistance.setText(distance / 1000 + "km " + distance % 1000 + "m");
     }
 
     @Override

@@ -29,7 +29,7 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
 
     @Override
     protected String doInBackground(Object... objects) {
-        url = (String)objects[0];
+        url = (String) objects[0];
         DownloadProfileUrl downloadUrl = new DownloadProfileUrl(context, method);
         try {
             googlePlacesData = downloadUrl.readUrl(url);
@@ -64,8 +64,7 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
             spinner.setVisibility(View.GONE);
             TextView txt2 = activity.findViewById(R.id.tError);
             txt2.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             TextView mName = activity.findViewById(R.id.tLogin);
             mName.setText("No data");
             mName.setVisibility(View.VISIBLE);
@@ -76,8 +75,7 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
         }
     }
 
-    private void showNearbyPlaces(HashMap<String, String> googlePlace)
-    {
+    private void showNearbyPlaces(HashMap<String, String> googlePlace) {
         userName = googlePlace.get("user_name");
     }
 }

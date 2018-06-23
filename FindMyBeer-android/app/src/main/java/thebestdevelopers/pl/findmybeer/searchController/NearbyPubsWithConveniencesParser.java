@@ -10,12 +10,11 @@ import java.util.ArrayList;
 import thebestdevelopers.pl.findmybeer.pubListController.Pub;
 
 public class NearbyPubsWithConveniencesParser {
-    private ArrayList<Pub> getPubs(JSONArray pubsListJsonArray)
-    {
+    private ArrayList<Pub> getPubs(JSONArray pubsListJsonArray) {
         ArrayList<Pub> pubs = new ArrayList<>();
 
         try {
-            for (int i =0; i< pubsListJsonArray.length(); ++i) {
+            for (int i = 0; i < pubsListJsonArray.length(); ++i) {
                 JSONObject singlePubInfo = pubsListJsonArray.getJSONObject(i);
                 String pubName = singlePubInfo.getString("name");
                 Integer freeTables = singlePubInfo.getInt("freeTable");
@@ -28,16 +27,14 @@ public class NearbyPubsWithConveniencesParser {
                 Pub pub = new Pub(pubName, distance, freeTables, rating, id);
                 pubs.add(pub);
             }
-        }
-        catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         return pubs;
 
     }
 
-    public ArrayList<Pub> parse(String jsonData)
-    {
+    public ArrayList<Pub> parse(String jsonData) {
 
         JSONArray jsonObject = null;
         try {

@@ -23,11 +23,9 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
 
     private String googlePlacesData;
     private String url;
-
     private String name, vicinity, placeID;
     public ArrayList<PubData> mFavList;
     private Context context;
-
     WeakReference<Activity> mWeakActivity;
 
     public GetJsonResult(Activity activity, Context _context) {
@@ -37,7 +35,7 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
 
     @Override
     protected String doInBackground(Object... objects) {
-        url = (String)objects[0];
+        url = (String) objects[0];
         DownloadFavUrl downloadUrl = new DownloadFavUrl(context);
         try {
             googlePlacesData = downloadUrl.readUrl(url);
@@ -48,7 +46,7 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
     }
 
     @Override
-    protected void onPostExecute(String s){
+    protected void onPostExecute(String s) {
         Activity activity = mWeakActivity.get();
         if (!s.equals("Exception")) {
             List<HashMap<String, String>> menuList;
@@ -87,9 +85,9 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
             name = googlePlace.get(i).get("name");
             vicinity = googlePlace.get(i).get("vicinity");
             placeID = googlePlace.get(i).get("place_id");
-            String temp = "!!!"+placeID;
+            String temp = "!!!" + placeID;
             placeID = temp;
-            mFavList.add(new PubData(name, vicinity,placeID));
+            mFavList.add(new PubData(name, vicinity, placeID));
         }
     }
 }

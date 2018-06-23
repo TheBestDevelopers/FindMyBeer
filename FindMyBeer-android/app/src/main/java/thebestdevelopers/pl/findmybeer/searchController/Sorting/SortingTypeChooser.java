@@ -15,16 +15,16 @@ public class SortingTypeChooser {
         this.pubListToSort = _listToSort;
     }
 
-    public  SortingTypeChooser() {}
+    public SortingTypeChooser() {
+    }
 
     public void setListToSort(ArrayList<Pub> _listToSort) {
         this.pubListToSort = _listToSort;
     }
 
-    public ArrayList<Pub> getSortedList(String sortingType)
-    {
+    public ArrayList<Pub> getSortedList(String sortingType) {
         switch (sortingType) {
-            case "distance ascending" :
+            case "distance ascending":
                 Collections.sort(pubListToSort, new Comparator<Pub>() {
                     @Override
                     public int compare(Pub p1, Pub p2) {
@@ -32,7 +32,7 @@ public class SortingTypeChooser {
                     }
                 });
                 break;
-            case "distance descending" :
+            case "distance descending":
                 Collections.sort(pubListToSort, new Comparator<Pub>() {
                     @Override
                     public int compare(Pub p1, Pub p2) {
@@ -40,7 +40,7 @@ public class SortingTypeChooser {
                     }
                 });
                 break;
-            case "name ascending" :
+            case "name ascending":
                 Collections.sort(pubListToSort, new Comparator<Pub>() {
                     @Override
                     public int compare(Pub p1, Pub p2) {
@@ -48,7 +48,7 @@ public class SortingTypeChooser {
                     }
                 });
                 break;
-            case "name descending" :
+            case "name descending":
                 Collections.sort(pubListToSort, new Comparator<Pub>() {
                     @Override
                     public int compare(Pub p1, Pub p2) {
@@ -56,7 +56,7 @@ public class SortingTypeChooser {
                     }
                 });
                 break;
-            case "rate ascending" :
+            case "rate ascending":
                 Collections.sort(pubListToSort, new Comparator<Pub>() {
                     @Override
                     public int compare(Pub p1, Pub p2) {
@@ -64,15 +64,15 @@ public class SortingTypeChooser {
                     }
                 });
                 break;
-            case "rate descending" :
+            case "rate descending":
                 Collections.sort(pubListToSort, new Comparator<Pub>() {
                     @Override
                     public int compare(Pub p1, Pub p2) {
-                        return  p2.getRating().compareTo(p1.getRating());
+                        return p2.getRating().compareTo(p1.getRating());
                     }
                 });
                 break;
-            case "free tables ascending" :
+            case "free tables ascending":
                 Collections.sort(pubListToSort, new Comparator<Pub>() {
                     @Override
                     public int compare(Pub p1, Pub p2) {
@@ -80,7 +80,7 @@ public class SortingTypeChooser {
                     }
                 });
                 break;
-            case "free tables descending" :
+            case "free tables descending":
                 Collections.sort(pubListToSort, new Comparator<Pub>() {
                     @Override
                     public int compare(Pub p1, Pub p2) {
@@ -88,7 +88,7 @@ public class SortingTypeChooser {
                     }
                 });
                 break;
-            default :
+            default:
                 Collections.sort(pubListToSort, new Comparator<Pub>() {
                     @Override
                     public int compare(Pub p1, Pub p2) {

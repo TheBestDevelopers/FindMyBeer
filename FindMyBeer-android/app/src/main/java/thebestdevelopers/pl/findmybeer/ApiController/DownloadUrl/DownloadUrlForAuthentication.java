@@ -2,24 +2,17 @@ package thebestdevelopers.pl.findmybeer.ApiController.DownloadUrl;
 
 import android.content.Context;
 import android.util.Base64;
-import android.util.Log;
-
-
-import com.google.zxing.common.StringUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.CookieManager;
 import java.net.HttpCookie;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.List;
 
-import thebestdevelopers.pl.findmybeer.R;
 import thebestdevelopers.pl.findmybeer.SessionController;
 
 
@@ -48,7 +41,7 @@ public class DownloadUrlForAuthentication implements IDownloadUrl {
         try {
             URL url = new URL(myUrl);
             final String basicAuth = "Basic " + Base64.encodeToString((username + ":" + password).getBytes(), Base64.NO_WRAP);
-            urlConnection=(HttpURLConnection) url.openConnection();
+            urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestProperty("Authorization", basicAuth);
             urlConnection.setConnectTimeout(10000);
             urlConnection.connect();
@@ -75,15 +68,13 @@ public class DownloadUrlForAuthentication implements IDownloadUrl {
 
                 } catch (IOException e) {
                     e.printStackTrace();
-                }
-                finally {
+                } finally {
                     inputStream.close();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
                 throw e;
-            }
-            finally {
+            } finally {
                 urlConnection.disconnect();
             }
 

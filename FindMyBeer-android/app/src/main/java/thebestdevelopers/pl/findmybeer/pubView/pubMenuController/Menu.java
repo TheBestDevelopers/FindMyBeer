@@ -18,8 +18,8 @@ import thebestdevelopers.pl.findmybeer.pubView.pubProfileController.ProfileTab;
 
 public class Menu extends AppCompatActivity {
 
+    String mId;
 
-    String mId, mName, mAddress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +38,7 @@ public class Menu extends AppCompatActivity {
             mId = (String) b.get("placeID");
         }
 
-        String url = getUrl(mId);
+        String url = getUrl();
         GetJsonResult getMenuData = new GetJsonResult(this, getApplicationContext(), "GET");
         Object dataTransfer[] = new Object[1];
         dataTransfer[0] = url;
@@ -75,7 +75,7 @@ public class Menu extends AppCompatActivity {
                 });
     }
 
-    private String getUrl(String id) {
+    private String getUrl() {
         StringBuilder menuUrl = new StringBuilder(getResources().getString(R.string.databaseIP));
         menuUrl.append("/api/pubs/getPubMenuForPubs");
         Log.d("created url", menuUrl.toString());

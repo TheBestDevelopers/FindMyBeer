@@ -2,7 +2,6 @@ package thebestdevelopers.pl.findmybeer.pubView.pubProfileController;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -52,17 +51,15 @@ public class ChangePasswordActivity extends AppCompatActivity {
         mProgressBar.setVisibility(View.VISIBLE);
         Object dataTransfer[] = new Object[1];
         dataTransfer[0] = url;
-        GetDataAsyncTask asyncTask = (GetDataAsyncTask) new GetDataAsyncTask(new IAsyncResponse(){
+        GetDataAsyncTask asyncTask = (GetDataAsyncTask) new GetDataAsyncTask(new IAsyncResponse() {
             @Override
-            public void processFinish(String result, Boolean timeout){
+            public void processFinish(String result, Boolean timeout) {
                 if (timeout) {
                     showAlert("Error with server connection. Try again later.");
-                }
-                else {
+                } else {
                     if (result.equals("true")) {
                         successfulChange("Password changed successfully!");
-                    }
-                    else showAlert("This is not your password!");
+                    } else showAlert("This is not your password!");
                 }
                 mProgressBar.setVisibility(View.GONE);
             }
