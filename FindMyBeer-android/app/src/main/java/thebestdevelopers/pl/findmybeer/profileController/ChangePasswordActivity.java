@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import thebestdevelopers.pl.findmybeer.ApiController.AsyncTasks.GetDataAsyncTask;
 import thebestdevelopers.pl.findmybeer.ApiController.AsyncTasks.IAsyncResponse;
-import thebestdevelopers.pl.findmybeer.ApiController.DownloadUrl.DownloadUrlWithPutMethod;
 import thebestdevelopers.pl.findmybeer.ApiController.DownloadUrl.DownloadUrlWithoutJSONBody;
 import thebestdevelopers.pl.findmybeer.ApiController.HttpRequests;
 import thebestdevelopers.pl.findmybeer.R;

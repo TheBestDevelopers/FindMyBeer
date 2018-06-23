@@ -110,7 +110,6 @@ public class Menu extends AppCompatActivity {
         StringBuilder menuUrl = new StringBuilder(getResources().getString(R.string.databaseIP));
         menuUrl.append("/api/pubs/getPubMenu?pubID=");
         menuUrl.append(id);
-        Log.d("created url", menuUrl.toString());
         return menuUrl.toString();
     }
 }

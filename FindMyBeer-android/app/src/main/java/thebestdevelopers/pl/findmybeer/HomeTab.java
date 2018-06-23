@@ -1,7 +1,9 @@
 package thebestdevelopers.pl.findmybeer;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -10,6 +12,7 @@ import android.location.LocationManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -21,6 +24,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.Manifest;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -58,6 +62,8 @@ public class HomeTab extends AppCompatActivity implements ItemClickListener, Goo
     private TextView mErrorTextView;
     private SessionController sessionController;
 
+    static public final int REQUEST_LOCATION = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,11 +80,29 @@ public class HomeTab extends AppCompatActivity implements ItemClickListener, Goo
         mErrorTextView = findViewById(R.id.mErrorTextView);
 
         setRecyclerView();
+        ActivityCompat.requestPermissions(HomeTab.this,
+                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                REQUEST_LOCATION);
+    }
 
-        if (googleServicesAvailable()) {
-            manageLocation();
-        } else {
-            Toast.makeText(this, "There's no Google Services installed", Toast.LENGTH_LONG).show();
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_LOCATION: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (googleServicesAvailable()) {
+                        manageLocation();
+                    } else {
+                        Toast.makeText(this, "There's no Google Services installed", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "Permission denied to access your location", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
         }
     }
 

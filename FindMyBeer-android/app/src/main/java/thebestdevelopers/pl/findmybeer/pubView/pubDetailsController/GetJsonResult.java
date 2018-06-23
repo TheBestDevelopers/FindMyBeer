@@ -56,7 +56,6 @@ public class GetJsonResult extends AsyncTask<Object, String, String> {
         HashMap<String, String> nearbyPlaceList;
         DataPubParser parser = new DataPubParser();
         nearbyPlaceList = parser.parse(s);
-        Log.d("placedata","called parse method");
         showNearbyPlaces(nearbyPlaceList);
         Activity activity = mWeakActivity.get();
         if (activity != null) {

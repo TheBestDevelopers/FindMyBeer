@@ -15,9 +15,6 @@ public class DataProfileParser {
         HashMap<String, String> googlePlaceMap = new HashMap<>();
         String userName = "";
 
-        Log.d("DataParser","jsonobject ="+googlePlaceJson.toString());
-
-
         try {
             if (!googlePlaceJson.isNull("username")) {
                 userName = googlePlaceJson.getString("username");
@@ -40,7 +37,6 @@ public class DataProfileParser {
         String temp = "{\"result\":";
         String nowy = temp + jsonData + "}";
         jsonData = nowy;
-        Log.d("json data", jsonData);
 
         try {
             jsonObject = new JSONObject(jsonData);

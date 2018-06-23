@@ -276,7 +276,6 @@ public class MapTab extends AppCompatActivity implements OnMapReadyCallback, Goo
         googlePlaceUrl.append("&type="+nearby);
         googlePlaceUrl.append("&name="+nearby);
         googlePlaceUrl.append("&key="+"AIzaSyB3iQRgruru1jotumbRTuzOYiWSePz41ZQ");
-        Log.d("created url", googlePlaceUrl.toString());
         return googlePlaceUrl.toString();
     }
 

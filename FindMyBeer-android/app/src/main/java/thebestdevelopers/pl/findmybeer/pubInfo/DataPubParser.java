@@ -23,9 +23,6 @@ public class DataPubParser {
         String favourite = "";
         String ourPub = "";
 
-      //  Log.d("DataParser","jsonobject ="+googlePlaceJson.toString());
-
-
         try {
             if (!googlePlaceJson.isNull("name")) {
                 placeName = googlePlaceJson.getString("name");
@@ -120,8 +117,6 @@ public class DataPubParser {
         JSONArray jsonArray = null;
         JSONObject jsonObject;
         JSONObject jObjectResult = null;
-
-        Log.d("json data", jsonData);
 
         try {
             jsonObject = new JSONObject(jsonData);

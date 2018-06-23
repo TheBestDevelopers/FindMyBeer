@@ -22,13 +22,11 @@ import com.facebook.login.LoginManager;
 
 import thebestdevelopers.pl.findmybeer.ApiController.AsyncTasks.GetDataAsyncTask;
 import thebestdevelopers.pl.findmybeer.ApiController.AsyncTasks.IAsyncResponse;
-import thebestdevelopers.pl.findmybeer.ApiController.DownloadUrl.DownloadUrlWithPutMethod;
 import thebestdevelopers.pl.findmybeer.ApiController.DownloadUrl.DownloadUrlWithoutJSONBody;
 import thebestdevelopers.pl.findmybeer.ApiController.HttpRequests;
 import thebestdevelopers.pl.findmybeer.BottomNavigationViewHelper;
 import thebestdevelopers.pl.findmybeer.HomeTab;
 import thebestdevelopers.pl.findmybeer.SessionController;
-import thebestdevelopers.pl.findmybeer.loginController.Login;
 import thebestdevelopers.pl.findmybeer.R;
 import thebestdevelopers.pl.findmybeer.favController.FavTab;
 import thebestdevelopers.pl.findmybeer.mapsController.MapTab;

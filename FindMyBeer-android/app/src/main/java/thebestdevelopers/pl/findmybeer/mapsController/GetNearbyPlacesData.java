@@ -56,7 +56,6 @@ public class GetNearbyPlacesData extends AsyncTask<Object, String, String>{
             try {
                 DataParser parser = new DataParser();
                 nearbyPlaceList = parser.parse(s);
-                Log.d("placedata", "called parse method");
                 showNearbyPlaces();
             } catch (Exception e) {
                 Toast.makeText(act, "There's no server connection", Toast.LENGTH_LONG).show();

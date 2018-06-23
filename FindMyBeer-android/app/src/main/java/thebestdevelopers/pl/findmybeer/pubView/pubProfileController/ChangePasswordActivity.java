@@ -7,14 +7,12 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import thebestdevelopers.pl.findmybeer.ApiController.AsyncTasks.GetDataAsyncTask;
 import thebestdevelopers.pl.findmybeer.ApiController.AsyncTasks.IAsyncResponse;
-import thebestdevelopers.pl.findmybeer.ApiController.DownloadUrl.DownloadUrlWithPutMethod;
 import thebestdevelopers.pl.findmybeer.ApiController.DownloadUrl.DownloadUrlWithoutJSONBody;
 import thebestdevelopers.pl.findmybeer.ApiController.HttpRequests;
 import thebestdevelopers.pl.findmybeer.R;

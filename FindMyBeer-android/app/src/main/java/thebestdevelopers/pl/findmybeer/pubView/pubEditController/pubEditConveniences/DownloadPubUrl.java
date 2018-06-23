@@ -59,7 +59,6 @@ public class DownloadPubUrl {
             inputStream.close();
             urlConnection.disconnect();
         }
-        Log.d("DownloadURL","Returning data= "+data);
 
         return data;
     }
