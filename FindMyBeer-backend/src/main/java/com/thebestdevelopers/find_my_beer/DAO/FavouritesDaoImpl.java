@@ -4,6 +4,7 @@ import com.thebestdevelopers.find_my_beer.DTO.BooleanDTO;
 import com.thebestdevelopers.find_my_beer.model.ClientEntity;
 import com.thebestdevelopers.find_my_beer.model.FavouritiesEntity;
 import com.thebestdevelopers.find_my_beer.model.PubEntity;
+import com.thebestdevelopers.find_my_beer.model.UserEntity;
 import com.thebestdevelopers.find_my_beer.repository.ClientRepository;
 import com.thebestdevelopers.find_my_beer.repository.FavouritesRepository;
 import com.thebestdevelopers.find_my_beer.repository.PubRepository;
@@ -27,6 +28,9 @@ public class FavouritesDaoImpl implements FavouritesDao {
 
     @Autowired
     ClientRepository clientRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     @Override
     public BooleanDTO addFavourite(int userId, int pubId) {

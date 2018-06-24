@@ -1,8 +1,13 @@
 package com.thebestdevelopers.find_my_beer.DAO;
 
+import com.sun.deploy.util.SessionState;
 import com.thebestdevelopers.find_my_beer.DTO.GetUsernameDTO;
+import com.thebestdevelopers.find_my_beer.model.ClientEntity;
+import com.thebestdevelopers.find_my_beer.model.PhotosEntity;
 import com.thebestdevelopers.find_my_beer.model.RoleEntity;
 import com.thebestdevelopers.find_my_beer.model.UserEntity;
+import com.thebestdevelopers.find_my_beer.repository.ClientRepository;
+import com.thebestdevelopers.find_my_beer.repository.PhotoRepository;
 import com.thebestdevelopers.find_my_beer.repository.RoleRepository;
 import com.thebestdevelopers.find_my_beer.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +30,11 @@ public class UserDaoImpl implements UserDao{
     @Autowired
     RoleRepository roleRepository;
 
+    @Autowired
+    PhotoRepository photoRepository;
+
+    @Autowired
+    ClientRepository clientRepository;
 
 
     public static String hashPassword(String password_plaintext) {
@@ -46,6 +56,16 @@ public class UserDaoImpl implements UserDao{
         roleEntity = roleRepository.save(roleEntity);
         roleEntity.setUserByUserId(userEntity);
         userEntity.setRoleByUserId(roleEntity);
+        PhotosEntity photosEntity = new PhotosEntity();
+        photosEntity.setPath("");
+        photosEntity = photoRepository.save(photosEntity);
+        if(role.equals("client")){
+            ClientEntity clientEntity = new ClientEntity();
+            clientEntity.setClientId((int) userEntity.getUserId());
+            clientEntity.setPhotoId(photosEntity.getPhotoId());
+            clientRepository.save(clientEntity);
+        }
+
         return userEntity;
     }
 
