@@ -95,7 +95,10 @@ public class PubServiceImpl implements PubService {
         for(RatingsEntity ratingsEntity : ratingsEntityList){
             ratingsValuesSum += ratingsEntity.getRate();
         }
-        ratingAverage = ratingsValuesSum/ratingsEntityList.size();
+        if(ratingsEntityList.size() != 0)
+            ratingAverage = ratingsValuesSum/ratingsEntityList.size();
+        else
+            ratingAverage = 0;
         DecimalFormat df = new DecimalFormat("#.##");
         df.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.US));
 

@@ -26,7 +26,7 @@ import java.util.Locale;
  */
 public class PubDistanceServiceImpl implements PubDistanceService {
 
-    final Double CHOSEN_DISTANCE = 10000.0; //distance in meters
+    final Double CHOSEN_DISTANCE = 100000.0; //distance in meters
     Double distance = 0.0;
     AddressRepository addressRepository;
     PubRepository pubRepository;

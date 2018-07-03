@@ -84,18 +84,12 @@ public class PubListRecyclerViewerAdapter extends RecyclerView.Adapter<PubListRe
 
     private void setTextViews(Pub currentPub, ViewHolder holder) {
         holder.textViewPubName.setText(currentPub.getPubName());
-        if (currentPub.distance > 10000)
-            setTextCountingDistance(holder);
-        else if (currentPub.distance > 1000)
+        if (currentPub.distance > 1000)
             setDistanceKilometers(currentPub.distance, holder);
         else
             holder.textViewDistance.setText(currentPub.distance + "m");
         holder.textViewStars.setText(currentPub.getRating().toString());
         holder.textViewFreeTables.setText(currentPub.getFreeTablesCount().toString());
-    }
-
-    private void setTextCountingDistance(ViewHolder holder) {
-        holder.textViewDistance.setText("Counting distance...");
     }
 
     private void setDistanceKilometers(Integer distance, ViewHolder holder) {
